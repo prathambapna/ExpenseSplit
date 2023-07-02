@@ -2,6 +2,7 @@ const mongoose =require("mongoose");
 const validator=require("validator");
 const bcrypt=require("bcryptjs");
 const jwt =require("jsonwebtoken");
+const crypto =require("crypto");
 
 const userSchema= new mongoose.Schema({
     name:{
@@ -19,7 +20,7 @@ const userSchema= new mongoose.Schema({
         type:String,
         required:[true,"Please enter your password"],
         minLength:[8,"password must be of minimum 8 characters"],
-        select:false
+        select:false,
     },
     avatar:{
         public_id:{
@@ -53,8 +54,20 @@ userSchema.methods.getJWTToken = function(){
 };
 
 //compare password
-userSchema.methods.comparePassword=async function(enteredPassword){
-    return await bcrypt.compare(enteredPassword,this.password);
+userSchema.methods.comparePassword=async function(password){
+    return await bcrypt.compare(password,this.password);
+}
+
+//generating password reset token
+userSchema.methods.getResetPasswordToken=function(){
+    //generating token
+    const resetToken=crypto.randomBytes(20).toString("hex");
+
+    //hashing and add to user schema
+    this.resetPasswordToken=crypto.createHash("sha256").update(resetToken).digest("hex");
+
+    this.resetPasswordExpire=Date.now()+15*60*1000;
+    return resetToken;
 }
 
 module.exports=mongoose.model("User",userSchema);
