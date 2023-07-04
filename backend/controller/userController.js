@@ -189,3 +189,21 @@ exports.updateProfile=catchAsyncErrors(async(req,res,next)=>{
     });    
 });
 
+
+//get all groups in which current user is present
+exports.myGroups=catchAsyncErrors(async(req,res,next)=>{
+    const userId=req.user._id;
+
+    const user=await User.findById(userId);
+
+    if(!user){
+        return next(new ErrorHandler("User does not exist",400));
+    }
+
+    res.status(200).json({
+        success:true,
+        groups:user.groupList,
+    })
+    
+});
+
