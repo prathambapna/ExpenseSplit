@@ -9,9 +9,11 @@ app.use(cookieParser());
 //route imports
 const user=require("./routes/userRoutes");
 const groupRoute =require("./routes/groupRoutes");
+const expenseRoute=require("./routes/expenseRoutes");
 
 app.use("/api/v1",user);
 app.use("/api/v1",groupRoute);
+app.use("/api/v1",expenseRoute);
 
 //middleware for error
 app.use(errorMiddleware);
