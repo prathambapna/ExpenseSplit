@@ -156,3 +156,27 @@ exports.deleteGroup=catchAsyncErrors(async(req,res,next)=>{
         success:true,
     })
 });
+
+//get single group details
+
+exports.groupDetail=catchAsyncErrors(async(req,res,next)=>{
+    const {groupId}=req.params;
+    
+    const group= await Group.findById(req.params.groupId);
+
+    if(!group){
+        return next(new ErrorHandler("Group not found",404));
+    }
+
+    //existing member can only access group details 
+    const isUserExistingInGroup=await group.participants.find((u)=>u.toString()===req.user._id.toString());
+    if(!isUserExistingInGroup){
+        return next(new ErrorHandler("You are not authorised to access this group",400));
+    }
+
+    res.status(200).json({
+        success:true,
+        group,
+    })
+
+});
