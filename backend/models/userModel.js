@@ -32,6 +32,13 @@ const userSchema= new mongoose.Schema({
             required:true
         }
     },
+    groupList:[
+        {
+            type:mongoose.Schema.ObjectId,
+            ref:"Group",
+            required:true,
+        }
+    ],
     resetPasswordToken:String,
     resetPasswordExpire:Date,
 });
