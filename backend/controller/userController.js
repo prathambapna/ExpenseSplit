@@ -204,4 +204,6 @@ exports.myGroups=catchAsyncErrors(async(req,res,next)=>{
         success:true,
         groups:user.groupList,
     })
+    
 });
+
