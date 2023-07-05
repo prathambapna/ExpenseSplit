@@ -1,10 +1,15 @@
 const mongoose =require("mongoose");
 
 const expenseSchema=new mongoose.Schema({
+    title:{
+        type:String,
+        required:[true,"Please enter expense name"],
+        maxLength:[20,"Max length for name is 20"],
+    },
     description:{
         type:String,
         required:[true,"Please enter expense description"],
-        maxLength:[50,"Max length for description is 30"],
+        maxLength:[150,"Max length for description is 150"],
     },
     amount:{
         type:Number,
@@ -30,10 +35,21 @@ const expenseSchema=new mongoose.Schema({
             share:{
                 type:Number,
                 default:0,
-                required:true,
+                required: function () {
+                    return this.splitType === 'unequal';
+                },
             }
         }
     ],
+    splitType: {
+        type: String,
+        enum: ['equal', 'unequal'],
+        required: true,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 module.exports=mongoose.model("Expense",expenseSchema);
