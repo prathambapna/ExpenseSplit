@@ -4,7 +4,8 @@ const Group=require("../models/groupModel");
 const User=require("../models/userModel");
 
 const isValidGroupMembership=catchAsyncError(async(req,res,next)=>{
-    const {groupId,userId}=req.params;
+    const {groupId}=req.params;
+    const userId=req.user._id;
 
     const user=await User.findById(userId);
     const group=await Group.findById(groupId);

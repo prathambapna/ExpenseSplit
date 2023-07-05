@@ -35,10 +35,21 @@ const expenseSchema=new mongoose.Schema({
             share:{
                 type:Number,
                 default:0,
-                required:true,
+                required: function () {
+                    return this.splitType === 'unequal';
+                },
             }
         }
     ],
+    splitType: {
+        type: String,
+        enum: ['equal', 'unequal'],
+        required: true,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 module.exports=mongoose.model("Expense",expenseSchema);

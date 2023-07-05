@@ -1,9 +1,10 @@
 const express=require("express");
 const isAuthenticatedUser = require("../middleware/auth");
 const isValidGroupMembership=require("../middleware/validateGroupMembership");
-const { createExpenseUnequal } = require("../controller/expenseController");
+const { createExpense, updateExpense } = require("../controller/expenseController");
 const router=express.Router();
 
-router.route("/user/:userId/group/:groupId/expense/create/unequal").post(isAuthenticatedUser,isValidGroupMembership,createExpenseUnequal);
+router.route("/group=:groupId/expense/create").post(isAuthenticatedUser,isValidGroupMembership,createExpense);
+router.route("/group=:groupId/expense/update/:expenseId").patch(isAuthenticatedUser,isValidGroupMembership,updateExpense);
 
 module.exports=router;
