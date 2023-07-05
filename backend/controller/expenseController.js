@@ -111,4 +111,47 @@ exports.updateExpense=catchAsyncErrors(async(req,res,next)=>{
         success:true,
         expense,
     })
-})
+});
+
+//get expense
+exports.getExpense=catchAsyncErrors(async(req,res,next)=>{
+    const {expenseId}=req.params;
+
+    const expense=await Expense.findById(expenseId);
+    if(!expense){
+        return next(new ErrorHandler("Expense not found",400));
+    }
+
+    return res.status(200).json({
+        success:true,
+        expense,
+    })
+
+});
+
+
+/*
+Delete Expense:
+
+Function to delete an existing expense.
+Retrieve the expense by ID.
+Remove the expense from the database.
+Adjust the group balances accordingly.
+
+Get User Expenses:
+Function to retrieve all expenses for a specific user.
+Retrieve the expenses associated with the user from the database.
+Return the list of expenses.
+
+Calculate Balances:
+Function to calculate and update the group balances.
+Iterate through the expenses within a group.
+Calculate each user's share and update their balance accordingly.
+Save the updated balances to the database.
+
+Settlement:
+Function to settle outstanding balances within a group.
+Identify the users involved in the settlement.
+Determine the amounts to be settled for each user.
+Create settlement transactions or update balances accordingly.
+*/

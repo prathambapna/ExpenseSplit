@@ -180,3 +180,33 @@ exports.groupDetail=catchAsyncErrors(async(req,res,next)=>{
     })
 
 });
+
+
+//get group expenses
+exports.groupExpenses=catchAsyncErrors(async(req,res,next)=>{
+    res.status(200).json({
+        success:true,
+        expenses:req.group.expenses,
+    })
+})
+
+
+//get group members
+exports.groupMembers=catchAsyncErrors(async(req,res,next)=>{
+    res.status(200).json({
+        success:true,
+        expenses:req.group.participants,
+    })
+})
+
+
+
+//update group name
+exports.updateGroupName=catchAsyncErrors(async(req,res,next)=>{
+    req.group.name=req.body.name;
+
+    res.status(200).json({
+        success:true,
+        group:req.group,
+    })
+})
