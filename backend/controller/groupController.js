@@ -213,4 +213,49 @@ exports.updateGroupName=catchAsyncErrors(async(req,res,next)=>{
         success:true,
         group:req.group,
     })
+});
+
+//get all balances of a group
+exports.groupBalances=catchAsyncErrors(async(req,res,next)=>{
+
+    let balances = [];
+
+    const group = await Group.findById(req.group._id);
+    const groupBalances = group.balances;
+
+    for (const balance of groupBalances) {
+
+    let userMap=balances.find((obj) => obj.userFrom.toString() === balance.userTo.toString() && obj.userTo.toString() === balance.userFrom.toString());
+    if(!userMap){
+        userMap={userFrom:balance.userFrom,userTo:balance.userTo,amount:balance.balance};
+        balances.push(userMap);
+    }
+    else{
+        userMap.amount-=balance.balance;
+    }
+    }
+
+    for (const balance of balances) {
+        const userFrom = await User.findById(balance.userFrom);
+        const userTo = await User.findById(balance.userTo);
+        balance.userFrom = {
+          _id: userFrom._id,
+          name: userFrom.name,
+          email: userFrom.email,
+        };
+        balance.userTo = {
+            _id: userTo._id,
+            name: userTo.name,
+            email: userTo.email,
+        };
+        const type=(balance.amount>0)?"lent":"owe";
+        balance.message=`${userFrom.name} ${type} ${Math.abs(balance.amount)} to ${userTo.name}`
+    }
+
+    balances = balances.filter((balance) => balance.amount !== 0);
+  
+    res.status(200).json({
+      success: true,
+      balances,
+    });
 })

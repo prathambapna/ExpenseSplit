@@ -1,6 +1,6 @@
 const express=require("express");
 const isAuthenticatedUser = require("../middleware/auth");
-const { createGroup, addUserToGroup, removeUserFromGroup, deleteGroup, groupDetail, groupExpenses, groupMembers, updateGroupName } = require("../controller/groupController");
+const { createGroup, addUserToGroup, removeUserFromGroup, deleteGroup, groupDetail, groupExpenses, groupMembers, updateGroupName, groupBalances } = require("../controller/groupController");
 const isValidGroupMembership = require("../middleware/validateGroupMembership");
 const router=express.Router();
 
@@ -19,5 +19,7 @@ router.route("/group/:groupId").get(isAuthenticatedUser,groupDetail);
 router.route("/group=:groupId/expenses").get(isAuthenticatedUser,isValidGroupMembership,groupExpenses);
 
 router.route("/group=:groupId/members").get(isAuthenticatedUser,isValidGroupMembership,groupMembers);
+
+router.route("/group=:groupId/balances").get(isAuthenticatedUser,isValidGroupMembership,groupBalances);
 
 module.exports=router;
