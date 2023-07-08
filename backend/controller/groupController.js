@@ -184,18 +184,22 @@ exports.groupDetail=catchAsyncErrors(async(req,res,next)=>{
 
 //get group expenses
 exports.groupExpenses=catchAsyncErrors(async(req,res,next)=>{
+    const group=await Group.findById(req.group._id);
+    await group.populate('expenses');
     res.status(200).json({
         success:true,
-        expenses:req.group.expenses,
+        expenses:group.expenses,
     })
 })
 
 
 //get group members
 exports.groupMembers=catchAsyncErrors(async(req,res,next)=>{
+    const group=await Group.findById(req.group._id);
+    await group.populate('participants','name email groupList');
     res.status(200).json({
         success:true,
-        expenses:req.group.participants,
+        members:group.participants,
     })
 })
 

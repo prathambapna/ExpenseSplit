@@ -53,6 +53,26 @@ exports.createExpense=catchAsyncErrors(async(req,res,next)=>{
 
 
     group.expenses.push(expense);
+    const balances= group.balances;
+    await participants.forEach(catchAsyncErrors(async(participant)=>{
+        if(payer.toString()!==participant.user.toString()){
+            const userBalanceMap=await balances.find((obj)=>
+                obj.userFrom.toString()===payer.toString() && obj.userTo.toString()===participant.user.toString(),
+            );
+            if(!userBalanceMap){
+                balances.push(({
+                    userFrom:payer,
+                    userTo:participant.user,
+                    balance:participant.share,
+                    group:req.group._id,
+                }));
+            }
+            else{
+                userBalanceMap.balance+=participant.share;
+            }
+        }
+    }));
+    group.balances=balances;
     await group.save({validateBeforeSave:false});
 
     res.status(201).json({
@@ -73,6 +93,21 @@ exports.updateExpense=catchAsyncErrors(async(req,res,next)=>{
         return next(new ErrorHandler("Expense not found",400));
     }
 
+    const group=await Group.findById(req.group._id);
+    const balances= group.balances;
+    const oldParticipants=expense.participants;
+    const oldPayer=expense.payer;
+    await oldParticipants.forEach(catchAsyncErrors(async(participant)=>{
+        if(oldPayer.toString()!==participant.user.toString()){
+            const userBalanceMap=await balances.find((obj)=>
+                obj.userFrom.toString()===oldPayer.toString() && obj.userTo.toString()===participant.user.toString(),
+            );
+            userBalanceMap.balance-=participant.share;
+        }
+    }));
+    group.balances=balances;
+    await group.save({validateBeforeSave:false});
+
     expense.title=updateExpenseFields.title || expense.title;
     expense.description=updateExpenseFields.description || expense.description;
     expense.amount=updateExpenseFields.amount || expense.amount;
@@ -81,6 +116,7 @@ exports.updateExpense=catchAsyncErrors(async(req,res,next)=>{
     expense.splitType=updateExpenseFields.splitType || expense.splitType;
     
     const participants= expense.participants;
+    const payer=expense.payer;
     if(expense.splitType==="equal"){
         let total_participants=participants.length;
         let equalShare=expense.amount/total_participants;
@@ -106,6 +142,29 @@ exports.updateExpense=catchAsyncErrors(async(req,res,next)=>{
 
 
     await expense.save({validateBeforeSave:false});
+
+    const newBalances= group.balances;
+    await participants.forEach(catchAsyncErrors(async(participant)=>{
+        if(payer.toString()!==participant.user.toString()){
+            const userBalanceMap=await newBalances.find((obj)=>
+                obj.userFrom.toString()===payer.toString() && obj.userTo.toString()===participant.user.toString(),
+            );
+            if(!userBalanceMap){
+                newBalances.push(({
+                    userFrom:payer,
+                    userTo:participant.user,
+                    balance:participant.share,
+                    group:req.group._id,
+                }));
+            }
+            else{
+                userBalanceMap.balance+=participant.share;
+            }
+        }
+    }));
+    group.balances=newBalances;
+    await group.save({validateBeforeSave:false});
+    
 
     res.status(200).json({
         success:true,
@@ -155,3 +214,10 @@ Identify the users involved in the settlement.
 Determine the amounts to be settled for each user.
 Create settlement transactions or update balances accordingly.
 */
+
+
+
+
+
+
+
