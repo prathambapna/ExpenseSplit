@@ -53,7 +53,7 @@ exports.createExpense=catchAsyncErrors(async(req,res,next)=>{
 
 
     group.expenses.push(expense);
-    const balances= group.balances;
+    let balances= group.balances;
     await participants.forEach(catchAsyncErrors(async(participant)=>{
         if(payer.toString()!==participant.user.toString()){
             const userBalanceMap=await balances.find((obj)=>
@@ -72,6 +72,7 @@ exports.createExpense=catchAsyncErrors(async(req,res,next)=>{
             }
         }
     }));
+    balances = balances.filter((b) => b.balance !== 0);
     group.balances=balances;
     await group.save({validateBeforeSave:false});
 
@@ -143,7 +144,7 @@ exports.updateExpense=catchAsyncErrors(async(req,res,next)=>{
 
     await expense.save({validateBeforeSave:false});
 
-    const newBalances= group.balances;
+    let newBalances= group.balances;
     await participants.forEach(catchAsyncErrors(async(participant)=>{
         if(payer.toString()!==participant.user.toString()){
             const userBalanceMap=await newBalances.find((obj)=>
@@ -162,6 +163,7 @@ exports.updateExpense=catchAsyncErrors(async(req,res,next)=>{
             }
         }
     }));
+    newBalances = newBalances.filter((b) => b.balance !== 0);
     group.balances=newBalances;
     await group.save({validateBeforeSave:false});
     
@@ -189,24 +191,42 @@ exports.getExpense=catchAsyncErrors(async(req,res,next)=>{
 });
 
 
+exports.deleteExpense=catchAsyncErrors(async(req,res,next)=>{
+    const {expenseId}=req.params;
+    const group=await Group.findById(req.group._id);
+    const expense=await Expense.findById(expenseId);
+    if(!expense){
+        return next(new ErrorHandler("Expense not found",400));
+    }
+    let balances= group.balances;
+    const oldParticipants=expense.participants;
+    const oldPayer=expense.payer;
+    await oldParticipants.forEach(catchAsyncErrors(async(participant)=>{
+        if(oldPayer.toString()!==participant.user.toString()){
+            const userBalanceMap=await balances.find((obj)=>
+                obj.userFrom.toString()===oldPayer.toString() && obj.userTo.toString()===participant.user.toString(),
+            );
+            userBalanceMap.balance-=participant.share;
+        }
+    }));
+    balances = balances.filter((b) => b.balance !== 0);
+    group.balances=balances;
+    
+    const expenseList=await group.expenses.filter((expId)=>expId.toString() !== expenseId.toString());
+    group.expenses=expenseList;
+    
+    await group.save({validateBeforeSave:false});
+
+    await expense.deleteOne();
+
+    res.status(200).json({
+        success:true,
+    });
+
+});
+
 /*
-Delete Expense:
 
-Function to delete an existing expense.
-Retrieve the expense by ID.
-Remove the expense from the database.
-Adjust the group balances accordingly.
-
-Get User Expenses:
-Function to retrieve all expenses for a specific user.
-Retrieve the expenses associated with the user from the database.
-Return the list of expenses.
-
-Calculate Balances:
-Function to calculate and update the group balances.
-Iterate through the expenses within a group.
-Calculate each user's share and update their balance accordingly.
-Save the updated balances to the database.
 
 Settlement:
 Function to settle outstanding balances within a group.

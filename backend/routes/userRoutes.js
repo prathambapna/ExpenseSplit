@@ -1,5 +1,5 @@
 const express=require("express");
-const { getAllUsers, registerUser, loginUser, logoutUser, forgotPassword, resetPassword, getUserDetails, updatePassword, updateProfile, myGroups } = require("../controller/userController");
+const { getAllUsers, registerUser, loginUser, logoutUser, forgotPassword, resetPassword, getUserDetails, updatePassword, updateProfile, myGroups, myBalances } = require("../controller/userController");
 const isAuthenticatedUser = require("../middleware/auth");
 const router=express.Router();
 
@@ -22,5 +22,7 @@ router.route("/password/update").put(isAuthenticatedUser,updatePassword);
 router.route("/me/update").put(isAuthenticatedUser,updateProfile);
 
 router.route("/me/groups").get(isAuthenticatedUser,myGroups);
+
+router.route("/me/balances").get(isAuthenticatedUser,myBalances);
 
 module.exports=router;
