@@ -236,7 +236,6 @@ exports.myBalances = catchAsyncErrors(async (req, res, next) => {
             }
             if (!found) {
                 balances.push({
-                    _id:balance._id,
                     user: balance.userTo,
                     amount: balance.balance,
                 });
@@ -253,7 +252,6 @@ exports.myBalances = catchAsyncErrors(async (req, res, next) => {
             }
             if (!found) {
                 balances.push({
-                    _id:balance._id,
                     user: balance.userFrom,
                     amount: balance.balance * -1,
                 });
