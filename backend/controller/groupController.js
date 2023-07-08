@@ -241,3 +241,19 @@ exports.groupBalances=catchAsyncErrors(async(req,res,next)=>{
       groupBalance,
     });
 })
+
+
+exports.settleUp=catchAsyncErrors(async(req,res,next)=>{
+    const {balanceId}=req.params;
+    const balance=await UserBalance.findById(balanceId);
+    const group=await Group.findById(req.group._id);
+    group.balances=await group.balances.filter((balance)=>balance.toString()!==balanceId.toString());
+    await group.save({validateBeforeSave:false});
+    
+    await balance.deleteOne();
+
+    res.status(200).json({
+        success:true,
+    })
+
+})
