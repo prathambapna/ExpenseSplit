@@ -262,7 +262,7 @@ exports.getExpense=catchAsyncErrors(async(req,res,next)=>{
 
 });
 
-
+//delete expense
 exports.deleteExpense=catchAsyncErrors(async(req,res,next)=>{
     const {expenseId}=req.params;
     const group=await Group.findById(req.group._id);
@@ -270,19 +270,47 @@ exports.deleteExpense=catchAsyncErrors(async(req,res,next)=>{
     if(!expense){
         return next(new ErrorHandler("Expense not found",400));
     }
-    let balances= group.balances;
+
     const oldParticipants=expense.participants;
     const oldPayer=expense.payer;
-    await oldParticipants.forEach(catchAsyncErrors(async(participant)=>{
-        if(oldPayer.toString()!==participant.user.toString()){
-            const userBalanceMap=await balances.find((obj)=>
-                obj.userFrom.toString()===oldPayer.toString() && obj.userTo.toString()===participant.user.toString(),
-            );
-            userBalanceMap.balance-=participant.share;
+    let balances = [...group.balances];
+
+    for(const participant of oldParticipants){
+        if(participant.user.toString()!==oldPayer.toString()){
+            const userBalanceMap1 = await UserBalance.findOne({
+                $and: [
+                    { userFrom: oldPayer },
+                    { userTo: participant.user },
+                    { _id: { $in:balances } }
+                ]
+            });
+            const userBalanceMap2 = await UserBalance.findOne({
+                $and: [
+                    { userFrom: participant.user },
+                    { userTo: oldPayer },
+                    { _id: { $in: balances } }
+                ]
+            });
+            if(userBalanceMap1){
+                userBalanceMap1.balance-=participant.share;
+                await userBalanceMap1.save({validateBeforeSave:false});
+            }
+            else if(userBalanceMap2){
+                userBalanceMap2.balance+=participant.share;
+                await userBalanceMap2.save({validateBeforeSave:false});
+            }
         }
-    }));
-    balances = balances.filter((b) => b.balance !== 0);
-    group.balances=balances;
+    }
+
+    for(const balance of balances){
+        const userBal=await UserBalance.findById(balance);
+        if(userBal.balance===0){
+            balances=balances.filter((b)=>b!=balance);
+        }
+    }
+    group.balances= balances;
+    
+    await group.save({validateBeforeSave:false});
     
     const expenseList=await group.expenses.filter((expId)=>expId.toString() !== expenseId.toString());
     group.expenses=expenseList;
