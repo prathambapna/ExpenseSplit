@@ -29,25 +29,8 @@ const groupSchema=new mongoose.Schema({
     ],
     balances:[
         {
-            userFrom: {
-                type: mongoose.Schema.ObjectId,
-                ref: "User",
-                required: true,
-            },
-            userTo: {
-                type: mongoose.Schema.ObjectId,
-                ref: "User",
-                required: true,
-            },
-            group: {
-                type: mongoose.Schema.ObjectId,
-                ref: "Group",
-                required: true,
-            },
-            balance: {
-                type: Number,
-                default: 0,
-            },    
+            type:mongoose.Schema.ObjectId,
+            ref:"UserBalance"
         }
     ],
     

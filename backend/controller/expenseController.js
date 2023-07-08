@@ -3,6 +3,7 @@ const catchAsyncErrors=require("../middleware/catchAsyncError");
 const User=require("../models/userModel");
 const Group=require("../models/groupModel");
 const Expense=require("../models/expenseModel");
+const UserBalance=require("../models/userBalanceModel");
 
 exports.createExpense=catchAsyncErrors(async(req,res,next)=>{
     const {title,description,amount,payer,participants,splitType}=req.body;
@@ -45,7 +46,6 @@ exports.createExpense=catchAsyncErrors(async(req,res,next)=>{
 
 
     //create expense
-
     const expense=await Expense.create({
         title,description,amount,payer,participants,splitType,
         group:req.group._id,
@@ -53,28 +53,56 @@ exports.createExpense=catchAsyncErrors(async(req,res,next)=>{
 
 
     group.expenses.push(expense);
-    let balances= group.balances;
-    await participants.forEach(catchAsyncErrors(async(participant)=>{
-        if(payer.toString()!==participant.user.toString()){
-            const userBalanceMap=await balances.find((obj)=>
-                obj.userFrom.toString()===payer.toString() && obj.userTo.toString()===participant.user.toString(),
-            );
-            if(!userBalanceMap){
-                balances.push(({
+    await group.save({validateBeforeSave:false});
+
+    //balances
+    let balances = [...group.balances];
+    for(const participant of participants){
+        if(participant.user.toString()!==payer.toString()){
+            const userBalanceMap1 = await UserBalance.findOne({
+                $and: [
+                    { userFrom: payer },
+                    { userTo: participant.user },
+                    { _id: { $in: group.balances } }
+                ]
+            });
+            const userBalanceMap2 = await UserBalance.findOne({
+                $and: [
+                    { userFrom: participant.user },
+                    { userTo: payer },
+                    { _id: { $in: group.balances } }
+                ]
+            });
+            if(userBalanceMap1){
+                userBalanceMap1.balance+=participant.share;
+                await userBalanceMap1.save({validateBeforeSave:false});
+            }
+            else if(userBalanceMap2){
+                userBalanceMap2.balance-=participant.share;
+                await userBalanceMap2.save({validateBeforeSave:false});
+            }
+            else{
+                const newUserBalance=await UserBalance.create({
                     userFrom:payer,
                     userTo:participant.user,
                     balance:participant.share,
                     group:req.group._id,
-                }));
-            }
-            else{
-                userBalanceMap.balance+=participant.share;
+                });
+                balances.push(newUserBalance);
             }
         }
-    }));
-    balances = balances.filter((b) => b.balance !== 0);
-    group.balances=balances;
+    }
+    
+    for(const balance of balances){
+        const userBal=await UserBalance.findById(balance);
+        if(userBal.balance===0){
+            balances=balances.filter((b)=>b!=balance);
+        }
+    }
+    group.balances= balances;
+    
     await group.save({validateBeforeSave:false});
+
 
     res.status(201).json({
         success:true,
@@ -95,17 +123,38 @@ exports.updateExpense=catchAsyncErrors(async(req,res,next)=>{
     }
 
     const group=await Group.findById(req.group._id);
-    const balances= group.balances;
+
     const oldParticipants=expense.participants;
     const oldPayer=expense.payer;
-    await oldParticipants.forEach(catchAsyncErrors(async(participant)=>{
-        if(oldPayer.toString()!==participant.user.toString()){
-            const userBalanceMap=await balances.find((obj)=>
-                obj.userFrom.toString()===oldPayer.toString() && obj.userTo.toString()===participant.user.toString(),
-            );
-            userBalanceMap.balance-=participant.share;
+    let balances = [...group.balances];
+
+    for(const participant of oldParticipants){
+        if(participant.user.toString()!==oldPayer.toString()){
+            const userBalanceMap1 = await UserBalance.findOne({
+                $and: [
+                    { userFrom: oldPayer },
+                    { userTo: participant.user },
+                    { _id: { $in:balances } }
+                ]
+            });
+            const userBalanceMap2 = await UserBalance.findOne({
+                $and: [
+                    { userFrom: participant.user },
+                    { userTo: oldPayer },
+                    { _id: { $in: balances } }
+                ]
+            });
+            if(userBalanceMap1){
+                userBalanceMap1.balance-=participant.share;
+                await userBalanceMap1.save({validateBeforeSave:false});
+            }
+            else if(userBalanceMap2){
+                userBalanceMap2.balance+=participant.share;
+                await userBalanceMap2.save({validateBeforeSave:false});
+            }
         }
-    }));
+    }
+
     group.balances=balances;
     await group.save({validateBeforeSave:false});
 
@@ -144,26 +193,49 @@ exports.updateExpense=catchAsyncErrors(async(req,res,next)=>{
 
     await expense.save({validateBeforeSave:false});
 
-    let newBalances= group.balances;
-    await participants.forEach(catchAsyncErrors(async(participant)=>{
-        if(payer.toString()!==participant.user.toString()){
-            const userBalanceMap=await newBalances.find((obj)=>
-                obj.userFrom.toString()===payer.toString() && obj.userTo.toString()===participant.user.toString(),
-            );
-            if(!userBalanceMap){
-                newBalances.push(({
+    let newBalances= [...group.balances];
+    for(const participant of participants){
+        if(participant.user.toString()!==payer.toString()){
+            const userBalanceMap1 = await UserBalance.findOne({
+                $and: [
+                    { userFrom: payer },
+                    { userTo: participant.user },
+                    { _id: { $in: newBalances } }
+                ]
+            });
+            const userBalanceMap2 = await UserBalance.findOne({
+                $and: [
+                    { userFrom: participant.user },
+                    { userTo: payer },
+                    { _id: { $in: newBalances } }
+                ]
+            });
+            if(userBalanceMap1){
+                userBalanceMap1.balance+=participant.share;
+                await userBalanceMap1.save({validateBeforeSave:false});
+            }
+            else if(userBalanceMap2){
+                userBalanceMap2.balance-=participant.share;
+                await userBalanceMap2.save({validateBeforeSave:false});
+            }
+            else{
+                const newUserBalance=await UserBalance.create({
                     userFrom:payer,
                     userTo:participant.user,
                     balance:participant.share,
                     group:req.group._id,
-                }));
-            }
-            else{
-                userBalanceMap.balance+=participant.share;
+                });
+                newBalances.push(newUserBalance);
             }
         }
-    }));
-    newBalances = newBalances.filter((b) => b.balance !== 0);
+    }
+    
+    for(const balance of newBalances){
+        const userBal=await UserBalance.findById(balance);
+        if(userBal.balance===0){
+            newBalances=newBalances.filter((b)=>b!=balance);
+        }
+    }
     group.balances=newBalances;
     await group.save({validateBeforeSave:false});
     

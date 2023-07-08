@@ -10,10 +10,12 @@ app.use(cookieParser());
 const user=require("./routes/userRoutes");
 const groupRoute =require("./routes/groupRoutes");
 const expenseRoute=require("./routes/expenseRoutes");
+const userBalanceRoute=require("./routes/userBalanceRoutes");
 
 app.use("/api/v1",user);
 app.use("/api/v1",groupRoute);
 app.use("/api/v1",expenseRoute);
+app.use("/api/v1",userBalanceRoute);
 
 //middleware for error
 app.use(errorMiddleware);
