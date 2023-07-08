@@ -1,6 +1,7 @@
 const express=require("express");
 const { getAllUsers, registerUser, loginUser, logoutUser, forgotPassword, resetPassword, getUserDetails, updatePassword, updateProfile, myGroups, myBalances } = require("../controller/userController");
 const isAuthenticatedUser = require("../middleware/auth");
+const clearNullBalancesRecord=require("../middleware/clearNullBalancesRecord");
 const router=express.Router();
 
 router.route("/users").get(isAuthenticatedUser, getAllUsers);
