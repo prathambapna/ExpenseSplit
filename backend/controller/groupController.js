@@ -2,6 +2,7 @@ const ErrorHandler=require("../utils/errorHandler");
 const catchAsyncErrors=require("../middleware/catchAsyncError");
 const User=require("../models/userModel");
 const Group=require("../models/groupModel");
+const UserBalance=require("../models/userBalanceModel");
 
 //create a group
 exports.createGroup=catchAsyncErrors(async(req,res,next)=>{
@@ -218,44 +219,25 @@ exports.updateGroupName=catchAsyncErrors(async(req,res,next)=>{
 //get all balances of a group
 exports.groupBalances=catchAsyncErrors(async(req,res,next)=>{
 
-    let balances = [];
-
     const group = await Group.findById(req.group._id);
-    const groupBalances = group.balances;
-
-    for (const balance of groupBalances) {
-
-    let userMap=balances.find((obj) => obj.userFrom.toString() === balance.userTo.toString() && obj.userTo.toString() === balance.userFrom.toString());
-    if(!userMap){
-        userMap={userFrom:balance.userFrom,userTo:balance.userTo,amount:balance.balance};
-        balances.push(userMap);
-    }
-    else{
-        userMap.amount-=balance.balance;
-    }
-    }
-
-    for (const balance of balances) {
-        const userFrom = await User.findById(balance.userFrom);
-        const userTo = await User.findById(balance.userTo);
-        balance.userFrom = {
-          _id: userFrom._id,
-          name: userFrom.name,
-          email: userFrom.email,
-        };
-        balance.userTo = {
-            _id: userTo._id,
-            name: userTo.name,
-            email: userTo.email,
-        };
-        const type=(balance.amount>0)?"lent":"owe";
-        balance.message=`${userFrom.name} ${type} ${Math.abs(balance.amount)} to ${userTo.name}`
+    let balances=[...group.balances];
+    let groupBalance=[];
+    for (const balanceId of balances) {
+        const balance=await UserBalance.findOne(balanceId).populate("userFrom", "_id name email").populate("userTo", "_id name email");
+        const { userFrom, userTo } = balance;
+        const type = balance.balance > 0 ? "lent" : "owe";
+        const message = `${userFrom.name} ${type} ${Math.abs(balance.balance)} to ${userTo.name}`;
+        groupBalance.push({
+            _id:balanceId,
+            userFrom:balance.userFrom,
+            userTo:balance.userTo,
+            balance: balance.balance,
+            message,
+        });
     }
 
-    balances = balances.filter((balance) => balance.amount !== 0);
-  
     res.status(200).json({
       success: true,
-      balances,
+      groupBalance,
     });
 })

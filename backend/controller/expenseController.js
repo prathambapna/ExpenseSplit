@@ -93,6 +93,7 @@ exports.createExpense=catchAsyncErrors(async(req,res,next)=>{
         }
     }
     
+    //removing balance which has amount 0
     for(const balance of balances){
         const userBal=await UserBalance.findById(balance);
         if(userBal.balance===0){
@@ -325,9 +326,9 @@ exports.deleteExpense=catchAsyncErrors(async(req,res,next)=>{
 
 });
 
+
+
 /*
-
-
 Settlement:
 Function to settle outstanding balances within a group.
 Identify the users involved in the settlement.
