@@ -1,6 +1,7 @@
 const ErrorHandler=require("../utils/errorHandler");
 const catchAsyncErrors=require("../middleware/catchAsyncError");
 const User=require("../models/userModel");
+const Group=require("../models/groupModel");
 const sendToken=require("../utils/jwtToken");
 const sendEmail=require("../utils/sendEmail");
 const crypto=require("crypto");
@@ -207,3 +208,52 @@ exports.myGroups=catchAsyncErrors(async(req,res,next)=>{
     
 });
 
+//get all balances of a user
+exports.myBalances = catchAsyncErrors(async (req, res, next) => {
+    const userId = req.user._id;
+    const user = await User.findById(userId);
+    let balances = [];
+  
+    for (const groupId of user.groupList) {
+      const group = await Group.findById(groupId);
+      const groupBalances = group.balances;
+  
+      for (const balance of groupBalances) {
+        if (balance.userFrom.toString() === userId.toString()) {
+          let user2 = balances.find((obj) => obj.user.toString() === balance.userTo.toString());
+          if (!user2) {
+            user2 = { user: balance.userTo, amount: balance.balance };
+            balances.push(user2);
+          } else {
+            user2.amount += balance.balance;
+          }
+        } else if (balance.userTo.toString() === userId.toString()) {
+          let user2 = balances.find((obj) => obj.user.toString() === balance.userFrom.toString());
+          if (!user2) {
+            user2 = { user: balance.userFrom, amount: -balance.balance };
+            balances.push(user2);
+          } else {
+            user2.amount -= balance.balance;
+          }
+        }
+      }
+    }
+
+    for (const balance of balances) {
+        const user = await User.findById(balance.user);
+        balance.user = {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+        };
+        const type=(balance.amount>0)?"lent":"owe";
+        balance.message=`You ${type} ${Math.abs(balance.amount)} to ${user.name}`
+    }
+
+    balances = balances.filter((balance) => balance.amount !== 0);
+  
+    res.status(200).json({
+      success: true,
+      balances,
+    });
+  });
