@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import WebFont from "webfontloader";
 import React from 'react';
 import Home from "./component/Home/Home.js";
+import { LoginSignUp } from './component/User/LoginSignUp';
 
 function App() {
   React.useEffect(()=>{
@@ -20,6 +21,7 @@ function App() {
       <Header />
       <Routes>
         <Route exact path="/" Component={Home}/>
+        <Route exact path="/login" Component={LoginSignUp} />
       </Routes>
       <Footer />
     </Router>
