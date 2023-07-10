@@ -10,7 +10,7 @@ const Header = () => {
       </Link>
     </span>
     <span>
-      <Link className="toProfile" to="/me">
+      <Link className="toProfile" to="/login">
         <img src={profile} alt='profile'></img>
       </Link>
     </span>
