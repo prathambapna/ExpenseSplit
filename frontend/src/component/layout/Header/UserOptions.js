@@ -10,7 +10,6 @@ import {useNavigate} from "react-router-dom";
 import { useAlert } from 'react-alert';
 import {logout} from "../../../actions/userAction";
 import { useDispatch ,useSelector} from 'react-redux';
-import Loader from '../Loader/Loader';
 
 const UserOptions = ({user}) => {
 
@@ -24,7 +23,6 @@ const UserOptions = ({user}) => {
         {icon:<PersonIcon/>, name:"Profile",func:account},
         {icon:<ExitToAppIcon/>, name:"Logout",func:logoutUser},
     ];
-    const {loading}=useSelector(state=>state.user);
 
     function home(){
         navigate("/");
@@ -40,33 +38,28 @@ const UserOptions = ({user}) => {
     }
 
     return (
-        <Fragment>
-            {loading ?
-                <Loader/>:
-                    <Fragment>
-                    <Backdrop open={open} style={{zIndex:10}}/>
-                    <SpeedDial
-                        className='speedDial'
-                        ariaLabel="SpeedDial tooltip example"
-                        onClose={()=>setOpen(false)}
-                        onOpen={()=>setOpen(true)}
-                        open={open}
-                        direction='down'
-                        icon={<img 
-                            className='speedDialIcon'
-                            src={(user.avatar.url && user.avatar.url!=="profile pic url") ? user.avatar.url:"/Profile.png"}
-                            alt="Profile"
-                        />}
-                    >
+            <Fragment>
+                <Backdrop open={open} style={{zIndex:10}}/>
+                <SpeedDial
+                    className='speedDial'
+                    ariaLabel="SpeedDial tooltip example"
+                    onClose={()=>setOpen(false)}
+                    onOpen={()=>setOpen(true)}
+                    open={open}
+                    direction='down'
+                    icon={<img 
+                        className='speedDialIcon'
+                        src={(user.avatar.url && user.avatar.url!=="profile pic url") ? user.avatar.url:"/Profile.png"}
+                        alt="Profile"
+                    />}
+                >
 
-                    {options.map((item)=>(
-                        <SpeedDialAction key={item.name} icon={item.icon} tooltipTitle={item.name} onClick={item.func}/>
-                    ))}
+                {options.map((item)=>(
+                    <SpeedDialAction key={item.name} icon={item.icon} tooltipTitle={item.name} onClick={item.func}/>
+                ))}
 
-                    </SpeedDial>
-                </Fragment>}
+                </SpeedDial>
         </Fragment>
-       
     )
 }
 

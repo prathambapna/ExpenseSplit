@@ -15,17 +15,17 @@ export const Profile = () => {
       if(isAuthenticated===false){
         navigate("/login");
       }
-    }, [navigate,isAuthenticated])
+    }, [navigate,isAuthenticated,user])
     
     return (
         <Fragment>
-            {loading?<Loader /> :
-                <Fragment>
-                    <MetaData title={`${user.name}'s`}/>
+            {loading?(<Loader />) :
+                (<Fragment>
+                    <MetaData title={`${user.name}'s Profile`}/>
                     <div className="profileContainer">
                         <div>
                         <h1>My Profile</h1>
-                        <img src={(user.avatar.url && user.avatar.url!=="profile pic url") ? user.avatar.url:"/Profile.png"}
+                        <img src={(user.avatar && user.avatar.url && user.avatar.url!=="profile pic url") ? user.avatar.url:"/Profile.png"}
                              alt={user.name} />
                         <Link to="/me/update">Edit Profile</Link>
                         </div>
@@ -48,7 +48,7 @@ export const Profile = () => {
                         </div>
                         </div>
                     </div>
-                </Fragment>}
+                </Fragment>)}
         </Fragment>
     )
 }
