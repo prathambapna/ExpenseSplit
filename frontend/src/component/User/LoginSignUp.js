@@ -10,6 +10,7 @@ import {useSelector,useDispatch} from "react-redux";
 import { clearErrors,login,register } from "../../actions/userAction";
 import {useAlert} from "react-alert";
 import { useNavigate } from 'react-router-dom';
+import MetaData from '../layout/MetaData';
 
 export const LoginSignUp = ({history}) => {
 
@@ -74,7 +75,7 @@ export const LoginSignUp = ({history}) => {
         dispatch(clearErrors());
       }
       if(isAuthenticated){
-        navigate('/account');
+        navigate('/me');
       }
     }, [dispatch,error,alert,navigate,isAuthenticated]);
     
@@ -100,6 +101,7 @@ export const LoginSignUp = ({history}) => {
     return (
         <Fragment>
             {loading?<Loader /> : <Fragment>
+            <MetaData title= "FairShare"/>
                 <div className='LoginSignUpContainer'>
                     <div className='LoginSignUpBox'>
                         <div>

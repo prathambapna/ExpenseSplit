@@ -10,6 +10,7 @@ import { loadUser } from './actions/userAction';
 import UserOptions from "./component/layout/Header/UserOptions.js";
 import { useSelector } from 'react-redux';
 import Profile from "./component/User/Profile.js";
+import UpdateProfile from "./component/User/UpdateProfile.js";
 import ProtectedRoute from './component/Route/ProtectedRoute';
 
 function App() {
@@ -33,7 +34,8 @@ function App() {
         <Route exact path="/" element={<Home/>}/>
         <Route exact path="/login" element={<LoginSignUp/>} />
       </Routes>
-      <ProtectedRoute exact path="/account" element={Profile} />
+      <ProtectedRoute exact path="/me" element={Profile} />
+      <ProtectedRoute exact path="/me/update" element={UpdateProfile} />
       <Footer />
     </Router>
   );  

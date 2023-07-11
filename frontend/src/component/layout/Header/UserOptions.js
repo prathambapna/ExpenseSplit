@@ -9,7 +9,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import {useNavigate} from "react-router-dom";
 import { useAlert } from 'react-alert';
 import {logout} from "../../../actions/userAction";
-import { useDispatch ,useSelector} from 'react-redux';
+import { useDispatch} from 'react-redux';
 
 const UserOptions = ({user}) => {
 
@@ -20,7 +20,7 @@ const UserOptions = ({user}) => {
 
     const options=[
         {icon:<HomeIcon/>, name:"Home",func:home},
-        {icon:<PersonIcon/>, name:"Profile",func:account},
+        {icon:<PersonIcon/>, name:"Profile",func:me},
         {icon:<ExitToAppIcon/>, name:"Logout",func:logoutUser},
     ];
 
@@ -28,8 +28,8 @@ const UserOptions = ({user}) => {
         navigate("/");
     }
     
-    function account(){
-        navigate("/account");
+    function me(){
+        navigate("/me");
     }
 
     function logoutUser(){
