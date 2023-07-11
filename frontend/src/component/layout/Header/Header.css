@@ -1,4 +1,4 @@
-header{
+/* header{
     margin-top: 0vmax;
     padding: 2vmax;
     background-color: rgb(34, 33, 33);
@@ -25,4 +25,16 @@ header{
     margin: 1vmax;
     cursor: pointer;
     align-items: center;
+} */
+
+.speedDial{
+    position: fixed;
+    right: 3vmax;
+    top: 2vmax;
 }
+
+.speedDialIcon {
+    width: 56px;
+    height: 56px;
+    border-radius: 100%;
+  }
