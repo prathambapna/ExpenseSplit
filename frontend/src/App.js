@@ -50,4 +50,6 @@ function App() {
 export default App;
 
 
-//update name and email not working
+//Fixes
+//avatar always need to be uploaded for (update profile and register)
+//remove profile picture
