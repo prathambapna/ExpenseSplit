@@ -81,7 +81,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
   const resetPasswordUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
   //eg : http://localhost/api/v1.....
 
-  const message = `Your password reset token is below:- \n\n ${resetPasswordUrl} \n\n If you have not requested this email then please ignore it `;
+  const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\n If you have not requested this email then please ignore it `;
 
   try {
     await sendEmail({
@@ -186,10 +186,10 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 
 //update user profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+
   let newUserData = {
     name: req.body.name,
     email: req.body.email,
-    avatar:req.body.avatar,
   };
 
 
@@ -211,13 +211,15 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
       url:myCloud.secure_url,
     }
   }
+  
 
-  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, newUserData, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
   });
 
+  await updatedUser.save();
   res.status(200).json({
     success: true,
   });
