@@ -52,8 +52,3 @@ function App() {
 
 export default App;
 
-
-//Fixes
-//avatar always need to be uploaded for (update profile and register)
-//remove profile picture
-//state not getting empty after logout
