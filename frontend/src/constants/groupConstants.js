@@ -2,5 +2,4 @@ export const MY_GROUP_REQUEST="MY_GROUP_REQUEST";
 export const MY_GROUP_SUCCESS="MY_GROUP_SUCCESS";
 export const MY_GROUP_FAIL="MY_GROUP_FAIL";
 
-
 export const CLEAR_ERRORS="CLEAR_ERRORS";

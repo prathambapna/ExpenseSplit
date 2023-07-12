@@ -22,6 +22,7 @@ export const groupReducer=(state={groups:[]},action) =>{
         case MY_GROUP_FAIL:
             return {
                 loading:false,
+                groups:[],
                 error:action.payload,
             }
         case CLEAR_ERRORS:

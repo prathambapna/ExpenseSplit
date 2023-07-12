@@ -24,6 +24,9 @@ import {LOGIN_REQUEST,
         RESET_PASSWORD_REQUEST,
         RESET_PASSWORD_SUCCESS,
         RESET_PASSWORD_FAIL,
+        MY_BALANCES_REQUEST,
+        MY_BALANCES_SUCCESS,
+        MY_BALANCES_FAIL,
 } from "../constants/userConstants";
 
 
@@ -166,3 +169,33 @@ export const forgotPasswordReducer=(state={},action)=>{
             return state;
     }
 }
+
+
+export const myBalancesReducer=(state={myBalances:[]},action) =>{
+    switch(action.type){
+        case MY_BALANCES_REQUEST:
+            return{
+                myBalances:[],
+                loading:true,
+            }
+        case MY_BALANCES_SUCCESS:
+            return {
+                loading:false,
+                myBalances:action.payload,
+            }
+        case MY_BALANCES_FAIL:
+            return {
+                loading:false,
+                myBalances:[],
+                error:action.payload,
+            }
+        case CLEAR_ERRORS:
+            return{
+                ...state,
+                error:null,
+            };
+            
+        default:
+            return state;
+    }
+};

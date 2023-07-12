@@ -14,7 +14,9 @@ import UpdateProfile from "./component/User/UpdateProfile.js";
 import UpdatePassword from "./component/User/UpdatePassword.js";
 import ForgotPassword from "./component/User/ForgotPassword.js";
 import ResetPassword from "./component/User/ResetPassword.js";
+import MyBalances from "./component/User/MyBalances.js";
 import ProtectedRoute from './component/Route/ProtectedRoute';
+
 
 function App() {
 
@@ -42,6 +44,7 @@ function App() {
       <ProtectedRoute exact path="/me" element={Profile} />
       <ProtectedRoute exact path="/me/update" element={UpdateProfile} />
       <ProtectedRoute exact path="/password/update" element={UpdatePassword} />
+      <ProtectedRoute exact path="/me/balances" element={MyBalances} />
       <Footer />
     </Router>
   );  
@@ -53,3 +56,4 @@ export default App;
 //Fixes
 //avatar always need to be uploaded for (update profile and register)
 //remove profile picture
+//state not getting empty after logout

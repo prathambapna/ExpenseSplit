@@ -9,7 +9,7 @@ from "../constants/groupConstants";
 import axios from "axios";
 
 
-//login
+//my groups
 export const myGroups = () => async(dispatch)=>{
     try {
         dispatch({type:MY_GROUP_REQUEST});
