@@ -1,0 +1,16 @@
+//Todo
+1]create group
+2]get group details
+3]add members
+4]delete members
+5]delete group
+
+
+.............as of now
+
+//Fixes
+
+
+1]avatar always need to be uploaded for (update profile and register)
+2]remove profile picture
+3]state not getting empty after logout
