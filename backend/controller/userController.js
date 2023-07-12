@@ -111,7 +111,7 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
     .update(req.params.token)
     .digest("hex");
 
-  //finding user with this hash token (we created this while creating getResetPasswordToken in userModels)
+  //finding user with this hash token below (we created this while creating getResetPasswordToken in userModels)
   const user = await User.findOne({
     resetPasswordToken: resetPasswordToken,
     resetPasswordExpire: { $gt: Date.now() },
@@ -229,7 +229,16 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 exports.myGroups = catchAsyncErrors(async (req, res, next) => {
   const userId = req.user._id;
 
-  const user = await User.findById(userId);
+  const user = await User.findById(userId)
+  .populate('groupList')
+  .populate({
+    path: 'groupList',
+    populate: {
+      path: 'createdBy',
+      model: 'User',
+      select:'name',
+    },
+  });
 
   if (!user) {
     return next(new ErrorHandler("User does not exist", 400));

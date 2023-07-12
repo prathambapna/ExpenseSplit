@@ -22,6 +22,9 @@ import {LOGIN_REQUEST,
     RESET_PASSWORD_REQUEST,
     RESET_PASSWORD_SUCCESS,
     RESET_PASSWORD_FAIL,
+    MY_BALANCES_REQUEST,
+    MY_BALANCES_SUCCESS,
+    MY_BALANCES_FAIL,
 } from "../constants/userConstants";
 import axios from "axios";
 
@@ -215,6 +218,29 @@ export const resetPassword = (token,passwords) => async(dispatch)=>{
         })
     }
 };
+
+
+export const myBalancesAction = () => async(dispatch,getState)=>{
+    try {
+        dispatch({type:MY_BALANCES_REQUEST});
+
+        const {data}=await axios.get(`/api/v1/me/balances`);
+        dispatch({
+            type:MY_BALANCES_SUCCESS,
+            payload:data.balances,
+        })
+
+        localStorage.setItem("balances",JSON.stringify(getState().myBalances.myBalances));
+
+    } catch (error) {
+        console.log(error.response.data);
+        dispatch({
+            type:MY_BALANCES_FAIL,
+            payload:error.response.data.message,
+        })
+    }
+};
+
 
 //clearing errors
 export const clearErrors = () => async(dispatch)=>{

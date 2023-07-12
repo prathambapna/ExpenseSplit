@@ -6,8 +6,9 @@ const Group = ({group}) => {
     <Link className="groupCard" to={group._id}>
         <div>
             <h1>{group.name}</h1>
-            <p>{group.description}</p>
+            <p>Admin :{group.createdBy.name}</p>
             <p className="noOfMembers">Total members : {group.participants.length}</p>
+            {(group.balances.length>0)?<p>Unsettled Debts</p>:<p>All settled Up!!</p>}
         </div>
     </Link>
   )

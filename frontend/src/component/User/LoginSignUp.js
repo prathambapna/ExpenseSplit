@@ -75,7 +75,7 @@ export const LoginSignUp = ({history}) => {
         dispatch(clearErrors());
       }
       if(isAuthenticated){
-        navigate('/me');
+        navigate('/');
       }
     }, [dispatch,error,alert,navigate,isAuthenticated]);
     

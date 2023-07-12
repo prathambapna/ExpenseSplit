@@ -1,0 +1,47 @@
+.myBalanceContainer{
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(231, 231, 231);
+    position: fixed;
+    top: 0%;
+    left: 0;
+}
+
+.myBalanceBox{
+    background-color: white;
+    width: 35vw;
+    height: 70vh;
+    box-sizing: border-box;
+    overflow: auto;
+    padding: 0vmax 1vmax;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 5px solid rgba(16, 15, 15, 0.921);
+}
+
+.myBalanceMessage{
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid rgba(0, 0, 0, 0.267);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #eb4034;
+    font-size: 1.7vmax;
+    font-family: "Roboto";
+    padding: 0.5vmax 0.5vmax;
+    overflow: auto;
+    margin-bottom: 0;
+}
+
+.noBalances{
+    color: #eb4034;
+    font-size: 1.7vmax;
+    font-family: "Roboto";
+}

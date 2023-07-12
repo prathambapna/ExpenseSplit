@@ -4,7 +4,7 @@ const groupSchema=new mongoose.Schema({
     name:{
         type:String,
         required:[true,"Please enter group name"],
-        maxLength:[30,"Max length for name is 30"],
+        maxLength:[20,"Max length for name is 20"],
     },
     createdBy:{
         type:mongoose.Schema.ObjectId,

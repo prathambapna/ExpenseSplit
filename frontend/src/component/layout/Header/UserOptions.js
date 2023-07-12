@@ -5,6 +5,7 @@ import { useState } from 'react';
 import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import Backdrop from '@material-ui/core/Backdrop';
 import {useNavigate} from "react-router-dom";
 import { useAlert } from 'react-alert';
@@ -21,6 +22,7 @@ const UserOptions = ({user}) => {
     const options=[
         {icon:<HomeIcon/>, name:"Home",func:home},
         {icon:<PersonIcon/>, name:"Profile",func:me},
+        {icon:<AccountBalanceIcon/>, name:"Balances",func:balance},
         {icon:<ExitToAppIcon/>, name:"Logout",func:logoutUser},
     ];
 
@@ -35,6 +37,10 @@ const UserOptions = ({user}) => {
     function logoutUser(){
         dispatch(logout());
         alert.success("Logout Successfully");
+    }
+
+    function balance(){
+        navigate("/me/balances");
     }
 
     return (
