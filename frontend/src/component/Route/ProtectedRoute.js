@@ -7,7 +7,7 @@ const ProtectedRoute = ({ element: Element, ...rest }) => {
 
   return (
     <Fragment>
-      {!loading && (
+      {loading===false && (
         <Routes>
           <Route
             {...rest}

@@ -49,7 +49,7 @@ const UpdatePassword = () => {
     
     return (
         <Fragment>
-        {loading ? (
+        {loading===true ? (
             <Loader />
         ) : (
             <Fragment>

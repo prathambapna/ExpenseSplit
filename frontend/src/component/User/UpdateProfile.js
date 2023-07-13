@@ -71,7 +71,7 @@ const UpdateProfile = () => {
 
     return (
         <Fragment>
-        {loading ? (
+        {loading===true ? (
             <Loader />
         ) : (
             <Fragment>

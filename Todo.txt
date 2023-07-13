@@ -14,3 +14,12 @@
 1]avatar always need to be uploaded for (update profile and register)
 2]remove profile picture
 3]state not getting empty after logout
+
+
+//compulsory
+1]delete group when no balances
+2]remove user when no balances of him
+
+//may be
+1]chart
+2]round expense split

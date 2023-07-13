@@ -38,7 +38,7 @@ const ForgotPassword = () => {
     }, [dispatch, error, alert, message]);
     return (
         <Fragment>
-        {loading ? (
+        {loading===true ? (
             <Loader />
         ) : (
             <Fragment>

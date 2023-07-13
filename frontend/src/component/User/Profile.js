@@ -19,7 +19,7 @@ export const Profile = () => {
     
     return (
         <Fragment>
-            {loading?(<Loader />) :
+            {loading===true?(<Loader />) :
                 (<Fragment>
                     <MetaData title={ `${user.name}'s Profile`}/>
                     <div className="profileContainer">

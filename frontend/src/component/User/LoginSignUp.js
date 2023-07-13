@@ -100,7 +100,7 @@ export const LoginSignUp = ({history}) => {
 
     return (
         <Fragment>
-            {loading?<Loader /> : <Fragment>
+            {loading===true?<Loader /> : <Fragment>
             <MetaData title= "FairShare"/>
                 <div className='LoginSignUpContainer'>
                     <div className='LoginSignUpBox'>
