@@ -27,7 +27,7 @@ const Home = () => {
 
   return (
     <Fragment>
-      {loading?<Loader/>:
+      {loading===true?<Loader/>:
             <Fragment>
               <MetaData title="FairShare"/>
               {!isAuthenticated && <LoginButton/>}

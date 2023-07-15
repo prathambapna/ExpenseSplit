@@ -21,7 +21,7 @@ const MyBalances = () => {
 
     return (
         <Fragment>
-            {loading?<Loader/>:
+            {loading===true?<Loader/>:
                 <Fragment>
                     <MetaData title="My Balances"/>
                     <div className='myBalanceContainer'>
