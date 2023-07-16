@@ -4,6 +4,7 @@ import Loader from "../layout/Loader/Loader";
 import { Link } from 'react-router-dom';
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
+import DeleteIcon from "@material-ui/icons/Delete";
 import FaceIcon from "@material-ui/icons/Face";
 
 import {useSelector,useDispatch} from "react-redux";
@@ -22,6 +23,17 @@ const GroupDetail = () => {
     const changeGroupNameHandler=(e)=>{
         e.preventDefault();
         navigate(`/group/${groupId}/update`);
+    }
+
+    const addMemberHandler=(e)=>{
+        e.preventDefault();
+        navigate(`/group/${groupId}/addUser`);
+    }
+
+
+    const deleteMemberHandler=(e,userId)=>{
+        e.preventDefault();
+        navigate(`/group/${groupId}/user/${userId}`);
     }
     useEffect(() => {
         if(error){
@@ -74,8 +86,12 @@ const GroupDetail = () => {
                                             alt="Profile"
                                         />
                                         <span>{user.name}</span>
+                                        <span className='deleteButton' onClick={(e) => deleteMemberHandler(e, user._id)}><DeleteIcon /></span>
                                     </div>)
                                     }
+                                </div>
+                                <div className='addMemberButton'>
+                                    <button onClick={addMemberHandler}>Add Member</button>
                                 </div>
                             </div>
                         </div>
