@@ -22,3 +22,4 @@
 //may be
 1]chart
 2]round expense split
+3]add multiple members together

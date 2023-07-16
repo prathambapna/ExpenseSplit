@@ -1,0 +1,189 @@
+.GroupDetailContainer{
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(231, 231, 231);
+    position: fixed;
+    top: 0%;
+    left: 0;
+}
+
+.leftSide{
+    background-image:linear-gradient(to right,#635dc0,#3027ae);
+    width: 25vw;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
+    border: 2px solid  black;
+    
+}
+
+.groupNameSection{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+    height: 30vh;
+    margin-bottom: 1vmax;
+    margin-top: 0.5vmax;
+    padding: auto;
+    align-items: center;
+}
+.groupNameSection>h1{
+    color: white;
+    font: 300 auto "Roboto";
+    padding: 2vmax;
+    margin: 0;
+}
+
+.changeGroupNameButton>button{
+    justify-content: center;
+    align-items: center;
+    padding: 0.8vmax;
+    background-color: crimson;
+    color: white;
+    font: 300 auto "Roboto";
+    cursor: pointer;
+    transition: all 0.5s;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
+}
+
+.changeGroupNameButton>button:hover{
+    background-color: #3027ae
+}
+
+.AdminSection,
+.createdAtSection{
+    display: flex;
+    width: 100%;
+    height: 5vh;
+    padding: 1vmax 0;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.AdminSection>p,
+.createdAtSection>p{
+    color: black;
+    font: 600 1.5vmax "Roboto";
+}
+
+.AdminSection>span,
+.createdAtSection>span{
+    color: white;
+    font: 300 1.5vmax "Roboto";
+}
+
+.groupMemberSection{
+    justify-content: flex-start;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+    height: 50vh;
+    margin-top: 0.5vmax;
+    padding: auto;
+    align-items: center;
+    margin-top: 2vmax;
+}
+
+.groupMemberSection>h2{
+    font: 700 2vmax "Roboto";
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 0.5vmax;
+}
+.members{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 0.5vmax;
+    overflow: auto;
+    width: 100%;
+    
+}
+
+.singleMember {
+    display: flex;
+    align-items: center;
+    gap: 2vmax;
+    padding: 0.2vmax;
+    width: 90%;
+    border: 0.05px solid  white;
+    background-color: #1f1d1d;
+    overflow: auto;
+  }
+  
+  .singleMember> img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .singleMember> span {
+    font: 300 1.5vmax "Roboto";
+    color: white;
+  }
+
+  @media screen and (max-width: 600px) {
+    .GroupDetailContainer {
+      background-color: white;
+    }
+    .leftSide {
+      width: 40vw;
+      height: 95vh;
+    }
+
+    .groupNameSection{
+        height: 20vh;
+    }
+
+    .AdminSection>p,
+    .createdAtSection>p{
+        font: 600 2vmax "Roboto";
+    }
+    
+    .AdminSection>span,
+    .createdAtSection>span{
+        font: 300 2vmax "Roboto";
+    }
+    
+    .groupMemberSection{
+        height: 70vh;
+        padding-top: 2vmax;
+        justify-content: flex-start;
+    }
+    
+    .groupMemberSection>h2{
+        font: 700 2vmax "Roboto";
+        margin-bottom: 0.5vmax;
+    }
+    .members{
+        padding: 2vmax;
+    }
+    
+    .singleMember {
+        gap: 3vmax;
+        padding: 0.7vmax;
+      }
+      
+      .singleMember> span {
+        font: 300 2vmax "Roboto";
+        color: white;
+      }
+  }
