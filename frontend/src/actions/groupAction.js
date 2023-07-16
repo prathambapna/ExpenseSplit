@@ -66,7 +66,7 @@ export const groupDetails = (groupId) => async(dispatch)=>{
     try {
         dispatch({type:GROUP_DETAILS_REQUEST});
 
-        const {data}=await axios.get(`/api/v1/group=${groupId}`);
+        const {data}=await axios.get(`/api/v1/group/${groupId}`);
         dispatch({
             type:GROUP_DETAILS_SUCCESS,
             payload:data,

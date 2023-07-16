@@ -15,11 +15,13 @@ import { groupDetails,clearErrors } from '../../actions/groupAction';
 import { useParams } from 'react-router-dom';
 
 const GroupDetail = () => {
+    const {groupId}=useParams();
     const dispatch=useDispatch();
     const alert=useAlert();
-    const {groupId}=useParams();
-    const {loading,success,error,group}=useSelector(state=>state.groupDetail);
+    const {loading,success,error,group}=useSelector((state)=>state.groupDetail);
     const navigate =useNavigate();
+
+
     const changeGroupNameHandler=(e)=>{
         e.preventDefault();
         navigate(`/group/${groupId}/update`);

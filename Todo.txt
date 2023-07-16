@@ -18,6 +18,7 @@
 //compulsory
 1]delete group when no balances
 2]remove user when no balances of him
+3]getting error while loading create group
 
 //may be
 1]chart
