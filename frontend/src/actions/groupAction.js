@@ -5,6 +5,9 @@ import {
     CREATE_GROUP_REQUEST,
     CREATE_GROUP_SUCCESS,
     CREATE_GROUP_FAIL,
+    GROUP_DETAILS_REQUEST,
+    GROUP_DETAILS_SUCCESS,
+    GROUP_DETAILS_FAIL,
     CLEAR_ERRORS,
 } 
 from "../constants/groupConstants";
@@ -32,7 +35,7 @@ export const myGroups = () => async(dispatch)=>{
     }
 };
 
-
+//create new group
 export const createGroup=(groupData)=>async(dispatch)=>{
     try {
         dispatch({type:CREATE_GROUP_REQUEST});
@@ -56,6 +59,27 @@ export const createGroup=(groupData)=>async(dispatch)=>{
         })
     }
 }
+
+
+//group details
+export const groupDetails = (groupId) => async(dispatch)=>{
+    try {
+        dispatch({type:GROUP_DETAILS_REQUEST});
+
+        const {data}=await axios.get(`/api/v1/group=${groupId}`);
+        dispatch({
+            type:GROUP_DETAILS_SUCCESS,
+            payload:data,
+        })
+
+    } catch (error) {
+        console.log(error.response.data);
+        dispatch({
+            type:GROUP_DETAILS_FAIL,
+            payload:error.response.data.message,
+        })
+    }
+};
 
 //clearing errors
 export const clearErrors = () => async(dispatch)=>{

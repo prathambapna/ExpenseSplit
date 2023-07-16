@@ -6,6 +6,9 @@ import {
     CREATE_GROUP_SUCCESS,
     CREATE_GROUP_RESET,
     CREATE_GROUP_FAIL,
+    GROUP_DETAILS_REQUEST,
+    GROUP_DETAILS_SUCCESS,
+    GROUP_DETAILS_FAIL,
     CLEAR_ERRORS,
 } 
 from "../constants/groupConstants";
@@ -63,6 +66,36 @@ export const createGroupReducer=(state={group:{}},action) =>{
             return{
                 ...state,
                 success:false,
+            }
+        case CLEAR_ERRORS:
+            return{
+                ...state,
+                error:null,
+            };
+            
+        default:
+            return state;
+    }
+};
+
+
+export const groupDetailsReducer=(state={group:{}},action) =>{
+    switch(action.type){
+        case GROUP_DETAILS_REQUEST:
+            return{
+                ...state,
+                loading:true,
+            }
+        case GROUP_DETAILS_SUCCESS:
+            return {
+                loading:false,
+                group:action.payload.group,
+                success:action.payload.success,
+            }
+        case GROUP_DETAILS_FAIL:
+            return {
+                loading:false,
+                error:action.payload,
             }
         case CLEAR_ERRORS:
             return{

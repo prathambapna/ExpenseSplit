@@ -3,7 +3,7 @@ import { legacy_createStore as createStore} from 'redux'
 import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
 import { forgotPasswordReducer, myBalancesReducer, profileReducer, userReducer } from "./reducers/userReducer";
-import { createGroupReducer, groupReducer } from "./reducers/groupReducer";
+import { createGroupReducer, groupDetailsReducer, groupReducer } from "./reducers/groupReducer";
 
 
 const reducer=combineReducers({
@@ -13,6 +13,7 @@ const reducer=combineReducers({
     groups:groupReducer,
     myBalances:myBalancesReducer,
     newGroup:createGroupReducer,
+    groupDetail:groupDetailsReducer,
 });
 
 let initialState={
