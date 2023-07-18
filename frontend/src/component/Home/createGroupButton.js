@@ -6,7 +6,7 @@ const CreateGroupButton = () => {
     const navigate =useNavigate();
     const createGroupHandler=(e)=>{
         e.preventDefault();
-        navigate("/group/create");
+        navigate("/newGroup/create");
     }
     return (
         <div className='createGroupButton'>

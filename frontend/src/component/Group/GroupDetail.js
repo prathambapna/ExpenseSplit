@@ -1,49 +1,67 @@
-import React, { Fragment, useRef ,useState, useEffect} from 'react';
+import React, { Fragment ,useState, useEffect} from 'react';
 import "./GroupDetails.css";
 import Loader from "../layout/Loader/Loader";
-import { Link } from 'react-router-dom';
-import MailOutlineIcon from "@material-ui/icons/MailOutline";
-import LockOpenIcon from "@material-ui/icons/LockOpen";
-import FaceIcon from "@material-ui/icons/Face";
-
+import DeleteIcon from "@material-ui/icons/Delete";
+import Expense from "../Expense/Expense.js";
+import CreateExpenseButton from '../Expense/createExpenseButton.js';
+import SettleBalanceButton from "../Expense/settleBalance.js";
 import {useSelector,useDispatch} from "react-redux";
 import {useAlert} from "react-alert";
 import { useNavigate } from 'react-router-dom';
 import MetaData from '../layout/MetaData';
-import { groupDetails,clearErrors } from '../../actions/groupAction';
+import { groupDetails,clearErrors,groupBalances } from '../../actions/groupAction';
 import { useParams } from 'react-router-dom';
 
 const GroupDetail = () => {
+    const {groupId}=useParams();
     const dispatch=useDispatch();
     const alert=useAlert();
-    const {groupId}=useParams();
-    const {loading,success,error,group}=useSelector(state=>state.groupDetail);
+    const {loading,error,group}=useSelector((state)=>state.groupDetail);
+    const {errorGroupBalance,groupBalance}=useSelector((state)=>state.groupBalances);
     const navigate =useNavigate();
+
+
     const changeGroupNameHandler=(e)=>{
         e.preventDefault();
         navigate(`/group/${groupId}/update`);
+    }
+
+    const addMemberHandler=(e)=>{
+        e.preventDefault();
+        navigate(`/group/${groupId}/addUser`);
+    }
+
+
+    const deleteMemberHandler=(e,userId)=>{
+        e.preventDefault();
+        navigate(`/group/${groupId}/user/${userId}`);
     }
     useEffect(() => {
         if(error){
             alert.error(error);
             dispatch(clearErrors());
         }
+        if(errorGroupBalance){
+            alert.error(errorGroupBalance);
+            dispatch(clearErrors());
+        }
       
         dispatch(groupDetails(groupId));
+        dispatch(groupBalances(groupId));
       
-    }, [dispatch,alert,error,groupId])
+    }, [dispatch,alert,error,groupId,errorGroupBalance])
 
     if (loading) {
         return <Loader />;
     }
 
-    if (!group || !group.createdBy) {
+    if (!group || !group.createdBy || !groupBalance) {
         return null; 
     }
 
     const createdBy = group.createdBy;
     const createdByName = createdBy.name;
-    
+    console.log(group);
     return (
         <Fragment>
                 {loading===true?<Loader /> : <Fragment>
@@ -74,13 +92,41 @@ const GroupDetail = () => {
                                             alt="Profile"
                                         />
                                         <span>{user.name}</span>
+                                        <span className='deleteButton' onClick={(e) => deleteMemberHandler(e, user._id)}><DeleteIcon /></span>
                                     </div>)
                                     }
                                 </div>
+                                <div className='addMemberButton'>
+                                    <button onClick={addMemberHandler}>Add Member</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='middleSide'>
+                            <div className='middleHeading'>
+                                <h1>Group Expenses</h1>
+                            </div>
+                            <div className='expenseContainer'>
+                                {group && group.expenses.length>0 && group.expenses.map((expense)=><Expense expense={expense} group={group._id} />)}
+                                {(!group || group.expenses.length===0 )&& <p className='noExpense'>No expenses yet! Create One.</p>}
+                            </div>
+                            <div className='createExpenseBtn'>
+                                <CreateExpenseButton group={group._id}/>
                             </div>
                         </div>
                         <div className='rightSide'>
-                        {/* toggle between expenses and balances */}
+                            <div className='rightHeading'>
+                                    <h1>Balances</h1>
+                            </div>
+                            <div className='balanceContainer'>
+                                {groupBalance && groupBalance.length>0 && groupBalance.map((balance)=>
+                                    <div className='singleBalanceContainer'>
+                                        <div className='balanceMsg'>{balance.message}</div>
+                                        <SettleBalanceButton group={group._id} bal={balance._id}/>
+                                    </div>
+                                
+                                )}
+                                {(!groupBalance || groupBalance.length===0 )&& <p className='noBalance'>Hurray , No Balances due!</p>}
+                            </div>
                         </div>
                     </div>
                 </Fragment>}

@@ -47,7 +47,7 @@ function App() {
       <ProtectedRoute exact path="/me/update" element={UpdateProfile} />
       <ProtectedRoute exact path="/password/update" element={UpdatePassword} />
       <ProtectedRoute exact path="/me/balances" element={MyBalances} />
-      <ProtectedRoute exact path="/group/create" element={CreateGroup} />
+      <ProtectedRoute exact path="/newGroup/create" element={CreateGroup} />
       <ProtectedRoute exact path="/group/:groupId" element={GroupDetail} />
       <Footer />
     </Router>

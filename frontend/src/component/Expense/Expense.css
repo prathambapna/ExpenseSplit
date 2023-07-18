@@ -1,0 +1,93 @@
+
+.expenseCard{
+    width:16vmax;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color:rgb(48,48,48);
+    margin: 2vmax;
+    transition: all 0.5s;
+    box-shadow: 0 0 8px rgba(15,15,15,0.26);
+    padding-bottom: 0.5vmax;
+    justify-content: space-evenly;
+  }
+
+  .expenseCard >div{
+    margin: 0.5vmax;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: auto;
+  }
+
+  .expenseCard>div>p{
+    font-family: "Roboto";
+    font-size: 1.2vmax;
+    margin: 1vmax 0.5vmax;
+    margin-bottom: 0;
+  }
+
+
+  .noOfMembers{
+    color: tomato;
+    font-family: "Roboto";
+  }
+
+  .expenseCard:hover{
+    transform: translateY(-1vmax);
+  }
+
+  
+  
+  .createExpenseButton > button{
+    justify-content: center;
+    align-items: center;
+    padding: 0.8vmax;
+    background-color: crimson;
+    color: white;
+    font: 300 0.9vmax "Roboto";
+    cursor: pointer;
+    transition: all 0.5s;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
+  }
+
+  .createExpenseButton>button:hover{
+    background-color: #3027ae
+  }
+
+
+  .settleBalanceButton > button{
+    justify-content: center;
+    align-items: center;
+    padding: 0.8vmax;
+    background-color: #3027ae;
+    color: white;
+    font: 300 0.9vmax "Roboto";
+    cursor: pointer;
+    transition: all 0.5s;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
+  }
+
+  .settleBalanceButton>button:hover{
+    background-color: crimson;
+  }
+  
+  @media screen and (max-width:730px) {
+    .expenseCard{
+      font-size: 1.7vmax;
+    }
+    .expenseCard >div{
+      margin: 0vmax;
+      display: block;
+    }
+
+    .expenseCard>div>p{
+      font-size: 1.4vmax;
+    }
+    
+  }

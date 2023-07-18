@@ -45,13 +45,14 @@
     margin: 0;
 }
 
-.changeGroupNameButton>button{
+.changeGroupNameButton>button,
+.addMemberButton>button{
     justify-content: center;
     align-items: center;
     padding: 0.8vmax;
-    background-color: crimson;
+    background-color: #3027ae;
     color: white;
-    font: 300 auto "Roboto";
+    font: 300 1vmax "Roboto";
     cursor: pointer;
     transition: all 0.5s;
     border-radius: 10px;
@@ -59,8 +60,9 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
 }
 
-.changeGroupNameButton>button:hover{
-    background-color: #3027ae
+.changeGroupNameButton>button:hover,
+.addMemberButton>button:hover{
+    background-color: crimson;
 }
 
 .AdminSection,
@@ -115,6 +117,7 @@
     padding: 0.5vmax;
     overflow: auto;
     width: 100%;
+    margin-bottom: 2vmax;
     
 }
 
@@ -124,14 +127,15 @@
     gap: 2vmax;
     padding: 0.2vmax;
     width: 90%;
-    border: 0.05px solid  white;
-    background-color: #1f1d1d;
+    box-shadow: 0 2px 10px rgba(15,15,15,0.26);
     overflow: auto;
+    position: relative; 
+    margin-bottom: 0.4vmax;
   }
   
   .singleMember> img {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
   }
   
@@ -140,19 +144,146 @@
     color: white;
   }
 
+  .deleteButton{
+    position: absolute;
+    right:1%;
+    cursor: pointer;
+  }
+
+  .deleteButton:hover{
+    color:red;
+  }
+
+
+  .middleSide{
+    width:50vw;
+    height:100vh;
+    position: absolute;
+    left: 25vw;
+    background-color: white;
+  }
+  .middleHeading{
+    justify-content: center;
+    display: flex;
+    text-align: center;
+    width: 100%;
+    height: 6vh;
+    margin-top: 2vmax;
+    align-items: center;
+}
+.middleHeading>h1{
+    color: black;
+    font: 300 auto "Roboto";
+}
+
+  .expenseContainer{
+    display: flex;
+    margin: 2vmax auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+    overflow: auto;
+    height: 70vh;
+    align-items: center;
+    text-align: center;
+  }
+
+  .noExpense{
+    justify-content: center;
+    display: flex;
+    text-align: center;
+    width: 100%;
+    align-items: center;
+    color: black;
+    font: 400 2vmax "Roboto";
+}
+  .createExpenseBtn{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .rightSide{
+    width:25vw;
+    height:100vh;
+    position: absolute;
+    left: 75vw;
+    background-image:linear-gradient(to right,#3027ae,#635dc0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
+    border: 2px solid  black;
+  }
+
+  .rightHeading{
+    justify-content: center;
+    display: flex;
+    text-align: center;
+    width: 100%;
+    height: 10vh;
+    margin-top: 2vmax;
+    align-items: center;
+}
+.rightHeading>h1{
+    color: white;
+    font: 300 auto "Roboto";
+}
+
+.balanceContainer{
+  display: flex;
+  margin: 2vmax auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+  overflow: auto;
+  height: 70vh;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.singleBalanceContainer{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  overflow: auto;
+  box-shadow: 0 2px 10px rgba(15,15,15,0.26);
+  width: 90%;
+  margin: 0.5vmax 0;
+  padding: 0.5vmax;
+
+}
+
+.balanceMsg{
+  color: white;
+  font: 550 1.2vmax "Roboto";
+  margin-bottom: 0.4vmax;
+}
+
+.noBalance{
+  justify-content: center;
+  display: flex;
+  text-align: center;
+  width: 100%;
+  align-items: center;
+  color: black;
+  font: 400 2vmax "Roboto";
+}
   @media screen and (max-width: 600px) {
     .GroupDetailContainer {
       background-color: white;
     }
     .leftSide {
       width: 40vw;
-      height: 95vh;
+      height: 100vh;
     }
 
+    
     .groupNameSection{
         height: 20vh;
     }
-
+    
     .AdminSection>p,
     .createdAtSection>p{
         font: 600 2vmax "Roboto";
@@ -180,10 +311,14 @@
     .singleMember {
         gap: 3vmax;
         padding: 0.7vmax;
-      }
-      
-      .singleMember> span {
+    }
+    
+    .singleMember> span {
         font: 300 2vmax "Roboto";
         color: white;
-      }
-  }
+    }
+    .middleSide{
+        width:30vw;
+    left: 40vw;
+    }
+}

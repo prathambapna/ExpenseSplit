@@ -11,7 +11,7 @@ import { CREATE_GROUP_RESET } from '../../constants/groupConstants';
 
 const CreateGroup = () => {
 
-    const {loading,success,error}=useSelector(state=>state.newGroup);
+    const {loading,success,error}=useSelector((state)=>state.newGroup);
     const [name, setName] = useState("");
 
     const dispatch=useDispatch();
@@ -41,7 +41,7 @@ const CreateGroup = () => {
 
     return (
         <Fragment>
-                {loading===true?<Loader /> : <Fragment>
+                {loading?<Loader /> : <Fragment>
                 <MetaData title= "CreateGroup"/>
                     <div className='CreateGroupContainer'>
                         <div className='CreateGroupBox'>

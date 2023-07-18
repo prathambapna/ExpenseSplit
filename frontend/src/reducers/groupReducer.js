@@ -9,6 +9,9 @@ import {
     GROUP_DETAILS_REQUEST,
     GROUP_DETAILS_SUCCESS,
     GROUP_DETAILS_FAIL,
+    GROUP_BALANCES_REQUEST,
+    GROUP_BALANCES_SUCCESS,
+    GROUP_BALANCES_FAIL,
     CLEAR_ERRORS,
 } 
 from "../constants/groupConstants";
@@ -93,6 +96,36 @@ export const groupDetailsReducer=(state={group:{}},action) =>{
                 success:action.payload.success,
             }
         case GROUP_DETAILS_FAIL:
+            return {
+                loading:false,
+                error:action.payload,
+            }
+        case CLEAR_ERRORS:
+            return{
+                ...state,
+                error:null,
+            };
+            
+        default:
+            return state;
+    }
+};
+
+
+export const groupBalancesReducer=(state={groupBalance:[]},action) =>{
+    switch(action.type){
+        case GROUP_BALANCES_REQUEST:
+            return{
+                ...state,
+                loading:true,
+            }
+        case GROUP_BALANCES_SUCCESS:
+            return {
+                loading:false,
+                groupBalance:action.payload.groupBalance,
+                success:action.payload.success,
+            }
+        case GROUP_BALANCES_FAIL:
             return {
                 loading:false,
                 error:action.payload,
