@@ -18,7 +18,8 @@ import MyBalances from "./component/User/MyBalances.js";
 import CreateGroup from "./component/Group/CreateGroup.js"
 import GroupDetail from "./component/Group/GroupDetail.js";
 import UpdateGroup from "./component/Group/UpdateGroup.js";
-import AddMemberInGroup from "./component/Group/AddMemberInGroup.js"
+import AddMemberInGroup from "./component/Group/AddMemberInGroup.js";
+import DeleteMemberInGroup from "./component/Group/DeleteMemberInGroup.js";
 import ProtectedRoute from './component/Route/ProtectedRoute';
 
 
@@ -53,6 +54,7 @@ function App() {
       <ProtectedRoute exact path="/group/:groupId" element={GroupDetail} />
       <ProtectedRoute exact path="/group/:groupId/update" element={UpdateGroup} />
       <ProtectedRoute exact path="/group/:groupId/addUser" element={AddMemberInGroup} />
+      <ProtectedRoute exact path="/group/:groupId/user/:userId" element={DeleteMemberInGroup} />
 
       <Footer />
     </Router>

@@ -1,6 +1,5 @@
 //Todo
-add member
-delete member
+
 add expense
 update expense
 delete expense

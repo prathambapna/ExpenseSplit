@@ -3,7 +3,7 @@ import { legacy_createStore as createStore} from 'redux'
 import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
 import { allUsersReducer, forgotPasswordReducer, myBalancesReducer, profileReducer, userReducer } from "./reducers/userReducer";
-import { addMemberReducer, createGroupReducer, groupBalancesReducer, groupDetailsReducer, groupReducer, updateGroupReducer } from "./reducers/groupReducer";
+import { addMemberReducer, createGroupReducer, deleteMemberReducer, groupBalancesReducer, groupDetailsReducer, groupReducer, updateGroupReducer } from "./reducers/groupReducer";
 
 
 const reducer=combineReducers({
@@ -18,6 +18,7 @@ const reducer=combineReducers({
     updateGroup:updateGroupReducer,
     addMember:addMemberReducer,
     allUsers:allUsersReducer,
+    deleteMember:deleteMemberReducer,
 });
 
 let initialState={
