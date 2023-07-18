@@ -25,6 +25,9 @@ import {LOGIN_REQUEST,
     MY_BALANCES_REQUEST,
     MY_BALANCES_SUCCESS,
     MY_BALANCES_FAIL,
+    ALL_USERS_REQUEST,
+    ALL_USERS_SUCCESS,
+    ALL_USERS_FAIL,
 } from "../constants/userConstants";
 import axios from "axios";
 
@@ -219,7 +222,7 @@ export const resetPassword = (token,passwords) => async(dispatch)=>{
     }
 };
 
-
+//my balances
 export const myBalancesAction = () => async(dispatch,getState)=>{
     try {
         dispatch({type:MY_BALANCES_REQUEST});
@@ -241,6 +244,26 @@ export const myBalancesAction = () => async(dispatch,getState)=>{
     }
 };
 
+
+//all user details
+export const allUsersDetails = () => async(dispatch)=>{
+    try {
+        dispatch({type:ALL_USERS_REQUEST});
+
+        const {data}=await axios.get(`/api/v1/users`);
+        dispatch({
+            type:ALL_USERS_SUCCESS,
+            payload:data,
+        })
+
+    } catch (error) {
+        console.log(error.response.data);
+        dispatch({
+            type:ALL_USERS_FAIL,
+            payload:error.response.data.message,
+        })
+    }
+};
 
 //clearing errors
 export const clearErrors = () => async(dispatch)=>{

@@ -1,5 +1,4 @@
 //Todo
-change group name
 add member
 delete member
 add expense

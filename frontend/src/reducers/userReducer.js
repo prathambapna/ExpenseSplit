@@ -27,9 +27,12 @@ import {LOGIN_REQUEST,
         MY_BALANCES_REQUEST,
         MY_BALANCES_SUCCESS,
         MY_BALANCES_FAIL,
+        ALL_USERS_REQUEST,
+        ALL_USERS_SUCCESS,
+        ALL_USERS_FAIL,
 } from "../constants/userConstants";
 
-
+//user auth
 export const userReducer=(state={user:{}},action)=>{
     switch (action.type) {
         case LOGIN_REQUEST:
@@ -88,7 +91,7 @@ export const userReducer=(state={user:{}},action)=>{
     }
 };
 
-
+//my profile
 export const profileReducer=(state={},action)=>{
     switch (action.type) {
         case UPDATE_PROFILE_REQUEST:
@@ -129,7 +132,7 @@ export const profileReducer=(state={},action)=>{
     }
 }
 
-
+//forgot password
 export const forgotPasswordReducer=(state={},action)=>{
     switch (action.type) {
         case FORGOT_PASSWORD_REQUEST:
@@ -170,7 +173,7 @@ export const forgotPasswordReducer=(state={},action)=>{
     }
 }
 
-
+//user balances
 export const myBalancesReducer=(state={myBalances:[]},action) =>{
     switch(action.type){
         case MY_BALANCES_REQUEST:
@@ -189,6 +192,38 @@ export const myBalancesReducer=(state={myBalances:[]},action) =>{
                 myBalances:[],
                 error:action.payload,
             }
+        case CLEAR_ERRORS:
+            return{
+                ...state,
+                error:null,
+            };
+            
+        default:
+            return state;
+    }
+};
+
+//get all users
+export const allUsersReducer=(state={users:[]},action)=>{
+    switch (action.type) {
+        case ALL_USERS_REQUEST:
+            return {
+                ...state,
+                loading:true,
+            };
+
+        case ALL_USERS_SUCCESS:
+            return {
+                ...state,
+                loading:false,
+                users:action.payload,
+            };
+        case ALL_USERS_FAIL:
+            return {
+                ...state,
+                loading:false,
+                error:action.payload,
+            };
         case CLEAR_ERRORS:
             return{
                 ...state,
