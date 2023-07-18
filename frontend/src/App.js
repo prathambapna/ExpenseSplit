@@ -52,7 +52,7 @@ function App() {
       <ProtectedRoute exact path="/newGroup/create" element={CreateGroup} />
       <ProtectedRoute exact path="/group/:groupId" element={GroupDetail} />
       <ProtectedRoute exact path="/group/:groupId/update" element={UpdateGroup} />
-      {/* <ProtectedRoute exact path="/group/:groupId/addUser" element={AddMemberInGroup} /> */}
+      <ProtectedRoute exact path="/group/:groupId/addUser" element={AddMemberInGroup} />
 
       <Footer />
     </Router>
