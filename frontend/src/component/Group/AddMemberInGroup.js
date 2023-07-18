@@ -1,14 +1,15 @@
-import React, { Fragment ,useState, useEffect} from 'react';
+import React, { Fragment , useEffect} from 'react';
 import "./AddMember.css";
 import Loader from "../layout/Loader/Loader";
 import {useSelector,useDispatch} from "react-redux";
 import {useAlert} from "react-alert";
 import { useNavigate } from 'react-router-dom';
 import MetaData from '../layout/MetaData';
-import { groupDetails,clearErrors } from '../../actions/groupAction';
+import { groupDetails,clearErrors, addMember } from '../../actions/groupAction';
 import {allUsersDetails} from "../../actions/userAction";
 import { useParams } from 'react-router-dom';
 import { ADD_MEMBER_RESET } from '../../constants/groupConstants';
+import SearchBar from "./SearchBar.js";
 
 const AddMemberInGroup = () => {
     const dispatch=useDispatch();
@@ -43,8 +44,14 @@ const AddMemberInGroup = () => {
             navigate(`/group/${groupId}`);
             dispatch({type:ADD_MEMBER_RESET});
         }
-    }, [success,error,groupDetailsError,allUsersError,dispatch,navigate,alert])
+    }, [success,error,groupDetailsError,allUsersError,dispatch,navigate,alert,group.name,groupId])
     
+
+    const addMemberHandler=(userId)=>{
+        const myForm=new FormData();
+        myForm.set("userId", userId);
+        dispatch(addMember(groupId,myForm));
+    }
     return(
         <Fragment>
             {loading?<Loader/>:
@@ -52,7 +59,7 @@ const AddMemberInGroup = () => {
                 <MetaData title="Add Member" />
                 <div className="addMemberContainer">
                     <h1>{group.name}</h1>
-                    {/* <SearchBar allUsers={allUsers} onAddUser={addMemberHandler} /> */}
+                    <SearchBar allUsers={users} onAddUser={addMemberHandler} />
                 </div>
             </Fragment>}
         </Fragment>
