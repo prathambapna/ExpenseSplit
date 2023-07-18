@@ -12,6 +12,14 @@ import {
     GROUP_BALANCES_REQUEST,
     GROUP_BALANCES_SUCCESS,
     GROUP_BALANCES_FAIL,
+    UPDATE_GROUP_REQUEST,
+    UPDATE_GROUP_RESET,
+    UPDATE_GROUP_SUCCESS,
+    UPDATE_GROUP_FAIL,
+    ADD_MEMBER_REQUEST,
+    ADD_MEMBER_RESET,
+    ADD_MEMBER_SUCCESS,
+    ADD_MEMBER_FAIL,
     CLEAR_ERRORS,
 } 
 from "../constants/groupConstants";
@@ -140,3 +148,76 @@ export const groupBalancesReducer=(state={groupBalance:[]},action) =>{
             return state;
     }
 };
+
+export const updateGroupReducer=(state={},action)=>{
+    switch (action.type) {
+        case UPDATE_GROUP_REQUEST:
+            return {
+                ...state,
+                loading:true,
+            };
+
+        case UPDATE_GROUP_SUCCESS:
+            return {
+                ...state,
+                loading:false,
+                isUpdated:action.payload,
+            };
+        case UPDATE_GROUP_FAIL:
+            return {
+                ...state,
+                loading:false,
+                error:action.payload,
+            };
+        case UPDATE_GROUP_RESET:
+            return {
+                ...state,
+                isUpdated:false,
+            }
+        case CLEAR_ERRORS:
+            return{
+                ...state,
+                error:null,
+            };
+            
+        default:
+            return state;
+    }
+}
+
+
+export const addMemberReducer=(state={user:{}},action)=>{
+    switch (action.type) {
+        case ADD_MEMBER_REQUEST:
+            return {
+                ...state,
+                loading:true,
+            };
+
+        case ADD_MEMBER_SUCCESS:
+            return {
+                user:action.payload.user,
+                loading:false,
+                success:action.payload.success,
+            };
+        case ADD_MEMBER_FAIL:
+            return {
+                ...state,
+                loading:false,
+                error:action.payload,
+            };
+        case ADD_MEMBER_RESET:
+            return {
+                ...state,
+                success:false,
+            }
+        case CLEAR_ERRORS:
+            return{
+                ...state,
+                error:null,
+            };
+            
+        default:
+            return state;
+    }
+}

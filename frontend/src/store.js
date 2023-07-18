@@ -2,8 +2,8 @@ import {combineReducers,applyMiddleware} from "redux";
 import { legacy_createStore as createStore} from 'redux'
 import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
-import { forgotPasswordReducer, myBalancesReducer, profileReducer, userReducer } from "./reducers/userReducer";
-import { createGroupReducer, groupBalancesReducer, groupDetailsReducer, groupReducer } from "./reducers/groupReducer";
+import { allUsersReducer, forgotPasswordReducer, myBalancesReducer, profileReducer, userReducer } from "./reducers/userReducer";
+import { addMemberReducer, createGroupReducer, groupBalancesReducer, groupDetailsReducer, groupReducer, updateGroupReducer } from "./reducers/groupReducer";
 
 
 const reducer=combineReducers({
@@ -15,6 +15,9 @@ const reducer=combineReducers({
     newGroup:createGroupReducer,
     groupDetail:groupDetailsReducer,
     groupBalances:groupBalancesReducer,
+    updateGroup:updateGroupReducer,
+    addMember:addMemberReducer,
+    allUsers:allUsersReducer,
 });
 
 let initialState={
