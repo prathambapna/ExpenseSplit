@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "./SearchBar.css"
 
 const SearchBar = ({ allUsers, onAddUser }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -23,21 +24,27 @@ const SearchBar = ({ allUsers, onAddUser }) => {
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Search users by name or email"
-        value={searchQuery}
-        onChange={handleSearch}
-      />
-      <ul>
-        {filteredUsers.map((user) => (
-          <li key={user._id}>
-            {user.name} - {user.email}{' '}
-            <button onClick={() => handleAddUser(user._id)}>Add</button>
-          </li>
-        ))}
-      </ul>
+    <div className="SearchBarContainer">
+        <input
+            className="SearchInput"
+            type="text"
+            placeholder="Search users by name or email"
+            value={searchQuery}
+            onChange={handleSearch}
+        />
+        <ul className="UserList">
+            {filteredUsers.map((user) => (
+                <li key={user._id} className="UserListItem">
+                <div>
+                    <span className="UserName">{user.name}</span> -{' '}
+                    <span className="UserEmail">{user.email}</span>
+                </div>
+                <button className="AddButton" onClick={() => handleAddUser(user._id)}>
+                    Add
+                </button>
+                </li>
+            ))}
+        </ul>
     </div>
   );
 };
