@@ -17,10 +17,8 @@
 
 //compulsory
 1]delete group when no balances
-2]remove user when no balances of him
-3]getting error while loading create group
+2]remove user only when no balances of him
 
 //may be
 1]chart
-2]round expense split
-3]add multiple members together
+2]add multiple members together

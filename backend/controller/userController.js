@@ -304,6 +304,7 @@ exports.myBalances = catchAsyncErrors(async (req, res, next) => {
             email:user.email,
         }
         const type = balance.amount > 0 ? "lent" : "owe";
+        balance.amount=Math.round(balance.amount*100)/100;
         balance.message = `You ${type} ${Math.abs(balance.amount)} to ${balance.user.name}`;
     }
 

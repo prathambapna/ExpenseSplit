@@ -172,7 +172,12 @@ exports.groupDetail=catchAsyncErrors(async(req,res,next)=>{
         path: 'participants',
         model: 'User',
         select: 'name avatar',
-      });;
+      })
+      .populate({
+        path:'expenses',
+        model:'Expense',
+        select:'title amount participants'
+      });
 
     if(!group){
         return next(new ErrorHandler("Group not found",404));
@@ -235,12 +240,12 @@ exports.groupBalances=catchAsyncErrors(async(req,res,next)=>{
         const balance=await UserBalance.findOne(balanceId).populate("userFrom", "_id name email").populate("userTo", "_id name email");
         const { userFrom, userTo } = balance;
         const type = balance.balance > 0 ? "lent" : "owe";
-        const message = `${userFrom.name} ${type} ${Math.abs(balance.balance)} to ${userTo.name}`;
+        const message = `${userFrom.name} ${type} ${Math.round(Math.abs(balance.balance)*100)/100} to ${userTo.name}`;
         groupBalance.push({
             _id:balanceId,
             userFrom:balance.userFrom,
             userTo:balance.userTo,
-            balance: balance.balance,
+            balance: Math.round(balance.balance*100)/100,
             message,
         });
     }

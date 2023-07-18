@@ -8,6 +8,9 @@ import {
     GROUP_DETAILS_REQUEST,
     GROUP_DETAILS_SUCCESS,
     GROUP_DETAILS_FAIL,
+    GROUP_BALANCES_REQUEST,
+    GROUP_BALANCES_SUCCESS,
+    GROUP_BALANCES_FAIL,
     CLEAR_ERRORS,
 } 
 from "../constants/groupConstants";
@@ -59,6 +62,27 @@ export const createGroup=(groupData)=>async(dispatch)=>{
         })
     }
 }
+
+
+//group balances
+export const groupBalances = (groupId) => async(dispatch)=>{
+    try {
+        dispatch({type:GROUP_BALANCES_REQUEST});
+
+        const {data}=await axios.get(`/api/v1/group/${groupId}/balances`);
+        dispatch({
+            type:GROUP_BALANCES_SUCCESS,
+            payload:data,
+        })
+
+    } catch (error) {
+        console.log(error.response.data);
+        dispatch({
+            type:GROUP_BALANCES_FAIL,
+            payload:error.response.data.message,
+        })
+    }
+};
 
 
 //group details
