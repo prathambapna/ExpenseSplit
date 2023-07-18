@@ -17,6 +17,9 @@ import {
     ADD_MEMBER_REQUEST,
     ADD_MEMBER_SUCCESS,
     ADD_MEMBER_FAIL,
+    DELETE_MEMBER_REQUEST,
+    DELETE_MEMBER_SUCCESS,
+    DELETE_MEMBER_FAIL,
     CLEAR_ERRORS,
 } 
 from "../constants/groupConstants";
@@ -158,6 +161,26 @@ export const addMember=(groupId,groupData)=>async(dispatch)=>{
         console.log(error.response.data);
         dispatch({
             type:ADD_MEMBER_FAIL,
+            payload:error.response.data.message,
+        })
+    }
+}
+
+//delete member in a group
+export const deleteMember=(groupId,userId)=>async(dispatch)=>{
+    try {
+        dispatch({type:DELETE_MEMBER_REQUEST});
+
+        const {data}=await axios.delete(`/api/v1/group/${groupId}/user/${userId}`);
+        dispatch({
+            type:DELETE_MEMBER_SUCCESS,
+            payload:data,
+        })
+
+    } catch (error) {
+        console.log(error.response.data);
+        dispatch({
+            type:DELETE_MEMBER_FAIL,
             payload:error.response.data.message,
         })
     }

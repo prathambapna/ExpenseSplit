@@ -20,6 +20,10 @@ import {
     ADD_MEMBER_RESET,
     ADD_MEMBER_SUCCESS,
     ADD_MEMBER_FAIL,
+    DELETE_MEMBER_REQUEST,
+    DELETE_MEMBER_RESET,
+    DELETE_MEMBER_SUCCESS,
+    DELETE_MEMBER_FAIL,
     CLEAR_ERRORS,
 } 
 from "../constants/groupConstants";
@@ -210,6 +214,43 @@ export const addMemberReducer=(state={user:{}},action)=>{
             return {
                 ...state,
                 success:false,
+            }
+        case CLEAR_ERRORS:
+            return{
+                ...state,
+                error:null,
+            };
+            
+        default:
+            return state;
+    }
+}
+
+export const deleteMemberReducer=(state={},action)=>{
+    switch (action.type) {
+        case DELETE_MEMBER_REQUEST:
+            return {
+                ...state,
+                loading:true,
+            };
+
+        case DELETE_MEMBER_SUCCESS:
+            return {
+                ...state,
+                loading:false,
+                isDeleted:true,
+            };
+        case DELETE_MEMBER_FAIL:
+            return {
+                ...state,
+                loading:false,
+                error:action.payload,
+                isDeleted:false,
+            };
+        case DELETE_MEMBER_RESET:
+            return {
+                ...state,
+                isDeleted:false,
             }
         case CLEAR_ERRORS:
             return{

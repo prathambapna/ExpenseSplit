@@ -92,6 +92,22 @@ exports.removeUserFromGroup=catchAsyncErrors(async(req,res,next)=>{
         return next(new ErrorHandler("User does not exists in group",400));
     }
 
+    const balances = [...group.balances];
+    let hasUnsettledBalances = false;
+
+    for (const balanceId of balances) {
+        const balance = await UserBalance.findById(balanceId).populate("userFrom", "_id").populate("userTo", "_id");
+        const { userFrom, userTo } = balance;
+        if (userFrom._id.toString() === userId.toString() || userTo._id.toString() === userId.toString()) {
+            hasUnsettledBalances = true;
+            break;
+        }
+    }
+
+    if (hasUnsettledBalances) {
+        return next(new ErrorHandler("User has unsettled balances in the group", 400));
+    }
+
 
     //if user is groupAdmin , delete group
     if(group.createdBy.toString() === userId){
