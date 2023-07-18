@@ -11,6 +11,9 @@ import {
     GROUP_BALANCES_REQUEST,
     GROUP_BALANCES_SUCCESS,
     GROUP_BALANCES_FAIL,
+    UPDATE_GROUP_REQUEST,
+    UPDATE_GROUP_SUCCESS,
+    UPDATE_GROUP_FAIL,
     CLEAR_ERRORS,
 } 
 from "../constants/groupConstants";
@@ -104,6 +107,32 @@ export const groupDetails = (groupId) => async(dispatch)=>{
         })
     }
 };
+
+
+//update group
+export const updateGroup=(groupId,groupData)=>async(dispatch)=>{
+    try {
+        dispatch({type:UPDATE_GROUP_REQUEST});
+
+        const config={headers :{"Content-Type":"application/json"}};
+        const {data}=await axios.patch(
+            `/api/v1/group/${groupId}/update`,
+            groupData,
+            config,
+        );
+        dispatch({
+            type:UPDATE_GROUP_SUCCESS,
+            payload:data,
+        })
+
+    } catch (error) {
+        console.log(error.response.data);
+        dispatch({
+            type:UPDATE_GROUP_FAIL,
+            payload:error.response.data.message,
+        })
+    }
+}
 
 //clearing errors
 export const clearErrors = () => async(dispatch)=>{

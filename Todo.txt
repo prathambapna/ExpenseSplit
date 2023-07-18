@@ -1,8 +1,11 @@
 //Todo
-2]get group details
-3]add members
-4]delete members
-5]delete group
+change group name
+add member
+delete member
+add expense
+update expense
+delete expense
+delete group
 
 
 .............as of now

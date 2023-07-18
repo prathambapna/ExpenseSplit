@@ -222,8 +222,10 @@ exports.groupMembers=catchAsyncErrors(async(req,res,next)=>{
 
 //update group name
 exports.updateGroupName=catchAsyncErrors(async(req,res,next)=>{
-    req.group.name=req.body.name;
-
+    let group=await Group.findById(req.group._id);
+    
+    group.name=req.body.name;
+    await group.save({validateBeforeSave:false});
     res.status(200).json({
         success:true,
         group:req.group,

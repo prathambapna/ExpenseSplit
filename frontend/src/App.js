@@ -16,7 +16,8 @@ import ForgotPassword from "./component/User/ForgotPassword.js";
 import ResetPassword from "./component/User/ResetPassword.js";
 import MyBalances from "./component/User/MyBalances.js";
 import CreateGroup from "./component/Group/CreateGroup.js"
-import GroupDetail from "./component/Group/GroupDetail.js"
+import GroupDetail from "./component/Group/GroupDetail.js";
+import UpdateGroup from "./component/Group/UpdateGroup.js"
 import ProtectedRoute from './component/Route/ProtectedRoute';
 
 
@@ -49,6 +50,7 @@ function App() {
       <ProtectedRoute exact path="/me/balances" element={MyBalances} />
       <ProtectedRoute exact path="/newGroup/create" element={CreateGroup} />
       <ProtectedRoute exact path="/group/:groupId" element={GroupDetail} />
+      <ProtectedRoute exact path="/group/:groupId/update" element={UpdateGroup} />
       <Footer />
     </Router>
   );  
