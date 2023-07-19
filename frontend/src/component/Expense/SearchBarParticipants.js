@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import "./SearchBarParticipants.css";
 
 const SearchBarParticipants = ({allUsers,onAddUsers}) => {
 
@@ -42,31 +43,33 @@ const SearchBarParticipants = ({allUsers,onAddUsers}) => {
 
     return (
         <Fragment>
-            <div className="SearchBarContainer">
-                <input
-                    className="SearchInput"
-                    type="text"
-                    placeholder="Search participant by name or email"
-                    value={searchQuery}
-                    onChange={handleSearch}
-                    onClick={() => setDropdownOpen(!dropdownOpen)} 
-                />
-                {dropdownOpen && <ul className="UserList">
-                    {filteredUsers.map((user) => (
-                        <li key={user._id} className="UserListItem" onClick={handleDropdownItemClick}>
-                        <div>
-                            <span className="UserName">{user.name}</span> -{' '}
-                            <span className="UserEmail">{user.email}</span>
-                        </div>
-                        <input
-                            type="checkbox"
-                            checked={selectedUsers && selectedUsers.some((p)=>p.user===user._id)}
-                            onChange={() => handleUserSelection(user)}
-                        />
-                        </li>
-                    ))}
-                </ul>}
-                <div className="DoneButtonContainer">
+            <div className="SearchBarParticipantContainer">
+                <div className="SearchInputParticipantContainer">
+                    <input
+                        className="SearchInputParticipant"
+                        type="text"
+                        placeholder="Search participant by name or email"
+                        value={searchQuery}
+                        onChange={handleSearch}
+                        onClick={() => setDropdownOpen(!dropdownOpen)} 
+                    />
+                    {dropdownOpen && <ul className="ParticipantList">
+                        {filteredUsers.map((user) => (
+                            <li key={user._id} className="ParticipantListItem" onClick={handleDropdownItemClick}>
+                            <div>
+                                <span className="ParticipantName">{user.name}</span> -{' '}
+                                <span className="ParticipantEmail">{user.email}</span>
+                            </div>
+                            <input
+                                type="checkbox"
+                                checked={selectedUsers && selectedUsers.some((p)=>p.user===user._id)}
+                                onChange={() => handleUserSelection(user)}
+                            />
+                            </li>
+                        ))}
+                    </ul>}
+                </div>
+                <div className='doneButtonContainer'>
                     <button className="DoneButton" onClick={handleDone}>
                         Done
                     </button>

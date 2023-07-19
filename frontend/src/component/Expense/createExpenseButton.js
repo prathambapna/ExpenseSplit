@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import "./Expense.css"
+import "./createExpenseButton.css"
 
 const CreateExpenseButton = ({group}) => {
     const navigate =useNavigate();

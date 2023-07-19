@@ -1,4 +1,4 @@
-.SearchBarContainer {
+.SearchBarPayerContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,23 +6,23 @@
     overflow: auto;
   }
   
-  .SearchInput {
-    width: 80%;
+  .SearchPayerInput {
+    width: 94%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
   }
   
-  .UserList {
+  .payerList {
     list-style: none;
     padding: 0;
     margin-top: 10px;
-    width: 80%;
+    width: 90%;
     font: 500 1.2vmax "Roboto";
   }
   
-  .UserListItem {
+  .payerListItem {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -34,24 +34,22 @@
     box-shadow: 0 0 3px rgba(15,15,15,0.26);
   }
   
-  .UserName {
+  .payerName {
     font-weight: bold;
   }
   
-  .UserEmail {
+  .payerEmail {
     color: #777;
   }
   
-  .AddButton {
-    padding: 6px 12px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  @media screen and (max-width: 850px) {
+    .SearchPayerInput {
+      width: 80%;
+      font-size: 10px;
+    }
+
+    .payerList {
+      width: 70%;
+      font: 500 1.2vmax "Roboto";
+    }
   }
-  
-  .AddButton:hover {
-    background-color: #0056b3;
-  }
-  
