@@ -69,17 +69,23 @@ const CreateExpense = () => {
         if(error){
             alert.error(error);
             dispatch(clearErrors());
+            formData.participants=[];
+            formData.payer={};
+            setPayerName('');
         }
         if(allUsersError){
             alert.error(allUsersError);
             dispatch(clearErrors());
+            formData.participants=[];
+            formData.payer={};
+            setPayerName('');
         }
         if(success){
             alert.success("Expense Created Successfully!");
             navigate(`/group/${groupId}`);
             dispatch({type:CREATE_EXPENSE_RESET});
         }
-    }, [dispatch,error,alert,navigate,success,groupId,allUsersError]);
+    }, [dispatch,error,alert,navigate,success,groupId,allUsersError,formData]);
 
 
     return (
