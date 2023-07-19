@@ -10,17 +10,24 @@ exports.createExpense=catchAsyncErrors(async(req,res,next)=>{
     
     const group=await Group.findById(req.group._id);
 
+    //payer not selected
+    if(Object.keys(payer).length === 0){
+        return next(new ErrorHandler("Payer is mandatory",400));
+    }
+
     //payer and participants are there in the group
     const isPayerThereInGroup=await group.participants.find((u)=>u.toString()===payer.toString());
     if(!isPayerThereInGroup){
         return next(new ErrorHandler(`payer : ${payer.toString()} not there in group`,400));
     }
 
+    //Participants not present in group
     const allUsersInGroup =await  participants.every(p => group.participants.includes(p.user));
     if(!allUsersInGroup){
-        return next(new ErrorHandler("Only choose participants that are present in the group",400));
+        return next(new ErrorHandler("Choose participants that are present in the group",400));
     }
 
+    //payer not added in participant
     const payerThereInParticipants=await participants.find((p)=>p.user.toString()===payer.toString());
     if(!payerThereInParticipants){
         return next(new ErrorHandler("Please do add Payer also in participants",400));

@@ -191,7 +191,7 @@ const CreateExpense = () => {
                                     </div>
                                 </div>
 
-                                <input type="submit" value="Create" className="createExpenseBtn" />
+                                <input type="submit" value="Create" className="createNewExpenseBtn" />
                             </form>
                         </div>
                     </div>
