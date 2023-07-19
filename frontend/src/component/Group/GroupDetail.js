@@ -1,4 +1,4 @@
-import React, { Fragment ,useState, useEffect} from 'react';
+import React, { Fragment , useEffect} from 'react';
 import "./GroupDetails.css";
 import Loader from "../layout/Loader/Loader";
 import DeleteIcon from "@material-ui/icons/Delete";
