@@ -18,7 +18,7 @@ exports.createExpense=catchAsyncErrors(async(req,res,next)=>{
 
     const allUsersInGroup =await  participants.every(p => group.participants.includes(p.user));
     if(!allUsersInGroup){
-        return next(new ErrorHandler("invalid participants",400));
+        return next(new ErrorHandler("Only choose participants that are present in the group",400));
     }
 
     const payerThereInParticipants=await participants.find((p)=>p.user.toString()===payer.toString());

@@ -1,6 +1,6 @@
-import React, { Fragment, useState , useEffect} from 'react';
+import React, { Fragment, useState } from 'react';
 
-const SearchBarPayer = ({allUsers,onAddUsers}) => {
+const SearchBarParticipants = ({allUsers,onAddUsers}) => {
 
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -34,9 +34,11 @@ const SearchBarPayer = ({allUsers,onAddUsers}) => {
         e.stopPropagation();
     };
 
-    useEffect(() => {
+    const handleDone = (e) => {
+        e.preventDefault();
         onAddUsers(selectedUsers);
-    }, [selectedUsers, onAddUsers]);
+        setDropdownOpen(false); 
+    };
 
     return (
         <Fragment>
@@ -44,7 +46,7 @@ const SearchBarPayer = ({allUsers,onAddUsers}) => {
                 <input
                     className="SearchInput"
                     type="text"
-                    placeholder="Search payer by name or email"
+                    placeholder="Search participant by name or email"
                     value={searchQuery}
                     onChange={handleSearch}
                     onClick={() => setDropdownOpen(!dropdownOpen)} 
@@ -64,9 +66,14 @@ const SearchBarPayer = ({allUsers,onAddUsers}) => {
                         </li>
                     ))}
                 </ul>}
+                <div className="DoneButtonContainer">
+                    <button className="DoneButton" onClick={handleDone}>
+                        Done
+                    </button>
+                </div>
             </div>
         </Fragment>
     )
 }
 
-export default SearchBarPayer
+export default SearchBarParticipants

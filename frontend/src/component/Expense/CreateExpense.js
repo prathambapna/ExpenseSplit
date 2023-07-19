@@ -25,14 +25,13 @@ const CreateExpense = () => {
     const alert=useAlert();
     const navigate = useNavigate();
 
-    const [payer, setPayer] = useState('');
     const [payerName, setPayerName] = useState('');
 
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        amount: null,
-        payer: payer ? payer._id : null,
+        amount: '',
+        payer: {},
         participants: [],
         splitType: 'equal',
     });
@@ -142,14 +141,14 @@ const CreateExpense = () => {
                                 <div className='expensePayer'>
                                     <span className='payerHeading'>Select Payer</span>
                                     <div className='searchPayer'>
-                                        <SearchBarPayer allUsers={users} onAddUser={(user) => {setPayer(user._id);setPayerName(user.name)}} />
+                                        <SearchBarPayer allUsers={users} onAddUser={(user) => {setFormData({ ...formData, payer: user._id });setPayerName(user.name)}} />
                                     </div>
                                 </div>
 
                                 <div className='expenseParticipants'>
                                     <span className='participantsHeading'>Select Participants</span>
                                     <div className='searchParticipants'>
-                                        <SearchBarParticipants allUsers={users} onAddUsers={(participants) =>setFormData({...formData,participants}) } />
+                                        <SearchBarParticipants allUsers={users} onAddUsers={(p) => setFormData({ ...formData, participants: p })}  />
                                     </div>
                                 </div>
 
@@ -183,8 +182,9 @@ const CreateExpense = () => {
                                     </div>
                                 </div>
 
+                                {console.log(formData)}
                                 <input type="submit" value="Create" className="createExpenseBtn" />
-
+                                {console.log(formData)}
                             </form>
                         </div>
                     </div>
