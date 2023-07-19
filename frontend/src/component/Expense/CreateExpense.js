@@ -94,7 +94,8 @@ const CreateExpense = () => {
                 <MetaData title= "Create Expense"/>
                     <div className='CreateExpenseContainer'>
                         <div className='CreateExpenseBox'>
-                            <form onSubmit={createExpenseSubmit}>
+                            <form className='createExpenseForm' onSubmit={createExpenseSubmit}>
+                                <h1>Create Expense</h1>
                                 <div className='expenseTitle'>
                                     <FaceIcon />
                                     <input
@@ -145,29 +146,29 @@ const CreateExpense = () => {
                                 </div>
 
                                 <div className='expensePayer'>
-                                    <span className='payerHeading'>Select Payer</span>
+                                    <span className='payerHeading'>Select Payer :</span>
                                     <div className='searchPayer'>
                                         <SearchBarPayer allUsers={users} onAddUser={(user) => {setFormData({ ...formData, payer: user._id });setPayerName(user.name)}} />
                                     </div>
                                 </div>
 
                                 <div className='expenseParticipants'>
-                                    <span className='participantsHeading'>Select Participants</span>
+                                    <span className='participantsHeading'>Select Participants : </span>
                                     <div className='searchParticipants'>
                                         <SearchBarParticipants allUsers={users} onAddUsers={(p) => setFormData({ ...formData, participants: p })}  />
                                     </div>
                                 </div>
 
 
-                                <div>
-                                    <div className='payerName'>{payerName}</div>
+                                <div className='expenseUsersInvolved'>
+                                    <div className='payerName'>Payer selected : {payerName}</div>
 
                                     <div className='particpantsList'>
                                         {formData.splitType==="equal" && formData.participants && formData.participants.map((p)=>{ 
                                             const user = users.find((user) => user._id === p.user);
                                             return (
                                                 <div key={p.user}>
-                                                <span>{user && user.name}</span>
+                                                    <span>{user && user.name}</span>
                                                 </div>
                                             );
                                         })}

@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import "./SearchBarPayer.css";
 
 const SearchBarPayer = ({allUsers,onAddUser}) => {
 
