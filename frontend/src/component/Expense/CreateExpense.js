@@ -164,6 +164,7 @@ const CreateExpense = () => {
                                     <div className='payerName'>Payer selected : {payerName}</div>
 
                                     <div className='particpantsList'>
+                                        <span className='participantHeading'>Participants </span>
                                         {formData.splitType==="equal" && formData.participants && formData.participants.map((p)=>{ 
                                             const user = users.find((user) => user._id === p.user);
                                             return (
@@ -173,7 +174,7 @@ const CreateExpense = () => {
                                             );
                                         })}
 
-                                        {formData.splitType==="unequal" && formData.participants && formData.participants.map((participant) => {
+                                        {formData.splitType==="unequal" && formData.participants  && formData.participants.map((participant) => {
                                             const user = users.find((user) => user._id === participant.user);
                                             return (
                                                 <div key={participant.user}>
@@ -181,6 +182,7 @@ const CreateExpense = () => {
                                                     <input
                                                         type="number"
                                                         value={participant.share}
+                                                        placeholder="Particpant's Share"
                                                         onChange={(e) => handleShareChange(e, user)}
                                                     />
                                                 </div>
@@ -189,9 +191,7 @@ const CreateExpense = () => {
                                     </div>
                                 </div>
 
-                                {console.log(formData)}
                                 <input type="submit" value="Create" className="createExpenseBtn" />
-                                {console.log(formData)}
                             </form>
                         </div>
                     </div>

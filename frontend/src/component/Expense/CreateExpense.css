@@ -14,9 +14,8 @@
 .CreateExpenseBox{
     background-color: white;
     width: 50vw;
-    height: 96vh;
+    height: 90vh;
     box-sizing: border-box;
-    overflow: auto;
     display: flex;
     padding: 2vmax;
 }
@@ -35,6 +34,8 @@
     transition: all 0.5s;
     width: 100%;
     padding: 1vmax 0.5vmax;
+    overflow: auto;
+    height: 100%;
 }
 
 
@@ -43,7 +44,7 @@
     width: 100%;
     align-items: center;
     position: relative;
-    margin: 0.5vmax 0;
+    margin: 0.8vmax 0;
 }
 
 .createExpenseForm>div>input{
@@ -63,3 +64,107 @@
     font-size: 1.6vmax;
     color: rgba(0, 0, 0, 0.623);
 }
+
+ .expenseSplitType,.expensePayer,.expenseParticipants {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+  
+  .expenseSplitType> span,
+  .expensePayer>span,
+  .expenseParticipants>span {
+    font: 300 0.9vmax cursive;
+    color: rgba(0, 0, 0, 0.623);
+    margin-right: 1vmax;
+  }
+  
+  .expenseSplitType >select {
+    padding: 1vmax 4vmax;
+    padding-right: 1vmax;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.267);
+    border-radius: 4px;
+    font: 300 0.9vmax cursive;
+    outline: none;
+  }
+
+  .expensePayer>div,
+  .expenseParticipants>div{
+    width: 100%;
+  }
+  .expenseUsersInvolved{
+    display: flex;
+    align-items: center;
+    justify-content:space-evenly;
+    text-align: center;
+  }
+  .payerName{
+    color: crimson;
+    font-size: 1vmax;
+    font-family: "Roboto";
+  }
+  
+  .particpantsList .participantHeading{
+    font: 300 1.5vmax "Roboto";
+    color: black;
+    margin-bottom: 1vmax;
+  }
+
+  .createExpenseForm .particpantsList {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .createExpenseForm .particpantsList > div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5vmax;
+    justify-content: center;
+  }
+  
+  .createExpenseForm .particpantsList > div > span {
+    font: 300 1.2vmax "Roboto";
+    color: crimson;
+    margin-right: 1vmax;
+  }
+  
+  .createExpenseForm .particpantsList > div > input {
+    padding: 0.5vmax 0.5vmax;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.267);
+    border-radius: 4px;
+    font: 300 0.9vmax cursive;
+    outline: none;
+  }
+  
+  .createExpenseForm .particpantsList > div > input[type="number"] {
+    width: 50%; 
+  }
+  
+  .createExpenseForm .particpantsList > div > input[type="number"]::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  .createExpenseBtn{
+    border: none;
+    background-color: tomato;
+    color: white;
+    font: 300 0.9vmax "Roboto";
+    width: 100%;
+    padding: 0.8vmax;
+    cursor: pointer;
+    transition: all 0.5s;
+    border-radius: 4px;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
+    margin-bottom: 1vmax;
+  }
+
+  .createExpenseBtn:hover{
+    background-color: rgb(179, 66, 46);
+  }
+  

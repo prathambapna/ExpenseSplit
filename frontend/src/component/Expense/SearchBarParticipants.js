@@ -43,22 +43,22 @@ const SearchBarParticipants = ({allUsers,onAddUsers}) => {
 
     return (
         <Fragment>
-            <div className="SearchBarContainer">
-                <div className="SearchInputContainer">
+            <div className="SearchBarParticipantContainer">
+                <div className="SearchInputParticipantContainer">
                     <input
-                        className="SearchInput"
+                        className="SearchInputParticipant"
                         type="text"
                         placeholder="Search participant by name or email"
                         value={searchQuery}
                         onChange={handleSearch}
                         onClick={() => setDropdownOpen(!dropdownOpen)} 
                     />
-                    {dropdownOpen && <ul className="UserList">
+                    {dropdownOpen && <ul className="ParticipantList">
                         {filteredUsers.map((user) => (
-                            <li key={user._id} className="UserListItem" onClick={handleDropdownItemClick}>
+                            <li key={user._id} className="ParticipantListItem" onClick={handleDropdownItemClick}>
                             <div>
-                                <span className="UserName">{user.name}</span> -{' '}
-                                <span className="UserEmail">{user.email}</span>
+                                <span className="ParticipantName">{user.name}</span> -{' '}
+                                <span className="ParticipantEmail">{user.email}</span>
                             </div>
                             <input
                                 type="checkbox"
@@ -69,9 +69,11 @@ const SearchBarParticipants = ({allUsers,onAddUsers}) => {
                         ))}
                     </ul>}
                 </div>
-                <button className="DoneButton" onClick={handleDone}>
-                    Done
-                </button>
+                <div className='doneButtonContainer'>
+                    <button className="DoneButton" onClick={handleDone}>
+                        Done
+                    </button>
+                </div>
             </div>
         </Fragment>
     )

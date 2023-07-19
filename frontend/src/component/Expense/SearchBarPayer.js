@@ -30,21 +30,21 @@ const SearchBarPayer = ({allUsers,onAddUser}) => {
 
     return (
         <Fragment>
-            <div className="SearchBarContainer">
+            <div className="SearchBarPayerContainer">
                 <input
-                    className="SearchInput"
+                    className="SearchPayerInput"
                     type="text"
                     placeholder="Search payer by name or email"
                     value={searchQuery}
                     onChange={handleSearch}
                     onClick={() => setDropdownOpen(!dropdownOpen)} 
                 />
-                {dropdownOpen && <ul className="UserList">
+                {dropdownOpen && <ul className="payerList">
                     {filteredUsers.map((user) => (
-                        <li key={user._id} className="UserListItem">
+                        <li key={user._id} className="payerListItem">
                         <div>
-                            <span className="UserName">{user.name}</span> -{' '}
-                            <span className="UserEmail">{user.email}</span>
+                            <span className="payerName">{user.name}</span> -{' '}
+                            <span className="payerEmail">{user.email}</span>
                         </div>
                         <input
                             type="checkbox"

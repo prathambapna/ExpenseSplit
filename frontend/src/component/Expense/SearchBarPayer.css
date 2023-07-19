@@ -1,0 +1,45 @@
+.SearchBarPayerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    overflow: auto;
+  }
+  
+  .SearchPayerInput {
+    width: 94%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .payerList {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+    width: 90%;
+    font: 500 1.2vmax "Roboto";
+  }
+  
+  .payerListItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    background-color: white;
+    box-shadow: 0 0 3px rgba(15,15,15,0.26);
+  }
+  
+  .payerName {
+    font-weight: bold;
+  }
+  
+  .payerEmail {
+    color: #777;
+  }
+  
+  
