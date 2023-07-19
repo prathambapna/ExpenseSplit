@@ -1,8 +1,8 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState , useEffect} from 'react';
 
-const SearchBarPayer = ({allUsers,onAddUser}) => {
+const SearchBarPayer = ({allUsers,onAddUsers}) => {
 
-    const [selectedUser, setSelectedUser] = useState({});
+    const [selectedUsers, setSelectedUsers] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -18,14 +18,25 @@ const SearchBarPayer = ({allUsers,onAddUser}) => {
             user.email.toLowerCase().includes(query.toLowerCase())
         );
         setFilteredUsers(filteredUsers);
+        setDropdownOpen(true);
     };
 
     const handleUserSelection = (user) => {
-        setSelectedUser(user);
-        setDropdownOpen(false);
-        onAddUser(user);
-        setFilteredUsers([]);
+        const isSelected = selectedUsers.some((participant) => participant.user === user._id);
+        if (isSelected) {
+            setSelectedUsers(selectedUsers.filter((participant) => participant.user !== user._id));
+        } else {
+            setSelectedUsers([...selectedUsers, { user: user._id }]);
+        }
     };
+
+    const handleDropdownItemClick = (e) => {
+        e.stopPropagation();
+    };
+
+    useEffect(() => {
+        onAddUsers(selectedUsers);
+    }, [selectedUsers, onAddUsers]);
 
     return (
         <Fragment>
@@ -40,14 +51,14 @@ const SearchBarPayer = ({allUsers,onAddUser}) => {
                 />
                 {dropdownOpen && <ul className="UserList">
                     {filteredUsers.map((user) => (
-                        <li key={user._id} className="UserListItem">
+                        <li key={user._id} className="UserListItem" onClick={handleDropdownItemClick}>
                         <div>
                             <span className="UserName">{user.name}</span> -{' '}
                             <span className="UserEmail">{user.email}</span>
                         </div>
                         <input
                             type="checkbox"
-                            checked={selectedUser && selectedUser._id===user._id}
+                            checked={selectedUsers && selectedUsers.some((p)=>p.user===user._id)}
                             onChange={() => handleUserSelection(user)}
                         />
                         </li>

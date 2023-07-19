@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom';
 import { CREATE_EXPENSE_RESET } from '../../constants/expenseConstants';
 import {allUsersDetails} from "../../actions/userAction";
 import SearchBarPayer from "./SearchBarPayer.js";
+import SearchBarParticipants from "./SearchBarParticipants.js";
 
 const CreateExpense = () => {
     const {loading,success,error}=useSelector((state)=>state.newExpense);
@@ -42,6 +43,27 @@ const CreateExpense = () => {
         setFormData({ ...formData, [name]: value });
     };
 
+    const handleShareChange = (e, user) => {
+        const { value } = e.target;
+
+        const participantIndex = formData.participants.findIndex((p) => p.user === user._id);
+
+        if (participantIndex !== -1) {
+            const updatedParticipants = [...formData.participants];
+            updatedParticipants[participantIndex] = {
+                ...updatedParticipants[participantIndex],
+                share: Number(value), 
+            };
+            setFormData({ ...formData, participants: updatedParticipants });
+        }
+    };
+
+    const createExpenseSubmit=(e)=>{
+        e.preventDefault();
+
+        dispatch(createExpense(groupId,formData));
+    }
+
 
     useEffect(() => {
         dispatch(allUsersDetails());
@@ -67,7 +89,7 @@ const CreateExpense = () => {
                 <MetaData title= "Create Expense"/>
                     <div className='CreateExpenseContainer'>
                         <div className='CreateExpenseBox'>
-                            <form >
+                            <form onSubmit={createExpenseSubmit}>
                                 <div className='expenseTitle'>
                                     <FaceIcon />
                                     <input
@@ -118,10 +140,51 @@ const CreateExpense = () => {
                                 </div>
 
                                 <div className='expensePayer'>
-                                    <span>Select Payer</span>
-                                    <SearchBarPayer allUsers={users} onAddUser={(user) => {setPayer(user._id);setPayerName(user.name)}} />
-                                    <span>{payerName}</span>
+                                    <span className='payerHeading'>Select Payer</span>
+                                    <div className='searchPayer'>
+                                        <SearchBarPayer allUsers={users} onAddUser={(user) => {setPayer(user._id);setPayerName(user.name)}} />
+                                    </div>
                                 </div>
+
+                                <div className='expenseParticipants'>
+                                    <span className='participantsHeading'>Select Participants</span>
+                                    <div className='searchParticipants'>
+                                        <SearchBarParticipants allUsers={users} onAddUsers={(participants) =>setFormData({...formData,participants}) } />
+                                    </div>
+                                </div>
+
+
+                                <div>
+                                    <div className='payerName'>{payerName}</div>
+
+                                    <div className='particpantsList'>
+                                        {formData.splitType==="equal" && formData.participants && formData.participants.map((p)=>{ 
+                                            const user = users.find((user) => user._id === p.user);
+                                            return (
+                                                <div key={p.user}>
+                                                <span>{user && user.name}</span>
+                                                </div>
+                                            );
+                                        })}
+
+                                        {formData.splitType==="unequal" && formData.participants && formData.participants.map((participant) => {
+                                            const user = users.find((user) => user._id === participant.user);
+                                            return (
+                                                <div key={participant.user}>
+                                                    <span>{user && user.name}</span>
+                                                    <input
+                                                        type="number"
+                                                        value={participant.share}
+                                                        onChange={(e) => handleShareChange(e, user)}
+                                                    />
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+
+                                <input type="submit" value="Create" className="createExpenseBtn" />
+
                             </form>
                         </div>
                     </div>
