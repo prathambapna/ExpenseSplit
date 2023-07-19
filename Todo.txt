@@ -1,9 +1,11 @@
 //Todo
 
 add expense
+expense details
 update expense
 delete expense
 delete group
+settle balance
 
 
 .............as of now

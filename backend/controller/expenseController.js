@@ -6,7 +6,7 @@ const Expense=require("../models/expenseModel");
 const UserBalance=require("../models/userBalanceModel");
 
 exports.createExpense=catchAsyncErrors(async(req,res,next)=>{
-    const {title,description,amount,payer,participants,splitType}=req.body;
+    let {title,description,amount,payer,participants,splitType}=req.body;
     
     const group=await Group.findById(req.group._id);
 
@@ -19,6 +19,11 @@ exports.createExpense=catchAsyncErrors(async(req,res,next)=>{
     const allUsersInGroup =await  participants.every(p => group.participants.includes(p.user));
     if(!allUsersInGroup){
         return next(new ErrorHandler("invalid participants",400));
+    }
+
+    const payerThereInParticipants=await participants.find((p)=>p.user.toString()===payer.toString());
+    if(!payerThereInParticipants){
+        return next(new ErrorHandler("Please do add Payer also in participants",400));
     }
 
 
