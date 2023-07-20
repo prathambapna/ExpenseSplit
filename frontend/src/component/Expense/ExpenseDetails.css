@@ -75,7 +75,7 @@
     border: 2px solid  black;
     align-items: center;
     justify-content: flex-start;
-    padding: 2vmax 1vmax;
+    padding: 2vmax 0.1vmax;
     text-align: center;
     font-family:"Roboto"; 
 }

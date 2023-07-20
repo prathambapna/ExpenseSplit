@@ -4,7 +4,7 @@ import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
 import { allUsersReducer, forgotPasswordReducer, myBalancesReducer, profileReducer, userReducer } from "./reducers/userReducer";
 import { addMemberReducer, createGroupReducer, deleteMemberReducer, groupBalancesReducer, groupDetailsReducer, groupReducer, groupUsersReducer, updateGroupReducer } from "./reducers/groupReducer";
-import { createExpenseReducer, expenseDetailsReducer } from "./reducers/expenseReducer";
+import { createExpenseReducer, deleteExpenseReducer, expenseDetailsReducer } from "./reducers/expenseReducer";
 
 
 const reducer=combineReducers({
@@ -23,6 +23,7 @@ const reducer=combineReducers({
     newExpense:createExpenseReducer,
     expenseDetail:expenseDetailsReducer,
     groupMembers:groupUsersReducer,
+    deleteExpense:deleteExpenseReducer,
 });
 
 let initialState={

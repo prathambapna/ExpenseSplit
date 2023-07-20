@@ -7,6 +7,10 @@ import {
         EXPENSE_DETAILS_REQUEST,
         EXPENSE_DETAILS_SUCCESS,
         EXPENSE_DETAILS_FAIL,
+        DELETE_EXPENSE_REQUEST,
+        DELETE_EXPENSE_SUCCESS,
+        DELETE_EXPENSE_FAIL,
+        DELETE_EXPENSE_RESET,
 } from "../constants/expenseConstants";
 
 export const createExpenseReducer=(state={expense:{}},action) =>{
@@ -73,3 +77,41 @@ export const expenseDetailsReducer=(state={expense:{}},action) =>{
             return state;
     }
 };
+
+
+export const deleteExpenseReducer=(state={},action)=>{
+    switch (action.type) {
+        case DELETE_EXPENSE_REQUEST:
+            return {
+                ...state,
+                loading:true,
+            };
+
+        case DELETE_EXPENSE_SUCCESS:
+            return {
+                ...state,
+                loading:false,
+                isDeleted:true,
+            };
+        case DELETE_EXPENSE_FAIL:
+            return {
+                ...state,
+                loading:false,
+                error:action.payload,
+                isDeleted:false,
+            };
+        case DELETE_EXPENSE_RESET:
+            return {
+                ...state,
+                isDeleted:false,
+            }
+        case CLEAR_ERRORS:
+            return{
+                ...state,
+                error:null,
+            };
+            
+        default:
+            return state;
+    }
+}
