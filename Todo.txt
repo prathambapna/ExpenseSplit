@@ -20,3 +20,4 @@ settle balance
 1]chart
 2]add multiple members together
 3]creating expense , only show participants that are in group
+4]media query on groupDetail page
