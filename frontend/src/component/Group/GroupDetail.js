@@ -61,11 +61,11 @@ const GroupDetail = () => {
 
     const createdBy = group.createdBy;
     const createdByName = createdBy.name;
-    console.log(group);
+
     return (
         <Fragment>
                 {loading===true?<Loader /> : <Fragment>
-                <MetaData title= "FairShare"/>
+                <MetaData title= {`${group.name}`}/>
                     <div className='GroupDetailContainer'>
                         <div className='leftSide'>
                             <div className='groupNameSection'>

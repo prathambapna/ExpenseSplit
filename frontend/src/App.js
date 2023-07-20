@@ -21,6 +21,7 @@ import UpdateGroup from "./component/Group/UpdateGroup.js";
 import AddMemberInGroup from "./component/Group/AddMemberInGroup.js";
 import DeleteMemberInGroup from "./component/Group/DeleteMemberInGroup.js";
 import CreateExpense from "./component/Expense/CreateExpense.js";
+import ExpenseDetail from "./component/Expense/ExpenseDetail.js";
 import ProtectedRoute from './component/Route/ProtectedRoute';
 
 
@@ -57,6 +58,7 @@ function App() {
       <ProtectedRoute exact path="/group/:groupId/addUser" element={AddMemberInGroup} />
       <ProtectedRoute exact path="/group/:groupId/user/:userId" element={DeleteMemberInGroup} />
       <ProtectedRoute exact path="/group/:groupId/newExpense/create" element={CreateExpense} />
+      <ProtectedRoute exact path="/group/:groupId/expense/:expenseId" element={ExpenseDetail} />
 
       <Footer />
     </Router>
