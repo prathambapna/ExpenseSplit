@@ -23,6 +23,9 @@ import {
     GROUP_USERS_REQUEST,
     GROUP_USERS_SUCCESS,
     GROUP_USERS_FAIL,
+    SETTLE_BALANCE_REQUEST,
+    SETTLE_BALANCE_SUCCESS,
+    SETTLE_BALANCE_FAIL,
     CLEAR_ERRORS,
 } 
 from "../constants/groupConstants";
@@ -211,6 +214,26 @@ export const groupUsersDetails = (groupId) => async(dispatch)=>{
     }
 };
 
+
+//settle balance in a group
+export const settleBalanceInGroup=(groupId,balanceId)=>async(dispatch)=>{
+    try {
+        dispatch({type:SETTLE_BALANCE_REQUEST});
+
+        const {data}=await axios.delete(`/api/v1/group/${groupId}/settleBalance/${balanceId}`);
+        dispatch({
+            type:SETTLE_BALANCE_SUCCESS,
+            payload:data,
+        })
+
+    } catch (error) {
+        console.log(error.response.data);
+        dispatch({
+            type:SETTLE_BALANCE_FAIL,
+            payload:error.response.data.message,
+        })
+    }
+}
 
 //clearing errors
 export const clearErrors = () => async(dispatch)=>{

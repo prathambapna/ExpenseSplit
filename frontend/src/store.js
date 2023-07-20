@@ -3,7 +3,7 @@ import { legacy_createStore as createStore} from 'redux'
 import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
 import { allUsersReducer, forgotPasswordReducer, myBalancesReducer, profileReducer, userReducer } from "./reducers/userReducer";
-import { addMemberReducer, createGroupReducer, deleteMemberReducer, groupBalancesReducer, groupDetailsReducer, groupReducer, groupUsersReducer, updateGroupReducer } from "./reducers/groupReducer";
+import { addMemberReducer, createGroupReducer, deleteMemberReducer, groupBalancesReducer, groupDetailsReducer, groupReducer, groupUsersReducer, settleBalanceReducer, updateGroupReducer } from "./reducers/groupReducer";
 import { createExpenseReducer, deleteExpenseReducer, editExpenseReducer, expenseDetailsReducer } from "./reducers/expenseReducer";
 
 
@@ -25,6 +25,7 @@ const reducer=combineReducers({
     groupMembers:groupUsersReducer,
     deleteExpense:deleteExpenseReducer,
     editExpense:editExpenseReducer,
+    settleBalance:settleBalanceReducer,
 });
 
 let initialState={
