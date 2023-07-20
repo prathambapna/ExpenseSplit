@@ -92,7 +92,19 @@ exports.removeUserFromGroup=catchAsyncErrors(async(req,res,next)=>{
         return next(new ErrorHandler("User does not exists in group",400));
     }
 
-    const balances = [...group.balances];
+    let balances = [...group.balances];
+
+    for(const balance of balances){
+        const userBal=await UserBalance.findById(balance);
+        if(userBal.balance===0){
+            balances=balances.filter((b)=>b!=balance);
+            await userBal.deleteOne();
+        }
+    }
+
+    group.balances=balances;
+    await group.save({validateBeforeSave:false});
+
     let hasUnsettledBalances = false;
 
     for (const balanceId of balances) {
@@ -109,22 +121,22 @@ exports.removeUserFromGroup=catchAsyncErrors(async(req,res,next)=>{
     }
 
 
-    //if user is groupAdmin , delete group
-    if(group.createdBy.toString() === userId){
-        await group.participants.forEach(catchAsyncErrors(async(participantId)=>{
-            const user=await User.findById(participantId);
-            const groupList=await user.groupList.filter((grpId)=>grpId.toString() !== groupId.toString());
-            user.groupList=groupList;
-            await user.save({validateBeforeSave:false});
-        }));
+    // //if user is groupAdmin , delete group
+    // if(group.createdBy.toString() === userId){
+    //     await group.participants.forEach(catchAsyncErrors(async(participantId)=>{
+    //         const user=await User.findById(participantId);
+    //         const groupList=await user.groupList.filter((grpId)=>grpId.toString() !== groupId.toString());
+    //         user.groupList=groupList;
+    //         await user.save({validateBeforeSave:false});
+    //     }));
     
-        await group.deleteOne();
+    //     await group.deleteOne();
     
-        res.status(200).json({
-            success:true,
-        });
-        return;
-    }
+    //     res.status(200).json({
+    //         success:true,
+    //     });
+    //     return;
+    // }
 
     //remove user from participants list in group
     const participants=await group.participants.filter((participantId)=>participantId.toString()!==userId.toString());
@@ -148,6 +160,7 @@ exports.removeUserFromGroup=catchAsyncErrors(async(req,res,next)=>{
 
 
 //delete a group
+//need to add about balance check condition
 exports.deleteGroup=catchAsyncErrors(async(req,res,next)=>{
     const group= await Group.findById(req.params.groupId);
 
@@ -253,22 +266,31 @@ exports.groupBalances=catchAsyncErrors(async(req,res,next)=>{
 
     const group = await Group.findById(req.group._id);
     let balances=[...group.balances];
+
+    for(const balance of balances){
+        const userBal=await UserBalance.findById(balance);
+        if(userBal.balance===0){
+            balances=balances.filter((b)=>b!=balance);
+            await userBal.deleteOne();
+        }
+    }
+
+    group.balances=balances;
+    await group.save({validateBeforeSave:false});
+    
     let groupBalance=[];
     for (const balanceId of balances) {
-        let balance=await UserBalance.findOne(balanceId);
-        if(balance){
-            balance=await UserBalance.findOne(balanceId).populate("userFrom", "_id name email").populate("userTo", "_id name email");
-            const { userFrom, userTo } = balance;
-            const type = balance.balance > 0 ? "lent" : "owe";
-            const message = `${userFrom.name} ${type} ${Math.round(Math.abs(balance.balance)*100)/100} to ${userTo.name}`;
-            groupBalance.push({
-                _id:balanceId,
-                userFrom:balance.userFrom,
-                userTo:balance.userTo,
-                balance: Math.round(balance.balance*100)/100,
-                message,
-            });
-        }
+        const balance=await UserBalance.findOne(balanceId).populate("userFrom", "_id name email").populate("userTo", "_id name email");
+        const { userFrom, userTo } = balance;
+        const type = balance.balance > 0 ? "lent" : "owe";
+        const message = `${userFrom.name} ${type} ${Math.round(Math.abs(balance.balance)*100)/100} to ${userTo.name}`;
+        groupBalance.push({
+            _id:balanceId,
+            userFrom:balance.userFrom,
+            userTo:balance.userTo,
+            balance: Math.round(balance.balance*100)/100,
+            message,
+        });
     }
 
     res.status(200).json({
