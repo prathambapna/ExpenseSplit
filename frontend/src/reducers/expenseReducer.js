@@ -11,6 +11,10 @@ import {
         DELETE_EXPENSE_SUCCESS,
         DELETE_EXPENSE_FAIL,
         DELETE_EXPENSE_RESET,
+        UPDATE_EXPENSE_REQUEST,
+        UPDATE_EXPENSE_RESET,
+        UPDATE_EXPENSE_SUCCESS,
+        UPDATE_EXPENSE_FAIL,
 } from "../constants/expenseConstants";
 
 export const createExpenseReducer=(state={expense:{}},action) =>{
@@ -104,6 +108,44 @@ export const deleteExpenseReducer=(state={},action)=>{
             return {
                 ...state,
                 isDeleted:false,
+            }
+        case CLEAR_ERRORS:
+            return{
+                ...state,
+                error:null,
+            };
+            
+        default:
+            return state;
+    }
+}
+
+
+//update expense 
+export const editExpenseReducer=(state={},action)=>{
+    switch (action.type) {
+        case UPDATE_EXPENSE_REQUEST:
+            return {
+                ...state,
+                loading:true,
+            };
+
+        case UPDATE_EXPENSE_SUCCESS:
+            return {
+                ...state,
+                loading:false,
+                isUpdated:action.payload.success,
+            };
+        case UPDATE_EXPENSE_FAIL:
+            return {
+                ...state,
+                loading:false,
+                error:action.payload,
+            };
+        case UPDATE_EXPENSE_RESET:
+            return {
+                ...state,
+                isUpdated:false,
             }
         case CLEAR_ERRORS:
             return{

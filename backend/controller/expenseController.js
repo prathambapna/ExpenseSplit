@@ -69,6 +69,19 @@ exports.createExpense=catchAsyncErrors(async(req,res,next)=>{
 
     //balances
     let balances = [...group.balances];
+
+    for(const balance of balances){
+        const userBal=await UserBalance.findById(balance);
+        if(userBal.balance===0){
+            balances=balances.filter((b)=>b!=balance);
+            await userBal.deleteOne();
+        }
+    }
+    group.balances= balances;
+    
+    await group.save({validateBeforeSave:false});
+
+
     for(const participant of participants){
         if(participant.user.toString()!==payer.toString()){
             const userBalanceMap1 = await UserBalance.findOne({
@@ -110,6 +123,7 @@ exports.createExpense=catchAsyncErrors(async(req,res,next)=>{
         const userBal=await UserBalance.findById(balance);
         if(userBal.balance===0){
             balances=balances.filter((b)=>b!=balance);
+            await userBal.deleteOne();
         }
     }
     group.balances= balances;
@@ -141,6 +155,18 @@ exports.updateExpense=catchAsyncErrors(async(req,res,next)=>{
     const oldPayer=expense.payer;
     let balances = [...group.balances];
 
+
+    for(const balance of balances){
+        const userBal=await UserBalance.findById(balance);
+        if(userBal.balance===0){
+            balances=balances.filter((b)=>b!=balance);
+            await userBal.deleteOne();
+        }
+    }
+    group.balances= balances;
+    
+    await group.save({validateBeforeSave:false});
+
     for(const participant of oldParticipants){
         if(participant.user.toString()!==oldPayer.toString()){
             const userBalanceMap1 = await UserBalance.findOne({
@@ -165,6 +191,14 @@ exports.updateExpense=catchAsyncErrors(async(req,res,next)=>{
                 userBalanceMap2.balance+=participant.share;
                 await userBalanceMap2.save({validateBeforeSave:false});
             }
+        }
+    }
+
+    for(const balance of balances){
+        const userBal=await UserBalance.findById(balance);
+        if(userBal.balance===0){
+            balances=balances.filter((b)=>b!=balance);
+            await userBal.deleteOne();
         }
     }
 
@@ -207,6 +241,18 @@ exports.updateExpense=catchAsyncErrors(async(req,res,next)=>{
     await expense.save({validateBeforeSave:false});
 
     let newBalances= [...group.balances];
+
+    for(const balance of newBalances){
+        const userBal=await UserBalance.findById(balance);
+        if(userBal.balance===0){
+            newBalances=newBalances.filter((b)=>b!=balance);
+            await userBal.deleteOne();
+        }
+    }
+    group.balances= newBalances;
+    
+    await group.save({validateBeforeSave:false});
+
     for(const participant of participants){
         if(participant.user.toString()!==payer.toString()){
             const userBalanceMap1 = await UserBalance.findOne({
@@ -242,15 +288,18 @@ exports.updateExpense=catchAsyncErrors(async(req,res,next)=>{
             }
         }
     }
-    
+
     for(const balance of newBalances){
         const userBal=await UserBalance.findById(balance);
         if(userBal.balance===0){
             newBalances=newBalances.filter((b)=>b!=balance);
+            await userBal.deleteOne();
         }
     }
-    group.balances=newBalances;
+    group.balances= newBalances;
+    
     await group.save({validateBeforeSave:false});
+
     
 
     res.status(200).json({
@@ -288,6 +337,18 @@ exports.deleteExpense=catchAsyncErrors(async(req,res,next)=>{
     const oldPayer=expense.payer;
     let balances = [...group.balances];
 
+
+    for(const balance of balances){
+        const userBal=await UserBalance.findById(balance);
+        if(userBal.balance===0){
+            balances=balances.filter((b)=>b!=balance);
+            await userBal.deleteOne();
+        }
+    }
+
+    group.balances=balances;
+    await group.save({validateBeforeSave:false});
+
     for(const participant of oldParticipants){
         if(participant.user.toString()!==oldPayer.toString()){
             const userBalanceMap1 = await UserBalance.findOne({
@@ -319,10 +380,11 @@ exports.deleteExpense=catchAsyncErrors(async(req,res,next)=>{
         const userBal=await UserBalance.findById(balance);
         if(userBal.balance===0){
             balances=balances.filter((b)=>b!=balance);
+            await userBal.deleteOne();
         }
     }
-    group.balances= balances;
-    
+
+    group.balances=balances;
     await group.save({validateBeforeSave:false});
     
     const expenseList=await group.expenses.filter((expId)=>expId.toString() !== expenseId.toString());
