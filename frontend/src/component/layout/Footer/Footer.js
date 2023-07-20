@@ -17,7 +17,7 @@ const Footer = () => {
         <h1>FairShare</h1>
         <p>Sharing expenses made fair and stress-free.</p>
 
-        <p>Copyrights 2021 &copy; PrathamBapna</p>
+        <p>Copyrights 2023 &copy; PrathamBapna</p>
       </div>
 
       <div className="rightFooter">

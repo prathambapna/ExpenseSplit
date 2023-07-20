@@ -168,7 +168,7 @@ const CreateExpense = () => {
                                         {formData.splitType==="equal" && formData.participants && formData.participants.map((p)=>{ 
                                             const user = users.find((user) => user._id === p.user);
                                             return (
-                                                <div >
+                                                <div key={p.user} >
                                                     <span>{user && user.name}</span>
                                                 </div>
                                             );
@@ -177,7 +177,7 @@ const CreateExpense = () => {
                                         {formData.splitType==="unequal" && formData.participants  && formData.participants.map((participant) => {
                                             const user = users.find((user) => user._id === participant.user);
                                             return (
-                                                <div >
+                                                <div key={participant.user}>
                                                     <span>{user && user.name}</span>
                                                     <input
                                                         type="number"

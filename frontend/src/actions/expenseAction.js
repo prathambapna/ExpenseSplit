@@ -9,18 +9,21 @@ import {
     DELETE_EXPENSE_REQUEST,
     DELETE_EXPENSE_SUCCESS,
     DELETE_EXPENSE_FAIL,
+    UPDATE_EXPENSE_REQUEST,
+    UPDATE_EXPENSE_SUCCESS,
+    UPDATE_EXPENSE_FAIL,
 } from "../constants/expenseConstants";
 import axios from "axios";
 
 //create new expense
-export const createExpense=(groupId,groupData)=>async(dispatch)=>{
+export const createExpense=(groupId,expenseData)=>async(dispatch)=>{
     try {
         dispatch({type:CREATE_EXPENSE_REQUEST});
 
         const config={headers :{"Content-Type":"application/json"}};
         const {data}=await axios.post(
             `/api/v1/group/${groupId}/expense/create`,
-            groupData,
+            expenseData,
             config,
         );
         dispatch({
@@ -78,6 +81,32 @@ export const deleteExpense=(groupId,expenseId)=>async(dispatch)=>{
     }
 }
 
+
+//edit  expense
+export const editExpense=(groupId,expenseId,expenseData)=>async(dispatch)=>{
+    try {
+        dispatch({type:UPDATE_EXPENSE_REQUEST});
+
+        const config={headers :{"Content-Type":"application/json"}};
+        
+        const {data}=await axios.put(
+            `/api/v1/group/${groupId}/expense/${expenseId}/update`,
+            expenseData,
+            config,
+        );
+        dispatch({
+            type:UPDATE_EXPENSE_SUCCESS,
+            payload:data,
+        })
+
+    } catch (error) {
+        console.log(error.response.data);
+        dispatch({
+            type:UPDATE_EXPENSE_FAIL,
+            payload:error.response.data.message,
+        })
+    }
+}
 
 //clearing errors
 export const clearErrors = () => async(dispatch)=>{

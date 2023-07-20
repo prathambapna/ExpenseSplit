@@ -86,7 +86,7 @@ const GroupDetail = () => {
                                 <h2>Members</h2>
                                 <div className='members'>
                                     {group && group.participants && group.participants.map((user)=>
-                                    <div className='singleMember'>
+                                    <div className='singleMember' key={user._id}>
                                         <img 
                                             src={(user.avatar.url && user.avatar.url!=="profile pic url") ? user.avatar.url:"/Profile.png"}
                                             alt="Profile"
@@ -106,7 +106,7 @@ const GroupDetail = () => {
                                 <h1>Group Expenses</h1>
                             </div>
                             <div className='expenseContainer'>
-                                {group && group.expenses.length>0 && group.expenses.map((expense)=><Expense expense={expense} group={group._id}/>)}
+                                {group && group.expenses.length>0 && group.expenses.map((expense)=><Expense expense={expense} group={group._id} key={expense._id}/>)}
                                 {(!group || group.expenses.length===0 )&& <p className='noExpense'>No expenses yet! Create One.</p>}
                             </div>
                             <div className='createExpenseBtn'>
@@ -119,9 +119,9 @@ const GroupDetail = () => {
                             </div>
                             <div className='balanceContainer'>
                                 {groupBalance && groupBalance.length>0 && groupBalance.map((balance)=>
-                                    <div className='singleBalanceContainer'>
+                                    <div className='singleBalanceContainer' key={balance._id}>
                                         <div className='balanceMsg'>{balance.message}</div>
-                                        <SettleBalanceButton group={group._id} bal={balance._id}/>
+                                        <SettleBalanceButton group={group._id} bal={balance._id} />
                                     </div>
                                 
                                 )}

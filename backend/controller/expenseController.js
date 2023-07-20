@@ -139,7 +139,7 @@ exports.createExpense=catchAsyncErrors(async(req,res,next)=>{
 });
 
 
-
+//update expense
 exports.updateExpense=catchAsyncErrors(async(req,res,next)=>{
     const {expenseId}=req.params;
     const updateExpenseFields=req.body;
@@ -205,15 +205,53 @@ exports.updateExpense=catchAsyncErrors(async(req,res,next)=>{
     group.balances=balances;
     await group.save({validateBeforeSave:false});
 
-    expense.title=updateExpenseFields.title || expense.title;
-    expense.description=updateExpenseFields.description || expense.description;
-    expense.amount=updateExpenseFields.amount || expense.amount;
-    expense.payer=updateExpenseFields.payer || expense.payer;
-    expense.participants=updateExpenseFields.participants || expense.participants;
-    expense.splitType=updateExpenseFields.splitType || expense.splitType;
+    expense.title=updateExpenseFields.title;
+    expense.description=updateExpenseFields.description;
+    expense.amount=updateExpenseFields.amount;
+    expense.payer=updateExpenseFields.payer;
+    expense.participants=updateExpenseFields.participants;
+    expense.splitType=updateExpenseFields.splitType;
     
     const participants= expense.participants;
     const payer=expense.payer;
+
+    if(!expense.title){
+        return next(new ErrorHandler("Title is mandatory",400));
+    }
+    if(!expense.description){
+        return next(new ErrorHandler("Description is mandatory",400));
+    }
+    if(!expense.amount){
+        return next(new ErrorHandler("Amount is mandatory",400));
+    }
+    if(!expense.splitType){
+        return next(new ErrorHandler("SplitType is mandatory",400));
+    }
+    
+    //payer not selected
+    if(!payer){
+        return next(new ErrorHandler("Payer is mandatory",400));
+    }
+
+    //payer and participants are there in the group
+    const isPayerThereInGroup=await group.participants.find((u)=>u.toString()===payer.toString());
+    if(!isPayerThereInGroup){
+        return next(new ErrorHandler(`payer : ${payer.toString()} not there in group`,400));
+    }
+
+    //Participants not present in group
+    const allUsersInGroup =await  participants.every(p => group.participants.includes(p.user));
+    if(!allUsersInGroup){
+        return next(new ErrorHandler("Choose participants that are present in the group",400));
+    }
+
+    //payer not added in participant
+    const payerThereInParticipants=await participants.find((p)=>p.user.toString()===payer.toString());
+    if(!payerThereInParticipants){
+        return next(new ErrorHandler("Please do add Payer also in participants",400));
+    }
+
+
     if(expense.splitType==="equal"){
         let total_participants=participants.length;
         let equalShare=expense.amount/total_participants;
