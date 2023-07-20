@@ -299,10 +299,21 @@ exports.groupBalances=catchAsyncErrors(async(req,res,next)=>{
     });
 })
 
-
+//settle balance
+//only lender can settle
 exports.settleUp=catchAsyncErrors(async(req,res,next)=>{
     const {balanceId}=req.params;
     const balance=await UserBalance.findById(balanceId);
+    
+    if(balance.balance>0 && balance.userFrom.toString()!==req.user._id.toString()){
+        const user=await User.findById(balance.userFrom);
+        return next(new ErrorHandler(`Only ${user.name} (lender) can settle this balance !!`));
+    }
+    else if(balance.balance<0 && balance.userTo.toString()!==req.user._id.toString()){
+        const user=await User.findById(balance.userTo);
+        return next(new ErrorHandler(`Only ${user.name} (lender) can settle this balance !!`));
+    }
+
     const group=await Group.findById(req.group._id);
     group.balances=await group.balances.filter((balance)=>balance.toString()!==balanceId.toString());
     await group.save({validateBeforeSave:false});

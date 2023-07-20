@@ -1,7 +1,6 @@
 //Todo
-update expense
+
 delete group
-settle balance
 
 //Fixes
 
@@ -17,7 +16,8 @@ settle balance
 
 
 //may be
-1]chart
-2]add multiple members together
-3]creating expense , only show participants that are in group
-4]media query on groupDetail page
+1]add multiple members together
+2]creating expense , only show participants that are in group
+3]media query on groupDetail page
+4]record transactions( settle balances record)
+5]chart

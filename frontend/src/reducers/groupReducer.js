@@ -27,11 +27,15 @@ import {
     GROUP_USERS_REQUEST,
     GROUP_USERS_SUCCESS,
     GROUP_USERS_FAIL,
+    SETTLE_BALANCE_REQUEST,
+    SETTLE_BALANCE_RESET,
+    SETTLE_BALANCE_SUCCESS,
+    SETTLE_BALANCE_FAIL,
     CLEAR_ERRORS,
 } 
 from "../constants/groupConstants";
 
-
+//all groups of user
 export const groupReducer=(state={groups:[]},action) =>{
     switch(action.type){
         case MY_GROUP_REQUEST:
@@ -61,6 +65,7 @@ export const groupReducer=(state={groups:[]},action) =>{
     }
 };
 
+//create group
 export const createGroupReducer=(state={group:{}},action) =>{
     switch(action.type){
         case CREATE_GROUP_REQUEST:
@@ -97,6 +102,7 @@ export const createGroupReducer=(state={group:{}},action) =>{
 };
 
 
+//group details
 export const groupDetailsReducer=(state={group:{}},action) =>{
     switch(action.type){
         case GROUP_DETAILS_REQUEST:
@@ -126,7 +132,7 @@ export const groupDetailsReducer=(state={group:{}},action) =>{
     }
 };
 
-
+//balances of group
 export const groupBalancesReducer=(state={groupBalance:[]},action) =>{
     switch(action.type){
         case GROUP_BALANCES_REQUEST:
@@ -156,6 +162,7 @@ export const groupBalancesReducer=(state={groupBalance:[]},action) =>{
     }
 };
 
+//update group
 export const updateGroupReducer=(state={},action)=>{
     switch (action.type) {
         case UPDATE_GROUP_REQUEST:
@@ -192,7 +199,7 @@ export const updateGroupReducer=(state={},action)=>{
     }
 }
 
-
+//add member
 export const addMemberReducer=(state={user:{}},action)=>{
     switch (action.type) {
         case ADD_MEMBER_REQUEST:
@@ -229,6 +236,7 @@ export const addMemberReducer=(state={user:{}},action)=>{
     }
 }
 
+//delete member 
 export const deleteMemberReducer=(state={},action)=>{
     switch (action.type) {
         case DELETE_MEMBER_REQUEST:
@@ -298,3 +306,40 @@ export const groupUsersReducer=(state={users:[]},action)=>{
             return state;
     }
 };
+
+//settle balance
+export const settleBalanceReducer=(state={},action)=>{
+    switch (action.type) {
+        case SETTLE_BALANCE_REQUEST:
+            return {
+                ...state,
+                loading:true,
+            };
+
+        case SETTLE_BALANCE_SUCCESS:
+            return {
+                ...state,
+                loading:false,
+                isSettled:action.payload.success,
+            };
+        case SETTLE_BALANCE_FAIL:
+            return {
+                ...state,
+                loading:false,
+                error:action.payload,
+            };
+        case SETTLE_BALANCE_RESET:
+            return {
+                ...state,
+                isSettled:false,
+            }
+        case CLEAR_ERRORS:
+            return{
+                ...state,
+                error:null,
+            };
+            
+        default:
+            return state;
+    }
+}
