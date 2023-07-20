@@ -38,7 +38,7 @@ exports.createExpense=catchAsyncErrors(async(req,res,next)=>{
     if(splitType==="equal"){
         let total_participants=participants.length;
         let equalShare=amount/total_participants;
-
+        equalShare=Math.round(equalShare*100)/100;
         await participants.forEach((participant)=>{
             participant.share=equalShare;
         });
@@ -255,7 +255,8 @@ exports.updateExpense=catchAsyncErrors(async(req,res,next)=>{
     if(expense.splitType==="equal"){
         let total_participants=participants.length;
         let equalShare=expense.amount/total_participants;
-
+        equalShare=Math.round(equalShare*100)/100;
+        
         participants.forEach((participant)=>{
             participant.share=equalShare;
         });
