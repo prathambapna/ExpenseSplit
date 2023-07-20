@@ -1,6 +1,5 @@
 //Todo
 
-add expense
 expense details
 update expense
 delete expense
@@ -20,8 +19,9 @@ settle balance
 
 //compulsory
 1]delete group when no balances
-2]remove user only when no balances of him
+
 
 //may be
 1]chart
 2]add multiple members together
+3]creating expense , only show participants that are in group

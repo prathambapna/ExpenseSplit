@@ -24,6 +24,9 @@ import {
     DELETE_MEMBER_RESET,
     DELETE_MEMBER_SUCCESS,
     DELETE_MEMBER_FAIL,
+    GROUP_USERS_REQUEST,
+    GROUP_USERS_SUCCESS,
+    GROUP_USERS_FAIL,
     CLEAR_ERRORS,
 } 
 from "../constants/groupConstants";
@@ -262,3 +265,36 @@ export const deleteMemberReducer=(state={},action)=>{
             return state;
     }
 }
+
+
+//get group users
+export const groupUsersReducer=(state={users:[]},action)=>{
+    switch (action.type) {
+        case GROUP_USERS_REQUEST:
+            return {
+                ...state,
+                loading:true,
+            };
+
+        case GROUP_USERS_SUCCESS:
+            return {
+                ...state,
+                loading:false,
+                users:action.payload.members,
+            };
+        case GROUP_USERS_FAIL:
+            return {
+                ...state,
+                loading:false,
+                error:action.payload,
+            };
+        case CLEAR_ERRORS:
+            return{
+                ...state,
+                error:null,
+            };
+            
+        default:
+            return state;
+    }
+};
