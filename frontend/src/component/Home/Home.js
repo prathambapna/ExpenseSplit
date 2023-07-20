@@ -44,7 +44,7 @@ const Home = () => {
               <div className="container" id="container">
                 {!isAuthenticated && <p className='noGroups'>Oops , please do Login to access your groups!!</p>}
                 {isAuthenticated && groups.length===0 && <p className='noGroups'>"Looks like you're not part of any groups yet. Why not create one and start sharing expenses?"</p>}
-                {isAuthenticated && groups && groups.map((group)=><Group group={group} />)}
+                {isAuthenticated && groups && groups.map((group)=><Group group={group} key={group._id} />)}
               </div>
               <div className='createGroupBtn'>
                 {isAuthenticated && <CreateGroupButton/>}

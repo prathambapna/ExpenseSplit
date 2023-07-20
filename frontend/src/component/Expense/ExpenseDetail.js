@@ -76,7 +76,7 @@ const ExpenseDetail = () => {
                             {users && expense && expense.participants && expense.participants.map((participant)=>{
                                 const user=users.find((u)=>u._id===participant.user);
                                 return(
-                                    <div className='singleParticipantSection'>
+                                    <div className='singleParticipantSection' key={participant.user}>
                                         <img 
                                             src={(user && user.avatar && user.avatar.url && user.avatar.url!=="profile pic url") ? user.avatar.url:"/Profile.png"}
                                             alt="Profile"

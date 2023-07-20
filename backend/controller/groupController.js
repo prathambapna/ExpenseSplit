@@ -255,17 +255,20 @@ exports.groupBalances=catchAsyncErrors(async(req,res,next)=>{
     let balances=[...group.balances];
     let groupBalance=[];
     for (const balanceId of balances) {
-        const balance=await UserBalance.findOne(balanceId).populate("userFrom", "_id name email").populate("userTo", "_id name email");
-        const { userFrom, userTo } = balance;
-        const type = balance.balance > 0 ? "lent" : "owe";
-        const message = `${userFrom.name} ${type} ${Math.round(Math.abs(balance.balance)*100)/100} to ${userTo.name}`;
-        groupBalance.push({
-            _id:balanceId,
-            userFrom:balance.userFrom,
-            userTo:balance.userTo,
-            balance: Math.round(balance.balance*100)/100,
-            message,
-        });
+        let balance=await UserBalance.findOne(balanceId);
+        if(balance){
+            balance=await UserBalance.findOne(balanceId).populate("userFrom", "_id name email").populate("userTo", "_id name email");
+            const { userFrom, userTo } = balance;
+            const type = balance.balance > 0 ? "lent" : "owe";
+            const message = `${userFrom.name} ${type} ${Math.round(Math.abs(balance.balance)*100)/100} to ${userTo.name}`;
+            groupBalance.push({
+                _id:balanceId,
+                userFrom:balance.userFrom,
+                userTo:balance.userTo,
+                balance: Math.round(balance.balance*100)/100,
+                message,
+            });
+        }
     }
 
     res.status(200).json({

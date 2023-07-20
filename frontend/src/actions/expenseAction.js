@@ -6,6 +6,9 @@ import {
     EXPENSE_DETAILS_REQUEST,
     EXPENSE_DETAILS_SUCCESS,
     EXPENSE_DETAILS_FAIL,
+    DELETE_EXPENSE_REQUEST,
+    DELETE_EXPENSE_SUCCESS,
+    DELETE_EXPENSE_FAIL,
 } from "../constants/expenseConstants";
 import axios from "axios";
 
@@ -54,6 +57,26 @@ export const expenseDetails = (groupId,expenseId) => async(dispatch)=>{
         })
     }
 };
+
+//delete expense in a group
+export const deleteExpense=(groupId,expenseId)=>async(dispatch)=>{
+    try {
+        dispatch({type:DELETE_EXPENSE_REQUEST});
+
+        const {data}=await axios.delete(`/api/v1/group/${groupId}/expense/${expenseId}/delete`);
+        dispatch({
+            type:DELETE_EXPENSE_SUCCESS,
+            payload:data,
+        })
+
+    } catch (error) {
+        console.log(error.response.data);
+        dispatch({
+            type:DELETE_EXPENSE_FAIL,
+            payload:error.response.data.message,
+        })
+    }
+}
 
 
 //clearing errors

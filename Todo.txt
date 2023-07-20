@@ -1,8 +1,5 @@
 //Todo
-
-expense details
 update expense
-delete expense
 delete group
 settle balance
 
@@ -19,6 +16,7 @@ settle balance
 
 //compulsory
 1]delete group when no balances
+2]when delete group in backend , also delete all expenses and all balances should be nullified
 
 
 //may be
