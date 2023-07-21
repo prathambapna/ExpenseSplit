@@ -16,9 +16,7 @@
     width: 25vw;
     height: 100vh;
     box-sizing: border-box;
-    overflow: hidden;
-    position: absolute;
-    left: 0;
+    overflow: auto;
     display: flex;
     flex-direction: column;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
@@ -99,6 +97,7 @@
     padding: auto;
     align-items: center;
     margin-top: 2vmax;
+    /* overflow: auto; */
 }
 
 .groupMemberSection>h2{
@@ -115,49 +114,65 @@
     align-items: center;
     justify-content: space-evenly;
     padding: 0.5vmax;
-    overflow: auto;
+    /* overflow: auto; */
     width: 90%;
     margin-bottom: 2vmax;
 }
-
-.singleMember {
+.singleMember{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 90%;
+  box-shadow: 0 2px 10px rgba(15,15,15,0.26);
+  padding: 0.2vmax 0;
+  margin-bottom: 0.5vmax;
+}
+.singleMemberProfile {
     display: flex;
     align-items: center;
     gap: 2vmax;
-    padding: 0.2vmax 0;
-    width: 90%;
-    box-shadow: 0 2px 10px rgba(15,15,15,0.26);
+    width: 100%;
     position: relative; 
-    margin-bottom: 0.4vmax;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 0.8vmax;
   }
   
-  .singleMember> img {
+  .singleMemberProfile> img {
     width: 35px;
     height: 35px;
     border-radius: 50%;
   }
   
-  .singleMember> span {
+  .singleMemberProfile> span {
     font: 300 1.5vmax "Roboto";
     color: white;
   }
 
   .deleteButton{
-    position: absolute;
-    right:1%;
     cursor: pointer;
   }
 
-  .deleteButton:hover{
+  
+  .svgDelete{
+    transform: scale(1);
+    color: rgb(178, 121, 111);
+  }
+  
+  .svgDelete:hover{
     color:red;
   }
 
+  .addMemberButton{
+    margin-bottom: 1vmax;
+    padding-bottom: 1vmax;
+  }
 
   .middleSide{
     width:50vw;
     height:100vh;
-    position: absolute;
-    left: 25vw;
     background-color: white;
   }
   .middleHeading{
@@ -204,20 +219,19 @@
   .rightSide{
     width:25vw;
     height:100vh;
-    position: absolute;
-    left: 75vw;
     background-image:linear-gradient(to right,#3027ae,#635dc0);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
     border: 2px solid  black;
   }
 
   .rightHeading{
-    justify-content: center;
     display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     text-align: center;
     width: 100%;
     height: 10vh;
-    margin-top: 2vmax;
+    margin-top: 3vmax;
     align-items: center;
 }
 .rightHeading>h1{
@@ -268,55 +282,97 @@
   color: black;
   font: 400 2vmax "Roboto";
 }
-  @media screen and (max-width: 600px) {
-    .GroupDetailContainer {
-      background-color: white;
+
+
+@media screen and (max-width: 800px) {
+  .leftSide{
+    width: 30vw;
+    justify-content: space-between;
+  }
+  
+  .groupNameSection{
+      height: 20vh;
+      padding: 2vmax 0;
+  }
+
+  .changeGroupNameButton>button,
+  .addMemberButton>button{
+      font: 300 1.4vmax "Roboto";
+  }
+
+  .AdminSection>p,
+  .createdAtSection>p{
+      color: black;
+      font: 600 2vmax "Roboto";
+  }
+
+  .AdminSection>span,
+  .createdAtSection>span{
+      color: white;
+      font: 300 2vmax "Roboto";
+  }
+
+  .groupMemberSection>h2{
+      font: 700 2.3vmax "Roboto";
+  }
+
+  .members{
+      padding: 0.8vmax;
+  }
+
+  .singleMemberProfile {
+      gap: 1vmax;
+      height: auto;
     }
-    .leftSide {
-      width: 40vw;
-      height: 100vh;
+    
+    .singleMemberProfile> img {
+      width: 30px;
+      height: 30px;
+    }
+    
+    .singleMemberProfile> span {
+      font: 300 1.8vmax "Roboto";
+      color: white;
     }
 
-    
-    .groupNameSection{
-        height: 20vh;
+    .svgDelete{
+      transform: scale(0.8);
     }
-    
-    .AdminSection>p,
-    .createdAtSection>p{
-        font: 600 2vmax "Roboto";
-    }
-    
-    .AdminSection>span,
-    .createdAtSection>span{
-        font: 300 2vmax "Roboto";
-    }
-    
-    .groupMemberSection{
-        height: 70vh;
-        padding-top: 2vmax;
-        justify-content: flex-start;
-    }
-    
-    .groupMemberSection>h2{
-        font: 700 2vmax "Roboto";
-        margin-bottom: 0.5vmax;
-    }
-    .members{
-        padding: 2vmax;
-    }
-    
-    .singleMember {
-        gap: 3vmax;
-        padding: 0.7vmax;
-    }
-    
-    .singleMember> span {
-        font: 300 2vmax "Roboto";
-        color: white;
-    }
+
     .middleSide{
-        width:30vw;
-    left: 40vw;
+      width:40vw;
     }
+
+    .middleHeading{
+      padding: 3vmax 0;
+      margin-top: 1vmax;
+    }
+
+  
+    .createExpenseBtn{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5vmax;
+    }
+    .rightSide{
+      width:30vw;
+    }
+
+
+  .singleBalanceContainer{
+    margin: 1vmax 0;
+  }
+
+  .balanceMsg{
+    font: 550 1.8vmax "Roboto";
+  }
+
+  .noBalance{
+    font: 400 2.4vmax "Roboto";
+  }
+
+
 }
+  

@@ -4,7 +4,7 @@
     padding: 0.8vmax;
     background-color: crimson;
     color: white;
-    font: 300 0.9vmax "Roboto";
+    font: 300 1vmax "Roboto";
     cursor: pointer;
     transition: all 0.5s;
     border-radius: 10px;
@@ -15,3 +15,9 @@
   .createExpenseButton>button:hover{
     background-color: #3027ae
   }
+
+     @media screen and (max-width: 800px) {
+      .createExpenseButton > button{
+        font-size: 2vmax;
+      }
+     }

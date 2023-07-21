@@ -47,3 +47,16 @@
     flex-direction: column;
     width: 100%;
   }
+
+
+  @media screen and (max-width: 700px) {
+
+  .addMemberBox {
+    width: 90vw;
+    height: 90vh;
+  }
+  
+  .addMemberHeading>h1{
+    font: 800 3vmax "Roboto";
+  }
+}

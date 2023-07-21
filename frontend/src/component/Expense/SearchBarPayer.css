@@ -41,6 +41,11 @@
   .payerEmail {
     color: #777;
   }
+
+  
+  input[type="checkbox"] {
+    cursor: pointer;
+  }
   
   @media screen and (max-width: 850px) {
     .SearchPayerInput {

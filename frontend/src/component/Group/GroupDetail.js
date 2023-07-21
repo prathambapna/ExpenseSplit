@@ -87,12 +87,14 @@ const GroupDetail = () => {
                                 <div className='members'>
                                     {group && group.participants && group.participants.map((user)=>
                                     <div className='singleMember' key={user._id}>
-                                        <img 
-                                            src={(user.avatar.url && user.avatar.url!=="profile pic url") ? user.avatar.url:"/Profile.png"}
-                                            alt="Profile"
-                                        />
-                                        <span>{user.name}</span>
-                                        <span className='deleteButton' onClick={(e) => deleteMemberHandler(e, user._id)}><DeleteIcon /></span>
+                                        <div className='singleMemberProfile'>
+                                            <img 
+                                                src={(user.avatar.url && user.avatar.url!=="profile pic url") ? user.avatar.url:"/Profile.png"}
+                                                alt="Profile"
+                                            />
+                                            <span>{user.name}</span>
+                                        </div>
+                                        <div className='deleteButton' onClick={(e) => deleteMemberHandler(e, user._id)}><DeleteIcon className='svgDelete'/></div>
                                     </div>)
                                     }
                                 </div>
