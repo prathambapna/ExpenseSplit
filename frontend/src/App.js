@@ -10,6 +10,7 @@ import { loadUser } from './actions/userAction';
 import UserOptions from "./component/layout/Header/UserOptions.js";
 import { useSelector } from 'react-redux';
 import Profile from "./component/User/Profile.js";
+import RemoveAvatar from "./component/User/RemoveAvatar.js";
 import UpdateProfile from "./component/User/UpdateProfile.js";
 import UpdatePassword from "./component/User/UpdatePassword.js";
 import ForgotPassword from "./component/User/ForgotPassword.js";
@@ -56,6 +57,7 @@ function App() {
       <ProtectedRoute exact path="/me/update" element={UpdateProfile} />
       <ProtectedRoute exact path="/password/update" element={UpdatePassword} />
       <ProtectedRoute exact path="/me/balances" element={MyBalances} />
+      <ProtectedRoute exact path="/me/removeAvatar" element={RemoveAvatar} />
       <ProtectedRoute exact path="/newGroup/create" element={CreateGroup} />
       <ProtectedRoute exact path="/group/:groupId" element={GroupDetail} />
       <ProtectedRoute exact path="/group/:groupId/update" element={UpdateGroup} />

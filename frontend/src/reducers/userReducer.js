@@ -30,6 +30,10 @@ import {LOGIN_REQUEST,
         ALL_USERS_REQUEST,
         ALL_USERS_SUCCESS,
         ALL_USERS_FAIL,
+        REMOVE_AVATAR_REQUEST,
+        REMOVE_AVATAR_SUCCESS,
+        REMOVE_AVATAR_FAIL,
+        REMOVE_AVATAR_RESET,
 } from "../constants/userConstants";
 
 //user auth
@@ -234,3 +238,41 @@ export const allUsersReducer=(state={users:[]},action)=>{
             return state;
     }
 };
+
+
+//remove avatar
+export const removeAvatarReducer=(state={},action)=>{
+    switch (action.type) {
+        case REMOVE_AVATAR_REQUEST:
+            return {
+                ...state,
+                loading:true,
+            };
+
+        case REMOVE_AVATAR_SUCCESS:
+            return {
+                ...state,
+                loading:false,
+                isAvatarRemoved:action.payload.success,
+            };
+        case REMOVE_AVATAR_FAIL:
+            return {
+                ...state,
+                loading:false,
+                error:action.payload,
+            };
+        case REMOVE_AVATAR_RESET:
+            return {
+                ...state,
+                isAvatarRemoved:false,
+            }
+        case CLEAR_ERRORS:
+            return{
+                ...state,
+                error:null,
+            };
+            
+        default:
+            return state;
+    }
+}
