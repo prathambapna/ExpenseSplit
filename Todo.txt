@@ -9,6 +9,5 @@
 //may be
 1]add multiple members together
 2]creating expense , only show participants that are in group
-3]media query on groupDetail page, expenseDetail page
-4]record transactions( settle balances record)
-5]chart
+3]record transactions( settle balances record)
+4]chart

@@ -80,5 +80,9 @@
     .expenseCard>div>p{
       font-size: 1.4vmax;
     }
+
+    .settleBalanceButton > button{
+      font: 300 1.5vmax "Roboto";
+    }
     
   }
