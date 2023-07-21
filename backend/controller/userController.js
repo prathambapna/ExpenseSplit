@@ -186,20 +186,23 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 
 //update user profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+  
+  const user=await User.findById(req.user.id);
 
   let newUserData = {
     name: req.body.name,
     email: req.body.email,
+    avatar:user.avatar,
   };
 
 
-  if(req.body.avatar!==""){
-    const user=await User.findById(req.user.id);
+  if(req.body.avatar!=="undefined"){
 
     // Check if the user has an existing avatar
     if (user.avatar.public_id) {
       await cloudinary.v2.uploader.destroy(user.avatar.public_id);
     }
+    
     const myCloud =await cloudinary.v2.uploader.upload(req.body.avatar,{
       folder:"avatars",
       width:150,

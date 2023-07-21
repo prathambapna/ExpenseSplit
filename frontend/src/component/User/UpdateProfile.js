@@ -30,6 +30,7 @@ const UpdateProfile = () => {
         myForm.set("name", name);
         myForm.set("email", email);
         myForm.set("avatar", avatar);
+
         dispatch(updateProfile(myForm));
     }
 
@@ -39,7 +40,7 @@ const UpdateProfile = () => {
         reader.onload = () =>{
             if(reader.readyState === 2){
                 setAvatarPreview(reader.result);
-                setAvatar(reader.result);
+                setAvatar(reader.result); 
             }
         };
 
@@ -51,7 +52,6 @@ const UpdateProfile = () => {
             setName(user.name);
             setEmail(user.email);
             setAvatarPreview(user.avatar.url );
-            setAvatar(user.avatar);
         }
         
         if(error){
