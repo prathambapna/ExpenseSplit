@@ -21,8 +21,12 @@ const Home = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-    dispatch(myGroups());
-  }, [dispatch,error,alert])
+
+    if(isAuthenticated){
+      dispatch(myGroups());
+    }
+
+  }, [dispatch,error,alert,isAuthenticated])
   
 
   return (

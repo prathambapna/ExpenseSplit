@@ -328,3 +328,38 @@ exports.myBalances = catchAsyncErrors(async (req, res, next) => {
         balances,
     });
 });
+
+
+//remove user avatar
+exports.removeAvatar = catchAsyncErrors(async (req, res, next) => {
+  
+  const user=await User.findById(req.user.id);
+
+  let avatar= {
+    public_id: "sample public id",
+    url: "profile pic url",
+  };
+
+
+  if(user.avatar && user.avatar.public_id!=="sample public id"){
+    await cloudinary.v2.uploader.destroy(user.avatar.public_id);
+  }
+  
+  let newUserData = {
+    name: user.name,
+    email: user.email,
+    avatar:avatar,
+  };
+  
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, newUserData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+
+  await updatedUser.save();
+  res.status(200).json({
+    success: true,
+    updatedUser,
+  });
+});

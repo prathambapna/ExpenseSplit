@@ -28,6 +28,9 @@ import {LOGIN_REQUEST,
     ALL_USERS_REQUEST,
     ALL_USERS_SUCCESS,
     ALL_USERS_FAIL,
+    REMOVE_AVATAR_REQUEST,
+    REMOVE_AVATAR_SUCCESS,
+    REMOVE_AVATAR_FAIL,
 } from "../constants/userConstants";
 import axios from "axios";
 
@@ -264,6 +267,27 @@ export const allUsersDetails = () => async(dispatch)=>{
         })
     }
 };
+
+
+//delete group in a group
+export const removeAvatar=()=>async(dispatch)=>{
+    try {
+        dispatch({type:REMOVE_AVATAR_REQUEST});
+
+        const {data}=await axios.delete(`/api/v1/me/removeAvatar`);
+        dispatch({
+            type:REMOVE_AVATAR_SUCCESS,
+            payload:data,
+        })
+
+    } catch (error) {
+        console.log(error.response.data);
+        dispatch({
+            type:REMOVE_AVATAR_FAIL,
+            payload:error.response.data.message,
+        })
+    }
+}
 
 //clearing errors
 export const clearErrors = () => async(dispatch)=>{

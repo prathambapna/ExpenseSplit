@@ -11,6 +11,20 @@ export const Profile = () => {
     const {user,isAuthenticated,loading}=useSelector((state)=>state.user);
     const navigate=useNavigate();
 
+    const deleteAvatarHandler=(e)=>{
+        e.preventDefault();
+        const isConfirmed = window.confirm('Are you sure you want to remove Profile Picture?');
+
+        if (isConfirmed) {
+            navigate(`/me/removeAvatar`);
+        }
+    }
+
+    const editProfileHandler=(e)=>{
+        e.preventDefault();
+        navigate(`/me/update`);
+    }
+
     useEffect(() => {
       if(isAuthenticated===false){
         navigate("/login");
@@ -24,10 +38,19 @@ export const Profile = () => {
                     <MetaData title={ `${user.name}'s Profile`}/>
                     <div className="profileContainer">
                         <div>
-                        <h1>My Profile</h1>
-                        <img src={(user.avatar && user.avatar.url && user.avatar.url!=="profile pic url") ? user.avatar.url:"/Profile.png"}
-                             alt={user.name} />
-                        <Link to="/me/update">Edit Profile</Link>
+                            <h1>My Profile</h1>
+                            <img src={(user.avatar && user.avatar.url && user.avatar.url!=="profile pic url") ? user.avatar.url:"/Profile.png"}
+                                alt={user.name} />
+                            <div>
+                                <span onClick={(e) => editProfileHandler(e)}>
+                                    Edit Profile
+                                </span>
+                                {user.avatar && user.avatar.url && user.avatar.url !== "profile pic url" && (
+                                    <span className="deleteProfileAvatar" onClick={(e) => deleteAvatarHandler(e)}>
+                                         &nbsp;/ &nbsp;Remove Profile Picture
+                                    </span>
+                                )}
+                            </div>
                         </div>
                         <div>
                         <div>

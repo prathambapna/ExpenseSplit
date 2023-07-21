@@ -73,6 +73,7 @@ export const LoginSignUp = ({history}) => {
       if(error){
         alert.error(error);
         dispatch(clearErrors());
+        navigate('/');
       }
       if(isAuthenticated){
         navigate('/');
