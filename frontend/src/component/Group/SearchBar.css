@@ -55,3 +55,13 @@
     background-color: #0056b3;
   }
   
+  @media screen and (max-width: 700px) {
+    
+    .SearchInput {
+      font-size: 25px;
+    }
+    
+    .UserList {
+      font: 500 1.8vmax "Roboto";
+    }
+  }

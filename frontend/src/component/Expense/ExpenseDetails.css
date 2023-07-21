@@ -101,3 +101,35 @@
     font: 300 1.5vmax "Roboto";
     color: black;
   }
+
+  @media screen and (max-width: 700px) {
+    .ExpenseDetailBox {
+        width: 96vw;
+      }
+    .leftSideExpenseSection{
+        width: 50%;
+        font-size: 1.7vmax; 
+    }
+    
+    .expenseHeadingSection{
+        font-size: 2.2vmax;
+    }
+    
+    .expenseDescriptionSection{
+        font-size: 1.8vmax;
+    }
+    .editExpense>button{
+        font: 300 1.8vmax "Roboto";
+    }
+    .rightSideExpenseSection{
+        width: 50%;
+    }
+    
+    .singleParticipantSection {
+        padding: 0.8vmax 0.2vmax;
+      }
+      
+    .singleParticipantSection> span {
+    font: 300 1.8vmax "Roboto";
+    }
+  }

@@ -45,3 +45,22 @@
     font-size: 1.7vmax;
     font-family: "Roboto";
 }
+
+@media screen and (max-width: 700px) {
+
+    .myBalanceBox{
+        width: 80vw;
+        height: 90vh;
+        border: 3px solid rgba(16, 15, 15, 0.921);
+    }
+    
+    .myBalanceMessage{
+        border: 3px solid rgba(0, 0, 0, 0.267);
+        font-size: 2.7vmax;
+    }
+    
+    .noBalances{
+        font-size: 2.7vmax;
+    }
+    
+}
