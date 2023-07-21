@@ -31,6 +31,10 @@ import {
     SETTLE_BALANCE_RESET,
     SETTLE_BALANCE_SUCCESS,
     SETTLE_BALANCE_FAIL,
+    DELETE_GROUP_REQUEST,
+    DELETE_GROUP_SUCCESS,
+    DELETE_GROUP_FAIL,
+    DELETE_GROUP_RESET,
     CLEAR_ERRORS,
 } 
 from "../constants/groupConstants";
@@ -332,6 +336,44 @@ export const settleBalanceReducer=(state={},action)=>{
             return {
                 ...state,
                 isSettled:false,
+            }
+        case CLEAR_ERRORS:
+            return{
+                ...state,
+                error:null,
+            };
+            
+        default:
+            return state;
+    }
+}
+
+//delete group 
+export const deleteGroupReducer=(state={},action)=>{
+    switch (action.type) {
+        case DELETE_GROUP_REQUEST:
+            return {
+                ...state,
+                loading:true,
+            };
+
+        case DELETE_GROUP_SUCCESS:
+            return {
+                ...state,
+                loading:false,
+                isDeleted:true,
+            };
+        case DELETE_GROUP_FAIL:
+            return {
+                ...state,
+                loading:false,
+                error:action.payload,
+                isDeleted:false,
+            };
+        case DELETE_GROUP_RESET:
+            return {
+                ...state,
+                isDeleted:false,
             }
         case CLEAR_ERRORS:
             return{

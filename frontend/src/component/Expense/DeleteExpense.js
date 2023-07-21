@@ -9,7 +9,7 @@ import { deleteExpense,clearErrors } from '../../actions/expenseAction';
 import { DELETE_EXPENSE_RESET } from '../../constants/expenseConstants';
 
 const DeleteExpense = () => {
-  const dispatch=useDispatch();
+    const dispatch=useDispatch();
     const alert=useAlert();
     const navigate=useNavigate();
 

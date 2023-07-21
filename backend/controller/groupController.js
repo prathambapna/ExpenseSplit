@@ -2,6 +2,7 @@ const ErrorHandler=require("../utils/errorHandler");
 const catchAsyncErrors=require("../middleware/catchAsyncError");
 const User=require("../models/userModel");
 const Group=require("../models/groupModel");
+const Expense =require("../models/expenseModel");
 const UserBalance=require("../models/userBalanceModel");
 
 //create a group
@@ -121,22 +122,38 @@ exports.removeUserFromGroup=catchAsyncErrors(async(req,res,next)=>{
     }
 
 
-    // //if user is groupAdmin , delete group
-    // if(group.createdBy.toString() === userId){
-    //     await group.participants.forEach(catchAsyncErrors(async(participantId)=>{
-    //         const user=await User.findById(participantId);
-    //         const groupList=await user.groupList.filter((grpId)=>grpId.toString() !== groupId.toString());
-    //         user.groupList=groupList;
-    //         await user.save({validateBeforeSave:false});
-    //     }));
+    //if user is groupAdmin , delete group
+    if(group.createdBy.toString() === userId){
+
+        if(group.participants.length>1){
+            return next(new ErrorHandler("Admin can leave the group after other participants have left",400));
+        }
+
+        if(group.participants.length===1){
+            return next(new ErrorHandler("Please Delete the group instead",400));
+        }
+
+        //remove group from user's grouplist
+        await group.participants.forEach(catchAsyncErrors(async(participantId)=>{
+            const user=await User.findById(participantId);
+            const groupList=await user.groupList.filter((grpId)=>grpId.toString() !== groupId.toString());
+            user.groupList=groupList;
+            await user.save({validateBeforeSave:false});
+        }));
+        
+        //delete all expenses
+        for(const expenseId of group.expenses){
+            const expense=await Expense.findById(expenseId);
+            await expense.deleteOne();
+        }
+
+        await group.deleteOne();
     
-    //     await group.deleteOne();
-    
-    //     res.status(200).json({
-    //         success:true,
-    //     });
-    //     return;
-    // }
+        res.status(200).json({
+            success:true,
+        });
+        return;
+    }
 
     //remove user from participants list in group
     const participants=await group.participants.filter((participantId)=>participantId.toString()!==userId.toString());
@@ -160,7 +177,6 @@ exports.removeUserFromGroup=catchAsyncErrors(async(req,res,next)=>{
 
 
 //delete a group
-//need to add about balance check condition
 exports.deleteGroup=catchAsyncErrors(async(req,res,next)=>{
     const group= await Group.findById(req.params.groupId);
 
@@ -173,12 +189,24 @@ exports.deleteGroup=catchAsyncErrors(async(req,res,next)=>{
         return next(new ErrorHandler("You are not authorised to delete this group",404));
     }
 
+    //group should have no balances
+    if(group.balances.length>0){
+        return next(new ErrorHandler("Settle All Balances Before Deleting Group",404));
+    }
+
+    //remove group from user's grouplist
     await group.participants.forEach(catchAsyncErrors(async(userId)=>{
         const user=await User.findById(userId);
         const groupList=await user.groupList.filter((grpId)=>grpId.toString() !== req.params.groupId.toString());
         user.groupList=groupList;
         await user.save({validateBeforeSave:false});
     }));
+
+    //delete all expenses
+    for(const expenseId of group.expenses){
+        const expense=await Expense.findById(expenseId);
+        await expense.deleteOne();
+    }
 
     await group.deleteOne();
 

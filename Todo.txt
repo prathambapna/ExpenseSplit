@@ -4,15 +4,10 @@ delete group
 
 //Fixes
 
-
+//compulsory
 1]avatar always need to be uploaded for (update profile and register)
 2]remove profile picture
 3]state not getting empty after logout
-
-
-//compulsory
-1]delete group when no balances
-2]when delete group in backend , also delete all expenses and all balances should be nullified
 
 
 //may be
@@ -21,3 +16,4 @@ delete group
 3]media query on groupDetail page
 4]record transactions( settle balances record)
 5]chart
+6]cursor on checkboxes
