@@ -51,7 +51,9 @@ const UpdateProfile = () => {
         if(user){
             setName(user.name);
             setEmail(user.email);
-            setAvatarPreview(user.avatar.url );
+            if(user.avatar && user.avatar.url!=="profile pic url"){
+                setAvatarPreview(user.avatar.url );
+            }
         }
         
         if(error){
