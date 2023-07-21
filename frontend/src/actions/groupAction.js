@@ -26,6 +26,9 @@ import {
     SETTLE_BALANCE_REQUEST,
     SETTLE_BALANCE_SUCCESS,
     SETTLE_BALANCE_FAIL,
+    DELETE_GROUP_REQUEST,
+    DELETE_GROUP_SUCCESS,
+    DELETE_GROUP_FAIL,
     CLEAR_ERRORS,
 } 
 from "../constants/groupConstants";
@@ -234,6 +237,28 @@ export const settleBalanceInGroup=(groupId,balanceId)=>async(dispatch)=>{
         })
     }
 }
+
+
+//delete group in a group
+export const deleteGroup=(groupId)=>async(dispatch)=>{
+    try {
+        dispatch({type:DELETE_GROUP_REQUEST});
+
+        const {data}=await axios.delete(`/api/v1/group/${groupId}/delete`);
+        dispatch({
+            type:DELETE_GROUP_SUCCESS,
+            payload:data,
+        })
+
+    } catch (error) {
+        console.log(error.response.data);
+        dispatch({
+            type:DELETE_GROUP_FAIL,
+            payload:error.response.data.message,
+        })
+    }
+}
+
 
 //clearing errors
 export const clearErrors = () => async(dispatch)=>{
