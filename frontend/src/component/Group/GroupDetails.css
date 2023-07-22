@@ -44,7 +44,8 @@
 }
 
 .changeGroupNameButton>button,
-.addMemberButton>button{
+.addMemberButton>button,
+.groupTransactionButton>button{
     justify-content: center;
     align-items: center;
     padding: 0.8vmax;
@@ -59,7 +60,8 @@
 }
 
 .changeGroupNameButton>button:hover,
-.addMemberButton>button:hover{
+.addMemberButton>button:hover,
+.groupTransactionButton>button:hover{
     background-color: crimson;
 }
 
@@ -165,7 +167,7 @@
     color:red;
   }
 
-  .addMemberButton{
+  .addMemberButton,.groupTransactionButton{
     margin-bottom: 1vmax;
     padding-bottom: 1vmax;
   }
@@ -222,6 +224,11 @@
     background-image:linear-gradient(to right,#3027ae,#635dc0);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
     border: 2px solid  black;
+    overflow: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
   }
 
   .rightHeading{
@@ -246,7 +253,7 @@
   justify-content: center;
   max-width: 100%;
   overflow: auto;
-  height: 70vh;
+  height: 60vh;
   align-items: center;
   text-align: center;
   flex-direction: column;
@@ -296,7 +303,9 @@
   }
 
   .changeGroupNameButton>button,
-  .addMemberButton>button{
+  .addMemberButton>button,
+  .groupTransactionButton>button
+  {
       font: 300 1.4vmax "Roboto";
   }
 
