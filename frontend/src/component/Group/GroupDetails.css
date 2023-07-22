@@ -16,11 +16,13 @@
     width: 25vw;
     height: 100vh;
     box-sizing: border-box;
-    overflow: auto;
+    /* overflow: auto; */
     display: flex;
     flex-direction: column;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
     border: 2px solid  black;
+    justify-content: center;
+    align-items: center;
     
 }
 
@@ -99,7 +101,7 @@
     padding: auto;
     align-items: center;
     margin-top: 2vmax;
-    /* overflow: auto; */
+    overflow: auto;
 }
 
 .groupMemberSection>h2{

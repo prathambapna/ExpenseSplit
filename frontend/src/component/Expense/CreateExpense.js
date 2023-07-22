@@ -11,13 +11,13 @@ import MetaData from '../layout/MetaData';
 import { clearErrors,createExpense } from '../../actions/expenseAction';
 import { useParams } from 'react-router-dom';
 import { CREATE_EXPENSE_RESET } from '../../constants/expenseConstants';
-import {allUsersDetails} from "../../actions/userAction";
 import SearchBarPayer from "./SearchBarPayer.js";
 import SearchBarParticipants from "./SearchBarParticipants.js";
+import { groupUsersDetails } from '../../actions/groupAction';
 
 const CreateExpense = () => {
     const {loading,success,error}=useSelector((state)=>state.newExpense);
-    const {error:allUsersError,users}=useSelector((state)=>state.allUsers);
+    const {error:groupUsersError,users}=useSelector((state)=>state.groupMembers);
     const {groupId}=useParams();
     
 
@@ -65,7 +65,7 @@ const CreateExpense = () => {
 
 
     useEffect(() => {
-        dispatch(allUsersDetails());
+        dispatch(groupUsersDetails(groupId));
         if(error){
             alert.error(error);
             dispatch(clearErrors());
@@ -73,8 +73,8 @@ const CreateExpense = () => {
             formData.payer={};
             setPayerName('');
         }
-        if(allUsersError){
-            alert.error(allUsersError);
+        if(groupUsersError){
+            alert.error(groupUsersError);
             dispatch(clearErrors());
             formData.participants=[];
             formData.payer={};
@@ -85,7 +85,7 @@ const CreateExpense = () => {
             navigate(`/group/${groupId}`);
             dispatch({type:CREATE_EXPENSE_RESET});
         }
-    }, [dispatch,error,alert,navigate,success,groupId,allUsersError,formData]);
+    }, [dispatch,error,alert,navigate,success,groupId,groupUsersError,formData]);
 
 
     return (

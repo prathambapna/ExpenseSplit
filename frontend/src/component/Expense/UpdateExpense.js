@@ -11,9 +11,9 @@ import MetaData from '../layout/MetaData';
 import { clearErrors, editExpense, expenseDetails } from '../../actions/expenseAction';
 import { useParams } from 'react-router-dom';
 import { UPDATE_EXPENSE_RESET } from '../../constants/expenseConstants';
-import {allUsersDetails} from "../../actions/userAction";
 import SearchBarPayer from "./SearchBarPayer.js";
 import SearchBarParticipants from "./SearchBarParticipants.js";
+import { groupUsersDetails } from '../../actions/groupAction';
 
 const UpdateExpense = () => {
 
@@ -23,7 +23,7 @@ const UpdateExpense = () => {
     const {groupId,expenseId}=useParams();
 
     const {loading,isUpdated,error}=useSelector((state)=>state.editExpense);
-    const {error:allUsersError,users}=useSelector((state)=>state.allUsers);
+    const {error:groupUsersError,users}=useSelector((state)=>state.groupMembers);
     const {error:expenseDetailsError,expense}=useSelector((state)=>state.expenseDetail);
 
     const [payerName, setPayerName] = useState('');
@@ -98,7 +98,7 @@ const UpdateExpense = () => {
 
     useEffect(() => {
         if(users.length===0){
-            dispatch(allUsersDetails());
+            dispatch(groupUsersDetails(groupId));
         }
 
         if(expense && expense._id !== expenseId){
@@ -117,8 +117,8 @@ const UpdateExpense = () => {
             alert.error(error);
             dispatch(clearErrors());
         }
-        if(allUsersError){
-            alert.error(allUsersError);
+        if(groupUsersError){
+            alert.error(groupUsersError);
             dispatch(clearErrors());
         }
 
@@ -134,7 +134,7 @@ const UpdateExpense = () => {
             dispatch({type:UPDATE_EXPENSE_RESET});
         }
 
-    }, [dispatch,error,alert,navigate,isUpdated,expenseId,expense,groupId,allUsersError,expenseDetailsError,users]);
+    }, [dispatch,error,alert,navigate,isUpdated,expenseId,expense,groupId,groupUsersError,expenseDetailsError,users]);
 
 
     return (
