@@ -3,7 +3,7 @@ import "./UpdateExpense.css";
 import Loader from "../layout/Loader/Loader";
 import FaceIcon from "@material-ui/icons/Face";
 import DescriptionIcon from "@material-ui/icons/Description";
-import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import {useSelector,useDispatch} from "react-redux";
 import {useAlert} from "react-alert";
 import { useNavigate } from 'react-router-dom';
@@ -170,7 +170,7 @@ const UpdateExpense = () => {
                                 </div>
 
                                 <div className='editExpenseAmount'>
-                                    <AttachMoneyIcon />
+                                    <CurrencyRupeeIcon />
                                     <input
                                         type="number"
                                         placeholder=' Expense Amount'
