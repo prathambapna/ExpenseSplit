@@ -35,6 +35,9 @@ import {
     DELETE_GROUP_SUCCESS,
     DELETE_GROUP_FAIL,
     DELETE_GROUP_RESET,
+    GROUP_TRANSACTIONS_REQUEST,
+    GROUP_TRANSACTIONS_SUCCESS,
+    GROUP_TRANSACTIONS_FAIL,
     CLEAR_ERRORS,
 } 
 from "../constants/groupConstants";
@@ -385,3 +388,33 @@ export const deleteGroupReducer=(state={},action)=>{
             return state;
     }
 }
+
+//group transactions
+export const groupTransactionsReducer=(state={groupTransactions:[]},action) =>{
+    switch(action.type){
+        case GROUP_TRANSACTIONS_REQUEST:
+            return{
+                groupTransactions:[],
+                loading:true,
+            }
+        case GROUP_TRANSACTIONS_SUCCESS:
+            return {
+                loading:false,
+                groupTransactions:action.payload.transactions,
+            }
+        case GROUP_TRANSACTIONS_FAIL:
+            return {
+                loading:false,
+                groupTransactions:[],
+                error:action.payload,
+            }
+        case CLEAR_ERRORS:
+            return{
+                ...state,
+                error:null,
+            };
+            
+        default:
+            return state;
+    }
+};

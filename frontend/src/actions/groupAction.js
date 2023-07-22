@@ -29,6 +29,9 @@ import {
     DELETE_GROUP_REQUEST,
     DELETE_GROUP_SUCCESS,
     DELETE_GROUP_FAIL,
+    GROUP_TRANSACTIONS_REQUEST,
+    GROUP_TRANSACTIONS_SUCCESS,
+    GROUP_TRANSACTIONS_FAIL,
     CLEAR_ERRORS,
 } 
 from "../constants/groupConstants";
@@ -258,6 +261,26 @@ export const deleteGroup=(groupId)=>async(dispatch)=>{
         })
     }
 }
+
+//group transactions
+export const groupTransactionsAction = (groupId) => async(dispatch)=>{
+    try {
+        dispatch({type:GROUP_TRANSACTIONS_REQUEST});
+
+        const {data}=await axios.get(`/api/v1/group/${groupId}/transactions`);
+        dispatch({
+            type:GROUP_TRANSACTIONS_SUCCESS,
+            payload:data,
+        })
+
+    } catch (error) {
+        console.log(error.response.data);
+        dispatch({
+            type:GROUP_TRANSACTIONS_FAIL,
+            payload:error.response.data.message,
+        })
+    }
+};
 
 
 //clearing errors

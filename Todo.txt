@@ -7,7 +7,6 @@ state not getting empty after logout
 //may be
 add multiple members together (checkbox)
 creating expense , only show participants that are in group
-record transactions( settle balances record)
 chart
 
 use redux persist

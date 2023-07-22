@@ -30,21 +30,21 @@ const MyTransactions = () => {
                         <div className='myTransactionBox'>
                             <h1>My Transactions</h1>
                             {myTransactions.length !== 0 &&
-        myTransactions.map((transaction) => (
-          <div key={transaction._id} className='myTransactionMessage'>
-            {transaction.userFrom._id === user._id ? (
-              <span>
-                Paid {transaction.amount} to {transaction.userTo.name} on{' '}
-                {String(transaction.createdAt).substring(0, 10)}
-              </span>
-            ) : (
-              <span>
-                Received {transaction.amount} from {transaction.userFrom.name} on{' '}
-                {String(transaction.createdAt).substring(0, 10)}
-              </span>
-            )}
-          </div>
-        ))}
+                                myTransactions.map((transaction) => (
+                                <div key={transaction._id} className='myTransactionMessage'>
+                                    {transaction.userFrom._id === user._id ? (
+                                    <span>
+                                        Paid {transaction.amount} to {transaction.userTo.name} on{' '}
+                                        {String(transaction.createdAt).substring(0, 10)}
+                                    </span>
+                                    ) : (
+                                    <span>
+                                        Received {transaction.amount} from {transaction.userFrom.name} on{' '}
+                                        {String(transaction.createdAt).substring(0, 10)}
+                                    </span>
+                                    )}
+                                </div>
+                            ))}
                             {myTransactions.length===0 && <h2 className='noTransactions'>No transactions performed yet !!!</h2>}
                         </div>
                     </div>

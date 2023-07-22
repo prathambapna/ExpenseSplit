@@ -30,6 +30,11 @@ const GroupDetail = () => {
         e.preventDefault();
         navigate(`/group/${groupId}/addUser`);
     }
+    
+    const groupTransactionHandler=(e)=>{
+        e.preventDefault();
+        navigate(`/group/${groupId}/transactions`);
+    }
 
 
     const deleteMemberHandler=(e,userId)=>{
@@ -128,6 +133,9 @@ const GroupDetail = () => {
                                 
                                 )}
                                 {(!groupBalance || groupBalance.length===0 )&& <p className='noBalance'>Hurray , No Balances due!</p>}
+                            </div>
+                            <div className='groupTransactionButton'>
+                                <button onClick={groupTransactionHandler}>Transactions</button>
                             </div>
                         </div>
                     </div>

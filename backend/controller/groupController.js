@@ -393,7 +393,14 @@ exports.settleUp=catchAsyncErrors(async(req,res,next)=>{
 
 exports.groupTransactions=catchAsyncErrors(async(req,res,next)=>{
     const {groupId}=req.params;
-    const group=await Group.findById(groupId).populate("transactions");
+    const group=await Group.findById(groupId).populate("transactions").populate({
+        path:'transactions',
+        populate:({
+          path: 'userFrom userTo',
+          model: 'User',
+          select:'name',
+        })
+      });
 
     if(!group){
         return next(new ErrorHandler("Group does not exist",400));

@@ -24,6 +24,7 @@ import DeleteGroup from "./component/Group/DeleteGroup.js";
 import AddMemberInGroup from "./component/Group/AddMemberInGroup.js";
 import DeleteMemberInGroup from "./component/Group/DeleteMemberInGroup.js";
 import SettleBalance from "./component/Group/SettleBalance.js";
+import GroupTransactions from "./component/Group/GroupTransactions.js";
 import CreateExpense from "./component/Expense/CreateExpense.js";
 import ExpenseDetail from "./component/Expense/ExpenseDetail.js";
 import DeleteExpense from "./component/Expense/DeleteExpense.js";
@@ -71,6 +72,7 @@ function App() {
       <ProtectedRoute exact path="/group/:groupId/settleBalance/:balanceId" element={SettleBalance} />
       <ProtectedRoute exact path="/group/:groupId/delete" element={DeleteGroup} />
       <ProtectedRoute exact path="/me/transactions" element={MyTransactions} />
+      <ProtectedRoute exact path="/group/:groupId/transactions" element={GroupTransactions} />
 
       <Footer />
     </Router>
