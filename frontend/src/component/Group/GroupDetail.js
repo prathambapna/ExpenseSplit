@@ -103,10 +103,10 @@ const GroupDetail = () => {
                                     </div>)
                                     }
                                 </div>
+                            </div>
                                 <div className='addMemberButton'>
                                     <button onClick={addMemberHandler}>Add Member</button>
                                 </div>
-                            </div>
                         </div>
                         <div className='middleSide'>
                             <div className='middleHeading'>
