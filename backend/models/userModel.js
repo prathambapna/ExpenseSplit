@@ -43,6 +43,12 @@ const userSchema= new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    transactions:[
+        {
+            type:mongoose.Schema.ObjectId,
+            ref:"Transaction"
+        }
+    ],
     resetPasswordToken:String,
     resetPasswordExpire:Date,
 });

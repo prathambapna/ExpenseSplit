@@ -16,6 +16,7 @@ import UpdatePassword from "./component/User/UpdatePassword.js";
 import ForgotPassword from "./component/User/ForgotPassword.js";
 import ResetPassword from "./component/User/ResetPassword.js";
 import MyBalances from "./component/User/MyBalances.js";
+import MyTransactions from "./component/User/MyTransactions.js";
 import CreateGroup from "./component/Group/CreateGroup.js"
 import GroupDetail from "./component/Group/GroupDetail.js";
 import UpdateGroup from "./component/Group/UpdateGroup.js";
@@ -69,6 +70,7 @@ function App() {
       <ProtectedRoute exact path="/group/:groupId/expense/:expenseId/update" element={UpdateExpense} />
       <ProtectedRoute exact path="/group/:groupId/settleBalance/:balanceId" element={SettleBalance} />
       <ProtectedRoute exact path="/group/:groupId/delete" element={DeleteGroup} />
+      <ProtectedRoute exact path="/me/transactions" element={MyTransactions} />
 
       <Footer />
     </Router>

@@ -4,6 +4,7 @@ const User=require("../models/userModel");
 const Group=require("../models/groupModel");
 const Expense =require("../models/expenseModel");
 const UserBalance=require("../models/userBalanceModel");
+const Transaction=require("../models/transactionModel");
 
 //create a group
 exports.createGroup=catchAsyncErrors(async(req,res,next)=>{
@@ -343,6 +344,42 @@ exports.settleUp=catchAsyncErrors(async(req,res,next)=>{
     }
 
     const group=await Group.findById(req.group._id);
+
+    //create transaction
+    let userFrom,userTo;
+
+    if(balance.balance<0){
+        userFrom=balance.userFrom;
+        userTo=balance.userTo;
+    }
+    else{
+        userFrom=balance.userTo;
+        userTo=balance.userFrom;
+    }
+
+    const transaction=await Transaction.create({
+        userFrom:userFrom,
+        userTo:userTo,
+        group:req.group._id,
+        amount:balance.balance,
+    });
+
+
+    //add transaction to group transactions
+    group.transactions.push(transaction);
+    await group.save({validateBeforeSave:false});
+
+    //add transaction to user transactions
+    const payer=await User.findById(userFrom);
+    const receiver=await User.findById(userTo);
+
+    payer.transactions.push(transaction);
+    await payer.save({validateBeforeSave:false});
+
+    receiver.transactions.push(transaction);
+    await receiver.save({validateBeforeSave:false});
+
+    //delete balance
     group.balances=await group.balances.filter((balance)=>balance.toString()!==balanceId.toString());
     await group.save({validateBeforeSave:false});
     
@@ -352,4 +389,18 @@ exports.settleUp=catchAsyncErrors(async(req,res,next)=>{
         success:true,
     })
 
+})
+
+exports.groupTransactions=catchAsyncErrors(async(req,res,next)=>{
+    const {groupId}=req.params;
+    const group=await Group.findById(groupId).populate("transactions");
+
+    if(!group){
+        return next(new ErrorHandler("Group does not exist",400));
+    }
+
+    res.status(200).json({
+        success:true,
+        transactions:group.transactions,
+    })
 })

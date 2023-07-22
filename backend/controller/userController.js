@@ -363,3 +363,25 @@ exports.removeAvatar = catchAsyncErrors(async (req, res, next) => {
     updatedUser,
   });
 });
+
+
+exports.myTransactions=catchAsyncErrors(async(req,res,next)=>{
+
+  const user=await User.findById(req.user.id).populate("transactions").populate({
+    path:'transactions',
+    populate:({
+      path: 'userFrom userTo',
+      model: 'User',
+      select:'name',
+    })
+  });
+
+  if(!user){
+      return next(new ErrorHandler("User does not exist",400));
+  }
+
+  res.status(200).json({
+      success:true,
+      transactions:user.transactions,
+  })
+})

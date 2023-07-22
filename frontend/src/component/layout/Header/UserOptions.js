@@ -6,6 +6,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import Backdrop from '@material-ui/core/Backdrop';
 import {useNavigate} from "react-router-dom";
 import { useAlert } from 'react-alert';
@@ -23,6 +24,7 @@ const UserOptions = ({user}) => {
         {icon:<HomeIcon/>, name:"Home",func:home},
         {icon:<PersonIcon/>, name:"Profile",func:me},
         {icon:<AccountBalanceIcon/>, name:"Balances",func:balance},
+        {icon:<ReceiptLongIcon/>, name:"Transactions",func:transaction},
         {icon:<ExitToAppIcon/>, name:"Logout",func:logoutUser},
     ];
 
@@ -41,6 +43,10 @@ const UserOptions = ({user}) => {
 
     function balance(){
         navigate("/me/balances");
+    }
+
+    function transaction(){
+        navigate("/me/transactions");
     }
 
     return (
