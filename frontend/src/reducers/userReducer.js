@@ -34,6 +34,9 @@ import {LOGIN_REQUEST,
         REMOVE_AVATAR_SUCCESS,
         REMOVE_AVATAR_FAIL,
         REMOVE_AVATAR_RESET,
+        MY_TRANSACTIONS_REQUEST,
+        MY_TRANSACTIONS_SUCCESS,
+        MY_TRANSACTIONS_FAIL,
 } from "../constants/userConstants";
 
 //user auth
@@ -276,3 +279,34 @@ export const removeAvatarReducer=(state={},action)=>{
             return state;
     }
 }
+
+
+//user transactions
+export const myTransactionsReducer=(state={myTransactions:[]},action) =>{
+    switch(action.type){
+        case MY_TRANSACTIONS_REQUEST:
+            return{
+                myTransactions:[],
+                loading:true,
+            }
+        case MY_TRANSACTIONS_SUCCESS:
+            return {
+                loading:false,
+                myTransactions:action.payload.transactions,
+            }
+        case MY_TRANSACTIONS_FAIL:
+            return {
+                loading:false,
+                myTransactions:[],
+                error:action.payload,
+            }
+        case CLEAR_ERRORS:
+            return{
+                ...state,
+                error:null,
+            };
+            
+        default:
+            return state;
+    }
+};

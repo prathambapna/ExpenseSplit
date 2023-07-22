@@ -33,6 +33,12 @@ const groupSchema=new mongoose.Schema({
             ref:"UserBalance"
         }
     ],
+    transactions:[
+        {
+            type:mongoose.Schema.ObjectId,
+            ref:"Transaction"
+        }
+    ]
     
 });
 

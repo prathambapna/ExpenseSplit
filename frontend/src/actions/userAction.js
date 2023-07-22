@@ -31,6 +31,9 @@ import {LOGIN_REQUEST,
     REMOVE_AVATAR_REQUEST,
     REMOVE_AVATAR_SUCCESS,
     REMOVE_AVATAR_FAIL,
+    MY_TRANSACTIONS_REQUEST,
+    MY_TRANSACTIONS_SUCCESS,
+    MY_TRANSACTIONS_FAIL,
 } from "../constants/userConstants";
 import axios from "axios";
 
@@ -288,6 +291,28 @@ export const removeAvatar=()=>async(dispatch)=>{
         })
     }
 }
+
+//my transactions
+export const myTransactionsAction = () => async(dispatch,getState)=>{
+    try {
+        dispatch({type:MY_TRANSACTIONS_REQUEST});
+
+        const {data}=await axios.get(`/api/v1/me/transactions`);
+        dispatch({
+            type:MY_TRANSACTIONS_SUCCESS,
+            payload:data,
+        })
+
+        localStorage.setItem("transactions",JSON.stringify(getState().myTransactions.myTransactions));
+
+    } catch (error) {
+        console.log(error.response.data);
+        dispatch({
+            type:MY_TRANSACTIONS_FAIL,
+            payload:error.response.data.message,
+        })
+    }
+};
 
 //clearing errors
 export const clearErrors = () => async(dispatch)=>{

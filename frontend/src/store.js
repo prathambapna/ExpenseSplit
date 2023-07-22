@@ -2,7 +2,7 @@ import {combineReducers,applyMiddleware} from "redux";
 import { legacy_createStore as createStore} from 'redux'
 import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
-import { allUsersReducer, forgotPasswordReducer, myBalancesReducer, profileReducer, removeAvatarReducer, userReducer } from "./reducers/userReducer";
+import { allUsersReducer, forgotPasswordReducer, myBalancesReducer, myTransactionsReducer, profileReducer, removeAvatarReducer, userReducer } from "./reducers/userReducer";
 import { addMemberReducer, createGroupReducer, deleteGroupReducer, deleteMemberReducer, groupBalancesReducer, groupDetailsReducer, groupReducer, groupUsersReducer, settleBalanceReducer, updateGroupReducer } from "./reducers/groupReducer";
 import { createExpenseReducer, deleteExpenseReducer, editExpenseReducer, expenseDetailsReducer } from "./reducers/expenseReducer";
 
@@ -28,6 +28,7 @@ const reducer=combineReducers({
     settleBalance:settleBalanceReducer,
     deleteGroup:deleteGroupReducer,
     removeAvatar:removeAvatarReducer,
+    myTransactions:myTransactionsReducer,
 });
 
 let initialState={
