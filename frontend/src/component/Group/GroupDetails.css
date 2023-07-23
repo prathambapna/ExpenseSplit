@@ -250,25 +250,21 @@
 
 .balanceContainer{
   display: flex;
+  flex-direction: column;
   margin: 2vmax auto;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 100%;
+  justify-content: space-evenly;
+  width: 90%;
   overflow: auto;
-  height: 60vh;
   align-items: center;
   text-align: center;
-  flex-direction: column;
 }
 
 .singleBalanceContainer{
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   justify-content: center;
   text-align: center;
   align-items: center;
-  overflow: auto;
   box-shadow: 0 2px 10px rgba(15,15,15,0.26);
   width: 90%;
   margin: 0.5vmax 0;
