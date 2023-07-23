@@ -4,6 +4,7 @@ const cookieParser=require("cookie-parser");
 const errorMiddleware=require("./middleware/error");
 const bodyParser =require("body-parser");
 const fileUpload=require("express-fileupload");
+const path = require("path");
 
 app.use(express.json());
 app.use(cookieParser());
@@ -20,6 +21,12 @@ app.use("/api/v1",user);
 app.use("/api/v1",groupRoute);
 app.use("/api/v1",expenseRoute);
 app.use("/api/v1",userBalanceRoute);
+
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
+});
 
 //middleware for error
 app.use(errorMiddleware);
