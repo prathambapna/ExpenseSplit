@@ -103,6 +103,7 @@
 @media screen and (max-width: 800px) {
   .profileContainer {
     flex-direction: column;
+    overflow: auto;
   }
 
   .profileContainer > div:first-child > h1 {
