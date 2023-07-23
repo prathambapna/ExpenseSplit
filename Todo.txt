@@ -2,7 +2,7 @@
 
 //compulsory
 state not getting empty after logout
-
+frontend groupdetails balance container flex direction column
 
 //may be
 add multiple members together (checkbox)
