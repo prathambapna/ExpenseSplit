@@ -2,7 +2,11 @@
 
 //compulsory
 state not getting empty after logout
-frontend groupdetails balance container flex direction column
+
+group details media query
+add member search bar font size
+meta data picture
+
 
 //may be
 add multiple members together (checkbox)

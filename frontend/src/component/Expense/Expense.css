@@ -71,6 +71,7 @@
   @media screen and (max-width:730px) {
     .expenseCard{
       font-size: 1.7vmax;
+      
     }
     .expenseCard >div{
       margin: 0vmax;
@@ -83,6 +84,47 @@
 
     .settleBalanceButton > button{
       font: 300 1.5vmax "Roboto";
+    }
+    
+  }
+
+  @media screen and (max-width:730px) {
+    .expenseCard{
+      font-size: 1.7vmax;
+      
+    }
+    .expenseCard >div{
+      margin: 0vmax;
+      padding: 0;
+      display: block;
+    }
+    
+    .expenseCard>div>p{
+      font-size: 1.4vmax;
+    }
+    
+    .settleBalanceButton > button{
+      font: 300 1.5vmax "Roboto";
+    }
+    
+  }
+  
+  
+  @media screen and (max-width:600px) {
+    .expenseCard{
+      width: 30vmax;
+      padding: 0.5vmax 0.2vmax;
+      margin: 0.8vmax;
+      
+    }
+
+
+    .expenseCard>div>p{
+      font-size: 1.8vmax;
+    }
+
+    .settleBalanceButton > button{
+      font: 300 2vmax "Roboto";
     }
     
   }
