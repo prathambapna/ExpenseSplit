@@ -55,7 +55,7 @@
     box-sizing: border-box;
     border: 1px solid rgba(0, 0, 0, 0.267);
     border-radius: 4px;
-    font: 300 0.9vmax cursive;
+    font: 300 0.9vmax "Roboto";
     outline: none;
 }
 
@@ -75,7 +75,7 @@
   .editExpenseSplitType> span,
   .editExpensePayer>span,
   .editExpenseParticipants>span {
-    font: 300 0.9vmax cursive;
+    font: 300 0.9vmax "Roboto";
     color: rgba(0, 0, 0, 0.623);
     margin-right: 1vmax;
   }
@@ -87,7 +87,7 @@
     box-sizing: border-box;
     border: 1px solid rgba(0, 0, 0, 0.267);
     border-radius: 4px;
-    font: 300 0.9vmax cursive;
+    font: 300 0.9vmax "Roboto";
     outline: none;
   }
 
@@ -137,7 +137,7 @@
     box-sizing: border-box;
     border: 1px solid rgba(0, 0, 0, 0.267);
     border-radius: 4px;
-    font: 300 0.9vmax cursive;
+    font: 300 0.9vmax "Roboto";
     outline: none;
   }
   
@@ -191,7 +191,7 @@
 
     .editExpenseForm > div > input {
       padding: 2.5vmax 5vmax;
-      font: 300 1.7vmax cursive;
+      font: 300 1.7vmax "Roboto";
     }
     .editExpenseForm > div > svg {
       font-size: 2.8vmax;
@@ -205,11 +205,11 @@
     .editExpenseSplitType> span,
     .editExpensePayer>span,
     .editExpenseParticipants>span {
-      font: 300 1.5vmax cursive;
+      font: 300 1.5vmax "Roboto";
     }
     
     .editExpenseSplitType >select {
-      font: 300 1.5vmax cursive;
+      font: 300 1.5vmax "Roboto";
     }
   
     
@@ -226,7 +226,7 @@
     }
     
     .editExpenseForm .editParticpantsList > div > input {
-      font: 300 1.5vmax cursive;
+      font: 300 1.5vmax "Roboto";
     }
   
   }
