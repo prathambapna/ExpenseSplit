@@ -9,6 +9,7 @@
     position: fixed;
     top: 0%;
     left: 0;
+    overflow: auto;
 }
 
 .leftSide{
@@ -16,7 +17,6 @@
     width: 25vw;
     height: 100vh;
     box-sizing: border-box;
-    /* overflow: auto; */
     display: flex;
     flex-direction: column;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
@@ -118,7 +118,6 @@
     align-items: center;
     justify-content: space-evenly;
     padding: 0.5vmax;
-    /* overflow: auto; */
     width: 90%;
     margin-bottom: 2vmax;
 }
@@ -219,6 +218,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 10vh;
   }
   .rightSide{
     width:25vw;
@@ -226,7 +226,6 @@
     background-image:linear-gradient(to right,#3027ae,#635dc0);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
     border: 2px solid  black;
-    overflow: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -252,7 +251,7 @@
   display: flex;
   flex-direction: column;
   margin: 2vmax auto;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   width: 90%;
   overflow: auto;
   align-items: center;
@@ -357,10 +356,6 @@
 
   
     .createExpenseBtn{
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       font-size: 5vmax;
     }
     .rightSide{
@@ -382,4 +377,161 @@
 
 
 }
+
+
+
+@media screen and (max-width: 600px) {
+  .GroupDetailContainer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .leftSide {
+    width: 100%;
+    height: auto;
+  }
+
+  .groupNameSection {
+    height: 15vh;
+    padding: 1vmax 0;
+  }
+
+  .changeGroupNameButton > button,
+  .addMemberButton > button,
+  .groupTransactionButton > button {
+    font: 300 2vmax "Roboto";
+    padding: 0.8vmax;
+  }
+
+  .AdminSection > p,
+  .createdAtSection > p {
+    font: 600 2.2vmax "Roboto";
+  }
+
+  .AdminSection > span,
+  .createdAtSection > span {
+    font: 300 2.2vmax "Roboto";
+  }
+
+  .groupMemberSection > h2 {
+    font: 700 2.6vmax "Roboto";
+  }
+
+  .members {
+    padding: 0.8vmax;
+  }
+
+  .singleMemberProfile {
+    gap: 1vmax;
+    height: auto;
+  }
+
+  .singleMemberProfile > img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .singleMemberProfile > span {
+    font: 300 2.2vmax "Roboto";
+  }
+
+  .svgDelete {
+    transform: scale(0.8);
+  }
+
+  .middleSide {
+    width: 100%;
+  }
+
+  .middleHeading {
+    padding: 1vmax 0;
+    margin-top: 1vmax;
+    font-size: 2.2vmax;
+  }
+
+  .expenseContainer {
+    display: flex;
+    margin: 2vmax auto;
+    justify-content: flex-start;
+    flex-direction: row; 
+    flex-wrap: nowrap;  
+    max-width: 100%;
+    overflow-x: auto; 
+    height: auto;
+    align-items: center;
+    text-align: center;
+  }
+
+  .noExpense {
+    font: 400 1.8vmax "Roboto";
+  }
+
+  .createExpenseBtn {
+    font-size: 3vmax;
+  }
+
+  .rightSide {
+    width: 100%;
+    margin-top: 1vmax;
+  }
+
+  .rightHeading {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-align: center;
+    width: 100%;
+    height: 10vh;
+    margin-top: 3vmax;
+    align-items: center;
+  }
+
+  .rightHeading > h1 {
+    font: 300 auto "Roboto";
+    font-size: 4vmax;
+  }
+
+  .balanceContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 2vmax auto;
+    justify-content: flex-start;
+    width: 90%;
+    overflow: auto;
+    align-items: center;
+    text-align: center;
+  }
+
+  .singleBalanceContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(15, 15, 15, 0.26);
+    width: 96%;
+    margin: 1vmax 0;
+    padding: 0.5vmax;
+  }
+
+  .balanceMsg {
+    color: white;
+    font: 550 2.2vmax "Roboto";
+    margin-bottom: 0.8vmax;
+  }
+
+  .noBalance {
+    justify-content: center;
+    display: flex;
+    text-align: center;
+    width: 100%;
+    align-items: center;
+    color: black;
+    font: 400 2.4vmax "Roboto";
+  }
+}
+
+
+
   
